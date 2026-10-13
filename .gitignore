@@ -1,0 +1,13 @@
+# Private, never published
+CLAUDE.local.md
+.private-terms
+.claude/settings.local.json
+
+# Local tooling installed per machine
+.claude/
+
+# OS and editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

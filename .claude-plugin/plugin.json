@@ -1,0 +1,21 @@
+{
+  "name": "coderachnid",
+  "version": "0.1.0",
+  "description": "A sixth sense for AI coding agents: security-first design, precise code, tests that bite, safe database work, phased plans and a pitfall log distilled from real projects.",
+  "author": {
+    "name": "ru3enaa1",
+    "url": "https://github.com/ru3enaa1"
+  },
+  "homepage": "https://github.com/ru3enaa1/coderachnid",
+  "repository": "https://github.com/ru3enaa1/coderachnid",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "skills",
+    "code-quality",
+    "security",
+    "testing",
+    "database",
+    "harness"
+  ]
+}

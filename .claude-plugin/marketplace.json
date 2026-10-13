@@ -1,0 +1,19 @@
+{
+  "name": "coderachnid",
+  "owner": {
+    "name": "ru3enaa1",
+    "url": "https://github.com/ru3enaa1"
+  },
+  "metadata": {
+    "description": "coderachnid: a sixth sense for AI coding agents, distilled from real projects."
+  },
+  "plugins": [
+    {
+      "name": "coderachnid",
+      "source": "./",
+      "description": "A sixth sense for AI coding agents: security-first design, precise code, tests that bite, safe database work, phased plans and a pitfall log distilled from real projects.",
+      "version": "0.1.0",
+      "category": "development"
+    }
+  ]
+}
