@@ -42,7 +42,9 @@ projects and generalized.
   anything pushed is visible at once. Push only with the maintainer's go-ahead, and only
   after both guards pass. Commits use the GitHub noreply address (set in the local git
   config), never a personal email.
-- **Now:** F1 on branch `feat/f1-local-trial`.
+- **2026-10-13 · F1 activation trial: 18 of 18.** Every skill fired on its task and
+  on no unrelated one (one sample each, English, edit tools disabled). Findings and
+  open items for F2 in `docs/F1-TRIAL.md`. Branch `feat/f1-local-trial`, not merged.
 
 ## 3. Structure
 
@@ -54,6 +56,7 @@ skills/project-setup/templates/   CLAUDE.template.md, DEVELOPMENT_PLAN.md, ADR.m
 guards/                           scripts that verify (the third layer)
 docs/DECISIONS.md                 why the plugin is shaped this way
 assets/                           README artwork; edit build-assets.mjs, never the SVGs
+evals/                            activation trial (F1) and, later, compliance evals (F2)
 ```
 
 The rules template is named `CLAUDE.template.md`, never `CLAUDE.md`: Claude Code loads
@@ -88,6 +91,8 @@ bash guards/check-private-terms.sh; echo $?   # privacy (needs local .private-te
 claude --plugin-dir "<path to this repo>"     # try the plugin without installing
 claude plugin validate .                      # validate the manifests
 node assets/build-assets.mjs                  # regenerate logo and banners
+bash evals/activation/setup-sandbox.sh <dir>  # throwaway sample project (outside the repo)
+CLAUDE_BIN="<claude>" bash evals/activation/run.sh <dir> [skill]   # activation trial
 ```
 
 Publishing (with the maintainer's explicit go-ahead; the repo is already public):
