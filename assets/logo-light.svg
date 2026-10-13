@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="16 -2 208 186" width="208" height="186" role="img" aria-labelledby="t">
+<title id="t">coderachnid: a hand-drawn spider sticker with an amber code bracket on its back</title>
+<defs>
+<filter id="kL" x="-25%" y="-25%" width="150%" height="150%">
+<feMorphology in="SourceAlpha" operator="dilate" radius="5" result="a"/>
+<feMorphology in="a" operator="erode" radius="1" result="b"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="4" result="t"/>
+<feDisplacementMap in="b" in2="t" scale="4.5" xChannelSelector="R" yChannelSelector="G" result="cut"/>
+<feMorphology in="cut" operator="dilate" radius="1.2" result="cutO"/>
+<feFlood flood-color="#1d2127"/><feComposite in2="cutO" operator="in" result="ol"/>
+<feFlood flood-color="#fbfaf6"/><feComposite in2="cut" operator="in" result="pp"/>
+<feMerge><feMergeNode in="ol"/><feMergeNode in="pp"/><feMergeNode in="SourceGraphic"/></feMerge>
+</filter>
+<filter id="iL" x="-10%" y="-10%" width="120%" height="120%">
+<feTurbulence type="fractalNoise" baseFrequency="0.07" numOctaves="2" seed="5" result="t"/>
+<feDisplacementMap in="SourceGraphic" in2="t" scale="3.2" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+</defs>
+<g filter="url(#kL)"><g filter="url(#iL)">
+<g fill="none" stroke="#141414" stroke-linecap="round" stroke-linejoin="round"><g stroke-width="8"><polyline points="108.0,62.0 78.0,30.0 58.0,14.0"/><polyline points="104.0,70.0 62.0,56.0 34.0,66.0"/><polyline points="104.0,82.0 60.0,96.0 38.0,126.0"/><polyline points="108.0,92.0 78.0,128.0 66.0,164.0"/><polyline points="132.0,62.0 162.0,30.0 182.0,14.0"/><polyline points="136.0,70.0 178.0,56.0 206.0,66.0"/><polyline points="136.0,82.0 180.0,96.0 202.0,126.0"/><polyline points="132.0,92.0 162.0,128.0 174.0,164.0"/></g><g stroke-width="2"><polyline points="108.0,62.0 75.4,32.2 55.4,16.2"/><polyline points="104.0,70.0 59.4,58.2 31.4,68.2"/><polyline points="104.0,82.0 57.4,98.2 35.4,128.2"/><polyline points="108.0,92.0 75.4,130.2 63.4,166.2"/><polyline points="132.0,62.0 164.6,32.2 184.6,16.2"/><polyline points="136.0,70.0 180.6,58.2 208.6,68.2"/><polyline points="136.0,82.0 182.6,98.2 204.6,128.2"/><polyline points="132.0,92.0 164.6,130.2 176.6,166.2"/></g></g>
+<ellipse cx="120" cy="114" rx="31" ry="38" fill="#141414"/>
+<circle cx="120" cy="66" r="19" fill="#141414"/>
+<g fill="none" stroke="#ffb547" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="114,103 104,115 114,127"/><polyline points="126,103 136,115 126,127"/></g>
+</g></g>
+</svg>

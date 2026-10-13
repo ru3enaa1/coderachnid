@@ -5,6 +5,7 @@
 #   - `description` is present and long enough to trigger reliably
 #   - the file stays short (detail belongs in references/)
 #   - every `references/x.md` or `templates/x` path mentioned in the skill exists
+#   - the skill count shown in the README badge and the banners matches the folders
 # Exit code: 0 when all skills pass, 1 otherwise.
 set -u
 
@@ -38,6 +39,15 @@ for dir in "$ROOT"/skills/*/; do
 
   # Report "ok" only when this skill added no failure of its own.
   [ "$failures" -eq "$before" ] && echo "ok    $skill ($lines lines)"
+done
+
+# The README badge and the banners state how many skills ship; a stale number is a lie
+# on the front page. Regenerate the banners with `node assets/build-assets.mjs`.
+count="$(find "$ROOT/skills" -mindepth 2 -maxdepth 2 -name SKILL.md | wc -l | tr -d ' ')"
+grep -q "badge/skills-$count-" "$ROOT/README.md" || fail "README" "skills badge does not say $count"
+for banner in "$ROOT"/assets/banner-*.svg; do
+  [ -f "$banner" ] || { fail "assets" "no banner-*.svg found"; break; }
+  grep -q ">$count skills ·" "$banner" || fail "assets" "$(basename "$banner") does not say $count skills"
 done
 
 if [ "$failures" -gt 0 ]; then

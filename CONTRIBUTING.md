@@ -29,6 +29,9 @@ A pitfall or rule is accepted when it is:
 
 1. One topic per pull request.
 2. Update `CHANGELOG.md` under "Unreleased".
+   If you add or remove a skill, update the `skills` badge in `README.md` and run
+   `node assets/build-assets.mjs` to regenerate the banners. `check-skills.sh` fails
+   until both match.
 3. Explain how you checked that the skill activates for the intended task, and does not
    activate for an unrelated one.
 

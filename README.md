@@ -1,20 +1,56 @@
-# coderachnid
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo-dark.svg">
+    <img src="assets/logo-light.svg" width="220" alt="coderachnid: a hand-drawn spider sticker with an amber code bracket on its back">
+  </picture>
+</p>
 
-**A sixth sense for AI coding agents.**
+<h1 align="center">coderachnid</h1>
 
-A spider doesn't see every thread of its web. It *feels* them: the faintest vibration
-tells it where something is wrong, before anything breaks. coderachnid gives your coding
-agent that sense. It is a Claude Code plugin that loads hard-won engineering discipline
-exactly when it is needed: security designed in from the first line, precise code with
-no truncation or hidden assumptions, tests that can actually fail, database work that
-never touches the original, and a running log of every trap already paid for.
+<p align="center"><em>It feels the thread before it snaps.</em></p>
 
-## Why
+<p align="center">
+  <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fru3enaa1%2Fcoderachnid%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=3a3f47" alt="version">
+  <img src="https://img.shields.io/badge/skills-9-3a3f47" alt="skills: 9">
+  <img src="https://img.shields.io/badge/hooks-off%20by%20default-3a3f47" alt="hooks: off by default">
+  <img src="https://img.shields.io/badge/plugin-Claude%20Code-3a3f47" alt="plugin: Claude Code">
+  <img src="https://img.shields.io/badge/license-MIT-3a3f47" alt="license: MIT">
+</p>
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/banner-dark.svg">
+    <img src="assets/banner-light.svg" width="100%" alt="A spider web drawn over code, with one amber thread vibrating where the flaw is. Security from the first line, tests that can actually fail, data that never touches the original, phases done once and closed clean.">
+  </picture>
+</p>
+
+You know the loop. The agent writes three hundred lines and they run. Two days later you
+are back, spending prompts on the auth check it skipped, the test that could never fail,
+the migration that had no backup.
+
+coderachnid gives your agent the sense to feel those threads **before** it writes. Each
+phase is done once, done right, and closed with a short note on where your project
+stands and what comes next.
+
+## Built for tight budgets. Useful on any.
+
+It was shaped with the $20 plan in mind, where every do-over is a prompt you don't get
+back. The same discipline pays off on any plan.
+
+- **Right the first time.** Security, tests and data safety are part of writing the
+  code, not a review pass you pay for later.
+- **One pass per phase.** A phased plan with frozen scope, so the agent finishes a stage
+  before it starts the next one.
+- **A project that explains itself.** Every development response ends with five points:
+  the next phase, the keys of what was done, what to watch, the tests to run and the
+  recommended next step. After a break, you know exactly where you are.
+
+## Sifted, not dumped
 
 There's a joke about AI-built apps: they are like poorly sifted cement. Everything is
 dumped in at once, lumps and all, and when you press it into the mold it cracks and
-leaves holes. Code written by hand with discipline is like well-sifted cement: it
-spreads evenly and sets dense and solid.
+leaves holes. Code written with discipline is like well-sifted cement: it spreads evenly
+and sets dense and solid.
 
 The model is already intelligent. What it lacks is **memory of what went wrong before**
 and **the reflex to check instead of assume**. Every rule in this plugin was paid for in
@@ -22,7 +58,7 @@ a real project: a test that passed while the feature was broken, a backup that d
 restore, a process kill that took down another app, a "zero violations" report from a
 check that captured nothing.
 
-## The senses (skills)
+## The senses
 
 | Skill | Activates when | What it adds |
 |---|---|---|

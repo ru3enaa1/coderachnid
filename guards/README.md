@@ -5,7 +5,7 @@ protect this repository. Guards that projects can adopt are on the roadmap.
 
 | Guard | What it proves | Run |
 |---|---|---|
-| `check-skills.sh` | Every skill has valid frontmatter, a name matching its folder, a trigger-worthy description, a short body and no dangling `references/` or `templates/` paths | `bash guards/check-skills.sh` |
+| `check-skills.sh` | Every skill has valid frontmatter, a name matching its folder, a trigger-worthy description, a short body and no dangling `references/` or `templates/` paths; the skill count in the README badge and banners matches the folders | `bash guards/check-skills.sh` |
 | `check-private-terms.sh` | No private term (people, companies, paths, private repositories) appears in a publishable file | `bash guards/check-private-terms.sh` |
 
 `check-private-terms.sh` reads its list from `.private-terms` at the repository root. That
