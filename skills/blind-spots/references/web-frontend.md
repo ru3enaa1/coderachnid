@@ -16,6 +16,9 @@
   positions the same element differently.
 - Use design tokens for every color and size, with both themes defined. No inline
   `style=""` (CSP).
+- Don't copy fixed heights from a desktop mockup. A panel designed at 1440×900 runs off
+  a 1536×737 viewport (1080p at 125%). Use `min(<mockup height>, 100dvh − header −
+  footer)` and check at the real viewport.
 
 ## Accessibility and contrast
 
@@ -30,6 +33,11 @@
   looks broken without being broken. Use device emulation.
 - Headless Edge/Chrome won't take a screenshot when `--enable-logging` is on. Capture
   and log in separate runs.
+- Headless Edge/Chrome without its own `--user-data-dir` can hand off to the user's
+  running browser and return at once, with no screenshot. Pass a dedicated profile
+  folder and check that the output file exists. Confirmed 2026-10-13.
+- An SVG shown through `<img>` (a README, an `<img src>`) cannot load web fonts or run
+  scripts. Use a system font stack or convert the text to paths. Anticipated.
 - A scripted `focus()` doesn't trigger `:focus-visible` in a headless browser. Test it
   with real pointer and keyboard events.
 - `navigator.clipboard` doesn't exist without HTTPS (for example a phone on

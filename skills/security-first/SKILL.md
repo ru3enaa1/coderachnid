@@ -67,6 +67,8 @@ wish.**
 - [ ] No expression evaluator or input-driven reflection.
 - [ ] Any migration is non-destructive and tested from the previous version.
 - [ ] Network exposure unchanged (still loopback-only, if that is the design).
+- [ ] On a public repository, commits use a no-reply author email. Every commit stores
+      it, so a personal address is published with the first push.
 - [ ] Full build and test suite green, confirmed by the **exit code**.
 
 ## References

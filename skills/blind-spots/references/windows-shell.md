@@ -7,6 +7,8 @@
   `NativeCommandError` and sets `$?` to false **even when the build passed**. Trust
   `$LASTEXITCODE`, not the red text.
 - `Set-Content` defaults to the ANSI code page. Pass `-Encoding utf8` explicitly.
+- PowerShell splits `-Dkey=path/file.txt` at the dot, and Maven then reads `.txt` as a
+  build phase. Quote every `-D` argument that contains a dot.
 
 ## Processes
 
@@ -26,6 +28,9 @@
   project depends on.
 - Home folders with spaces (`C:\Users\First Last`) break unquoted paths in JVM
   `argLine`s, Java agents and scripts.
+- The Windows firewall drops packets silently. Connecting to a port that is not
+  listening on the LAN address **times out** instead of being refused, so a test that
+  proves "not reachable from the network" must accept both outcomes.
 
 ## Git Bash / MSYS
 

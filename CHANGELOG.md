@@ -17,5 +17,9 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 - README visual identity: sticker logo and banner (dark and light), tagline, honest
   badges, and a welcome aimed at budget-conscious users (D-008).
 - `assets/build-assets.mjs`, which regenerates the artwork deterministically.
+- Pitfalls harvested from real projects: no-reply commit email on public repositories,
+  YAML that loads with the wrong meaning, PowerShell splitting `-D` arguments, silent
+  firewall drops, fixed mockup heights, headless browser profiles, fonts in SVG images,
+  schema validation failing the whole test suite, and test data folders.
 - `check-skills.sh` now fails if the skill count in the README badge or the banners
   does not match the skill folders.

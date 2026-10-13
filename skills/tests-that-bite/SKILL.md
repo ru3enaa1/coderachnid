@@ -30,7 +30,8 @@ say a wrong line would be *noticed*.
 9. **Read the HTML to check what the user sees; read the database to check what was
    saved.** Mixing the two gives false positives.
 10. **Zero residue.** Each integration test uses its own temporary database or file.
-    There is no shared database to dirty (see `safe-database`).
+    There is no shared database to dirty (see `safe-database`). Tests point the app's
+    data folder inside the build output, never at the user's real one.
 11. **Never edit a test to match broken behavior, and never delete one to get green.**
 12. **A green build does not prove the app starts.** Start it and open it.
 

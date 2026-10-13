@@ -12,6 +12,9 @@
   domain event).
 - **Safe-update mode** in GUI clients rejects `UPDATE` without a key in `WHERE`
   (`WHERE id > 0`).
+- **With schema validation at startup, one unapplied migration fails every integration
+  test**, not only the ones for its module (`missing column ...`): the ORM checks the
+  whole schema when the context starts. Apply migrations before running the suite.
 - **The ORM validates column types, not only names.** A `SMALLINT` mapped as a 32-bit
   integer fails at startup. Declare the JDBC type explicitly.
 - **Flush order: the ORM runs INSERTs before UPDATEs.** "Close the open one, open a new

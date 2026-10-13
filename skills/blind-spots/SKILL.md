@@ -49,7 +49,7 @@ that has actually happened, and the check that would have caught it. When a row 
 | Template comments shipped to the browser | Never write in a comment what the page must not say |
 | Screenshot at a size the browser can't render (desktop windows have a minimum width) | Emulate the device. Check at the real scaled viewport (1920×1080 at 125% is 1536×737) |
 | Accents encoded as entities in attributes | Compare with what the engine really emits, or use a regex |
-| YAML with an unquoted `: ` inside a sentence | A test loads every data file |
+| YAML that loads but means something else: an unquoted `: ` in a sentence, a comma inside `{ }` or `[ ]`, `no`/`yes` read as booleans (YAML 1.1), a duplicate key silently overwriting | A test loads every data file with a loader that rejects duplicate keys |
 
 ## Stack references (load only the one you need)
 
