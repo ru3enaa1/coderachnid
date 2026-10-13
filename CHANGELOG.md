@@ -21,5 +21,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
   YAML that loads with the wrong meaning, PowerShell splitting `-D` arguments, silent
   firewall drops, fixed mockup heights, headless browser profiles, fonts in SVG images,
   schema validation failing the whole test suite, and test data folders.
+- Activation trial (F1): sample project, 18 prompts, a headless runner and the first
+  results, 18 of 18 passing (`evals/`, `docs/F1-TRIAL.md`).
 - `check-skills.sh` now fails if the skill count in the README badge or the banners
   does not match the skill folders.

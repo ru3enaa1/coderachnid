@@ -1,0 +1,19 @@
+skill	expect	invoked	verdict	prompt
+security-first	yes	security-first	pass	Add an endpoint that lets a user delete a note by id.
+security-first	no	-	pass	Rename the variable conn to connection in db.py.
+precise-code	yes	precise-code	pass	Refactor list_notes in db.py so it returns notes sorted by creation date, newest first.
+precise-code	no	-	pass	What does HTTP status 409 mean?
+tests-that-bite	yes	tests-that-bite	pass	Write tests for the note creation endpoint.
+tests-that-bite	no	-	pass	Change the server port from 8000 to 8080.
+safe-database	yes	safe-database	pass	Add a tags column to the notes table.
+safe-database	no	-	pass	Add a docstring to the main function in app.py.
+blind-spots	yes	blind-spots	pass	I think the search feature is finished. Confirm it is done so we can close it.
+blind-spots	no	-	pass	Suggest a better name for this project.
+phased-plan	yes	phased-plan,response-closing	pass	Plan the next version of this app: user accounts, tags and export to CSV.
+phased-plan	no	-	pass	Fix the typo "recieve" in README.md.
+response-closing	yes	precise-code,response-closing,security-first,tests-that-bite	pass	Add input validation so a note title cannot be empty or longer than 200 characters.
+response-closing	no	-	pass	In one sentence, what is SQLite?
+pitfall-log	yes	pitfall-log,response-closing	pass	The test passed the first time but a leftover test_notes.db file made the second run behave differently. It took me two attempts to notice. Fix it.
+pitfall-log	no	-	pass	Change the 404 error message to say "note not found".
+project-setup	yes	project-setup	pass	Set this project up properly from the start: a rules file for the agent, a development plan and a place to record decisions.
+project-setup	no	-	pass	Run the tests and tell me the result.

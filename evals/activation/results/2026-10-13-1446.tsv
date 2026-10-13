@@ -1,0 +1,3 @@
+skill	expect	invoked	verdict	prompt
+safe-database	yes	safe-database	pass	Add a tags column to the notes table.
+safe-database	no	-	pass	Add a docstring to the main function in app.py.
