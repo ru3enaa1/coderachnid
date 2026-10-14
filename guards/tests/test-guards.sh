@@ -179,6 +179,61 @@ expect 2 "no file matches: nothing was checked" run_lf "$d" '*.svg'
 d="$WORK/lf-nogit"; mkdir -p "$d"; printf 'x\n' > "$d/a.txt"
 expect 2 "not a git repository" run_lf "$d" '*.txt'
 
+# ---- templates/guards/run-checked.sh ---------------------------------------------
+
+RC="$TEMPLATES/run-checked.sh"
+echo
+echo "run-checked.sh (project template)"
+expect 0 "passing command exits 0" bash "$RC" -- bash -c 'echo built; exit 0'
+expect 3 "failing command keeps its own exit code" bash "$RC" -- bash -c 'echo broken; exit 3'
+expect 0 "stderr reaches the shown output" bash -c "bash '$RC' -- bash -c 'echo trace-on-stderr >&2; exit 4' | grep -q trace-on-stderr"
+expect 127 "missing command reports 127" bash "$RC" -- no-such-command-coderachnid
+expect 2 "no command is a usage error" bash "$RC" --
+expect 2 "non-numeric --tail is a usage error" bash "$RC" --tail many -- true
+
+# ---- templates/guards/backup-before-migrate.sh -----------------------------------
+
+BK="$TEMPLATES/backup-before-migrate.sh"
+native() { if command -v cygpath > /dev/null 2>&1; then cygpath -w "$1"; else printf '%s' "$1"; fi; }
+PY=""
+for candidate in python3 python; do
+  if "$candidate" -c "import sqlite3" > /dev/null 2>&1; then PY="$candidate"; break; fi
+done
+
+echo
+echo "backup-before-migrate.sh (project template)"
+b="$WORK/backup"; mkdir -p "$b/data"
+if [ -n "$PY" ]; then
+  # A WAL-mode database with rows, created the way an app would.
+  "$PY" -c "import sqlite3, sys; c = sqlite3.connect(sys.argv[1]); c.execute('PRAGMA journal_mode=WAL'); c.execute('CREATE TABLE notes (id INTEGER PRIMARY KEY, title TEXT)'); c.executemany('INSERT INTO notes (title) VALUES (?)', [('a',), ('b',), ('c',)]); c.commit()" "$(native "$b/data/notes.db")"
+  expect 0 "sqlite: backup taken and verified" bash "$BK" sqlite "$b/data/notes.db" "$b/root" add-tags
+  expect 0 "sqlite: backup file written under a dated folder" bash -c "find '$b/root' -path '*-add-tags/notes.db' | grep -q ."
+  echo "not a database" > "$b/data/fake.db"
+  expect 1 "sqlite: a file that is not a database fails" bash "$BK" sqlite "$b/data/fake.db" "$b/root" fake
+else
+  echo "skip  sqlite cases: no python with sqlite3"
+fi
+expect 2 "sqlite: missing database file" bash "$BK" sqlite "$b/data/none.db" "$b/root" missing
+expect 2 "unknown engine is a usage error" bash "$BK" oracle shop "$b/root"
+
+# A stand-in for mysqldump: no server is needed to test what the guard does with a
+# good dump, a failed one and one cut short.
+mkdir -p "$b/bin"
+cat > "$b/bin/mysqldump" <<'STUB'
+#!/usr/bin/env bash
+case "${STUB_MODE:-ok}" in
+  ok) echo "CREATE TABLE notes (id INT);"; echo "-- Dump completed on 2026-10-14 12:00:00" ;;
+  fail) echo "mysqldump: Got error: 2003: Can't connect" >&2; exit 2 ;;
+  truncated) echo "CREATE TABLE notes (id INT);"; echo "INSERT INTO notes VALUES (1" ;;
+esac
+STUB
+chmod +x "$b/bin/mysqldump"
+expect 0 "mysql: complete dump is verified" env STUB_MODE=ok PATH="$b/bin:$PATH" bash "$BK" mysql shop "$b/root" ok
+expect 1 "mysql: mysqldump error fails" env STUB_MODE=fail PATH="$b/bin:$PATH" bash "$BK" mysql shop "$b/root" fail
+expect 1 "mysql: dump cut short fails" env STUB_MODE=truncated PATH="$b/bin:$PATH" bash "$BK" mysql shop "$b/root" cut
+expect 2 "mysql: --password= on the command line is refused" env PATH="$b/bin:$PATH" bash "$BK" mysql shop "$b/root" pw1 -- --password=secret
+expect 2 "mysql: -p<password> on the command line is refused" env PATH="$b/bin:$PATH" bash "$BK" mysql shop "$b/root" pw2 -- -psecret
+
 echo
 echo "$pass passed, $fail failed"
 [ "$fail" -eq 0 ]

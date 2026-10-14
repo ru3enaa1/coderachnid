@@ -58,11 +58,12 @@ projects and generalized.
   (4 of 4). Merged to `main` and pushed.
 - **2026-10-13 · Last activation gaps closed.** `security-first` in Spanish 4/4,
   `tests-that-bite` writes the test before the fix (with 1.00, without 0.50).
-- **2026-10-13 · F3 guard hardening** (branch `feat/f3-guard-hardening`).
-  `guards/tests/test-guards.sh`: 31 positive controls, one known-bad fixture per rule of
-  every guard; it fails when a guard is broken. Project guards ship as `project-setup`
-  templates (`check-forbidden-phrases.sh`, `check-line-endings.sh`, D-010). The suite
-  caught a real bug: Git for Windows' grep can't see CRLF.
+- **2026-10-14 · F3 guard hardening closed.** `guards/tests/test-guards.sh`: 47
+  positive controls, one known-bad fixture per rule of every guard; it fails when a
+  guard is broken. Four project guards ship as `project-setup` templates (D-010):
+  forbidden phrases, line endings, `run-checked.sh` and `backup-before-migrate.sh`
+  (SQLite and MySQL; MySQL against a real server still anticipated). The suite caught a
+  real bug: Git for Windows' grep can't see CRLF.
 
 ## 3. Structure
 

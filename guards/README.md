@@ -23,6 +23,12 @@ Shipped as templates of the `project-setup` skill, in
 |---|---|---|
 | `check-forbidden-phrases.sh` | No phrase from a list (promises the product must never make) appears in user-facing text | `bash guards/check-forbidden-phrases.sh <list> <path>...` |
 | `check-line-endings.sh` | Byte-compared files are pinned to LF in `.gitattributes` and have no CRLF on disk | `bash guards/check-line-endings.sh '<pathspec>'...` |
+| `run-checked.sh` | A build or test command's real exit code, not the one a pipe or a red console reports | `bash guards/run-checked.sh -- <command>` |
+| `backup-before-migrate.sh` | A verified backup exists before a migration runs: SQLite (online backup API, integrity check, row counts) or MySQL (`mysqldump --single-transaction`, complete dump, no password on the command line) | `bash guards/backup-before-migrate.sh sqlite\|mysql <db> <backup-root> <reason> && <migrate>` |
+
+The MySQL path is tested against a stand-in `mysqldump` (good, failed and truncated
+dumps). Running it against a real server is still **anticipated**: confirm it on the
+first project that uses it.
 
 ## Exit codes
 
@@ -49,6 +55,5 @@ reported a CRLF file as clean.
 
 ## Roadmap
 
-- Adoptable guards still to come: a build wrapper that reports the real exit code, and
-  a backup-before-migrate script.
+- Backups for PostgreSQL (`pg_dump`), with the F5 stack references.
 - Optional, opt-in hooks that call these guards. Off by default (see `docs/DECISIONS.md`, D-004).

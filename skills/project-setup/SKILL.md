@@ -32,6 +32,10 @@ contributor) finds the rules, the plan and the history in the same places.
      make in user-facing text, with the list in a file that grows with each review.
    - `check-line-endings.sh '<pathspec>'...` for golden and generated files compared
      byte for byte: pinned to LF in `.gitattributes` and no CRLF on disk.
+   - `run-checked.sh -- <build or test command>` to read the command's real exit code
+     instead of the one a pipe or a red console reports.
+   - `backup-before-migrate.sh sqlite|mysql <db> database/backups <reason>`, chained
+     before the migration command, so a migration only runs after a verified backup.
    Run each one once against a planted violation before trusting its "clean".
 6. **Close with the response block** (see `response-closing`), with F0 as the next phase.
 

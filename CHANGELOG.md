@@ -31,9 +31,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
   data, wildcard bug, closing with a project rule. The plugin wins where the base model
   skips a safeguard (Δ +1.00, +0.50, +0.33).
 - README: the line to add to `CLAUDE.md` for a closing on every reply.
-- Positive-control suite for every guard (`guards/tests/test-guards.sh`, 31 checks).
-- Project guards as `project-setup` templates: `check-forbidden-phrases.sh` and
-  `check-line-endings.sh` (D-010).
+- Positive-control suite for every guard (`guards/tests/test-guards.sh`, 47 checks).
+- Project guards as `project-setup` templates (D-010): `check-forbidden-phrases.sh`,
+  `check-line-endings.sh`, `run-checked.sh` (real exit code of a build) and
+  `backup-before-migrate.sh` (verified SQLite or MySQL backup before a migration).
 - Pitfall: Git for Windows' grep strips the carriage return before matching.
 - `check-skills.sh` now fails if the skill count in the README badge or the banners
   does not match the skill folders.

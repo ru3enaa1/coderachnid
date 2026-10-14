@@ -52,6 +52,10 @@
 - Windows Python cannot see Git Bash's `/tmp`. Convert paths with `cygpath -w`.
 - Tools installed for Windows (Node, Docker) may be missing from Git Bash's `PATH` in
   agent sessions. Prepend their install folder explicitly.
+- A tool shipped inside an editor extension lives in a versioned folder
+  (`.../extension-2.1.296/...`) that disappears on the next auto-update. Find it with a
+  glob each time, and make "tool not found" fail loudly: a check piped into `grep` that
+  can't start prints nothing, which reads like a pass. Confirmed 2026-10-14.
 
 ## Line endings
 
