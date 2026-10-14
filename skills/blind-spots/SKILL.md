@@ -1,6 +1,6 @@
 ---
 name: blind-spots
-description: Use before saying work is done, ready, safe to ship, merge or release, or that it looks right; when copying code between projects or library versions, running build or shell commands, killing processes, taking screenshots or trusting a self-reported metric. Lists the blind spots AI coding agents repeatedly fall into and the concrete check that exposes each one.
+description: Use when editing or reviewing CSS or page layout (an element covering another, spacing, fixed or sticky parts), server templates (Thymeleaf, HTMX), build files or shell scripts; before saying work is done, ready, safe to ship, merge or release, or that it looks right; when copying code between projects or library versions, running build or shell commands, killing processes, taking screenshots or trusting a self-reported metric. Lists the blind spots AI coding agents repeatedly fall into and the concrete check that exposes each one.
 ---
 
 # Blind spots
