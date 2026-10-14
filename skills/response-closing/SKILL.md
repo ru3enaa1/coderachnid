@@ -1,6 +1,6 @@
 ---
 name: response-closing
-description: Use at the end of every response during development work. Closes with a five-point block covering next phase, keys, watch-outs, recommended tests and recommended implementation, so the human always knows where the work stands and what to do next.
+description: Use for every development task (writing or changing code, tests, configuration, data or plans): load it when the task starts, and end the final reply with a five-point block covering next phase, keys, watch-outs, recommended tests and recommended implementation, so the human always knows where the work stands and what to do next. Skip it for quick factual answers.
 ---
 
 # Response closing
@@ -32,6 +32,13 @@ into a workflow: the human can read only the block and still know where things s
 
 Skip it only for replies that are not development work (a quick factual answer, a
 greeting), or when the project's rules say otherwise.
+
+## Make it reliable
+
+**Put the closing rule in the project rules file.** Skills are chosen per task, so this
+one loads on some development replies and not on others (measured in F2). A line in
+`CLAUDE.md` is read on every turn. `project-setup` adds that line; this skill holds the
+format it points to.
 
 ## Example
 

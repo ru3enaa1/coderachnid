@@ -3,7 +3,46 @@
 Checks that the skills do their job in a real Claude Code session. Guards prove the
 files are well formed; evals prove the agent actually uses them.
 
-## Activation (F1)
+## Eval suite (F2): `claude plugin eval`
+
+From F2 on, evals use Claude Code's built-in runner. Cases live in `evals/cases/`, one
+directory per case with a `case.yaml` and a `fixture.sh` that copies the sample project
+from `activation/sandbox/` into the run's empty workspace.
+
+| Group | What it checks | Graders |
+|---|---|---|
+| `cases/activation/<skill>-fires-<lang>` | The skill activates on another phrasing, in English and in Spanish | `tool_used: Skill` |
+| `cases/activation/<skill>-quiet-es` | The skill stays out of an unrelated request in Spanish | `tool_used: Skill`, `min: 0`, `max: 0` |
+| `cases/compliance/*` | Once loaded, the skill changes the result, measured against a no-plugin baseline | `regex` on files or the reply, `llm` rubric, plus a skill indicator |
+
+```sh
+claude plugin eval . --tag activation --ablation none --scaffold --trust-plugin --no-publish -j 2
+claude plugin eval . --tag compliance --scaffold --trust-plugin --no-publish --allow-tools Edit Write
+```
+
+- `--scaffold` runs the case's `fixture.sh`. The scripts are ours and only copy files.
+- Activation runs one arm (`--ablation none`): a "skill fired" check means nothing
+  without the plugin. Compliance runs both arms, and `Δ` is what the plugin added.
+- Grant `Edit` and `Write` for compliance cases. Never grant `Bash` on native Windows:
+  there is no sandbox backend, so such runs are refused.
+- The Spanish prompts are test data: they check activation for non-English users.
+- Raw output goes to `evals/results/` (git-ignored). Summaries go to `docs/F2-EVALUATION.md`.
+- Every run is a real session; the CLI prints its cost. Bound a run with `--max-cost-usd`.
+
+### Traps found while building the suite
+
+- **Positive-control every grader** against a bad and a fixed version before trusting
+  it. The first SQL-concatenation regex also matched the safe fix and failed every run.
+- **A batch can hit the plan's usage limit midway.** Later runs end with a "session
+  limit" error and score 0, which looks like a regression. Read each run's error, then
+  rerun only those cases after the reset.
+- **Repeating `--case` keeps only the last one.** Use a glob or separate runs.
+- **Measure in isolation.** The F1 runner used the maintainer's own environment and
+  reported 18 of 18; the isolated suite with more phrasings found four weak skills.
+- `--keep-temp` keeps a run's workspace and trace for debugging. Read only `out/`,
+  never run git or tools inside it, and delete it afterwards.
+
+## Activation (F1, superseded by the suite above)
 
 Does each skill activate on the task it was written for, and stay quiet on an unrelated
 one? `activation/prompts.tsv` holds two prompts per skill: one that should trigger it

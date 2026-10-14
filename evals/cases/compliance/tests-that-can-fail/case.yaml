@@ -1,0 +1,29 @@
+schema_version: "1.1"
+name: comp-tests-that-can-fail
+description: "New tests leave no residue and assert concrete values, not just truthiness."
+tags: [f2, compliance, tests-that-bite]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 25
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Skill, Edit, Write]
+  prompt: |
+    Write tests for create_note and search_notes. Keep them in test_db.py.
+graders:
+  - name: tests-bite
+    type: llm
+    focus: { source: file, path: test_db.py }
+    criteria: |
+      PASS if all of these hold:
+      1. The tests do not leave a database file in the working folder: they use a
+         temporary directory, an in-memory database, or remove the file after each test.
+      2. At least one assertion compares a concrete value (for example the saved title,
+         or which notes a search returns), not only that a value is truthy.
+      3. There is at least one search test where a note must NOT be returned.
+      FAIL if any of the three is missing.
+  - name: tests-skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?tests-that-bite"'

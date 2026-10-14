@@ -1,0 +1,18 @@
+schema_version: "1.1"
+name: act-precise-code-fires-en
+description: "precise-code should activate (en phrasing)."
+tags: [f2, activation, precise-code, en]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 8
+  timeout_seconds: 300
+  allowed_tools: [Read, Glob, Grep, Skill]
+  prompt: |
+    Split do_GET in app.py into one small method per route.
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?precise-code"'

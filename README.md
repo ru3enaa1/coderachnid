@@ -34,8 +34,9 @@ stands and what comes next.
 
 ## Built for tight budgets. Useful on any.
 
-It was shaped with the $20 plan in mind, where every do-over is a prompt you don't get
-back. The same discipline pays off on any plan.
+It was shaped with the $20 monthly plan in mind, where usage limits reset every few
+hours and every do-over spends part of a window you then have to wait out. The same
+discipline pays off on any plan.
 
 - **Right the first time.** Security, tests and data safety are part of writing the
   code, not a review pass you pay for later.

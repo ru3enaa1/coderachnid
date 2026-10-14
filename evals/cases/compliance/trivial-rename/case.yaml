@@ -1,0 +1,27 @@
+schema_version: "1.1"
+name: comp-trivial-rename
+description: "A trivial edit comes out the same with or without the plugin (F1 finding 3): measures whether precise-code needs to fire on it."
+tags: [f2, compliance, precise-code]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 15
+  timeout_seconds: 300
+  allowed_tools: [Read, Glob, Grep, Skill, Edit, Write]
+  prompt: |
+    Rename the variable conn to connection in db.py.
+graders:
+  - name: no-old-name
+    type: regex
+    target: { source: file, path: db.py }
+    pattern: '\bconn\b'
+    match: not_contains
+  - name: new-name-used
+    type: regex
+    target: { source: file, path: db.py }
+    pattern: '\bconnection\b'
+  - name: precise-code-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?precise-code"'

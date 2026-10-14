@@ -44,7 +44,13 @@ projects and generalized.
   config), never a personal email.
 - **2026-10-13 · F1 activation trial: 18 of 18.** Every skill fired on its task and
   on no unrelated one (one sample each, English, edit tools disabled). Findings and
-  open items for F2 in `docs/F1-TRIAL.md`. Branch `feat/f1-local-trial`, not merged.
+  open items for F2 in `docs/F1-TRIAL.md`. Merged to `main` and pushed.
+- **2026-10-13 · F2 evaluation done** (branch `feat/f2-evaluation`). `claude plugin
+  eval` suite: activation in English and Spanish, compliance against a no-plugin
+  baseline. Four descriptions tuned, one reverted, no false positives. **Key finding:
+  on four small tasks the base model already did the right thing and the plugin cost
+  34% more; its value on harder tasks is still unproven.** Report:
+  `docs/F2-EVALUATION.md`. D-009: always-on behavior lives in the rules file.
 
 ## 3. Structure
 
@@ -56,7 +62,7 @@ skills/project-setup/templates/   CLAUDE.template.md, DEVELOPMENT_PLAN.md, ADR.m
 guards/                           scripts that verify (the third layer)
 docs/DECISIONS.md                 why the plugin is shaped this way
 assets/                           README artwork; edit build-assets.mjs, never the SVGs
-evals/                            activation trial (F1) and, later, compliance evals (F2)
+evals/                            `claude plugin eval` suite (cases/), F1 trial (activation/)
 ```
 
 The rules template is named `CLAUDE.template.md`, never `CLAUDE.md`: Claude Code loads
@@ -91,9 +97,12 @@ bash guards/check-private-terms.sh; echo $?   # privacy (needs local .private-te
 claude --plugin-dir "<path to this repo>"     # try the plugin without installing
 claude plugin validate .                      # validate the manifests
 node assets/build-assets.mjs                  # regenerate logo and banners
-bash evals/activation/setup-sandbox.sh <dir>  # throwaway sample project (outside the repo)
-CLAUDE_BIN="<claude>" bash evals/activation/run.sh <dir> [skill]   # activation trial
+claude plugin eval . --tag activation --ablation none --scaffold --trust-plugin --no-publish -j 2
+claude plugin eval . --tag compliance --scaffold --trust-plugin --no-publish --allow-tools Edit Write
 ```
+
+Every eval run is a real session on the maintainer's plan: filter with `--case` or
+`--tag`, and check run errors for the usage limit before trusting a score.
 
 Publishing (with the maintainer's explicit go-ahead; the repo is already public):
 

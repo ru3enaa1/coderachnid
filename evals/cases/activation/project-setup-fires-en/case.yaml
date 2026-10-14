@@ -1,0 +1,18 @@
+schema_version: "1.1"
+name: act-project-setup-fires-en
+description: "project-setup should activate (en phrasing)."
+tags: [f2, activation, project-setup, en]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 8
+  timeout_seconds: 300
+  allowed_tools: [Read, Glob, Grep, Skill]
+  prompt: |
+    I'm restarting this project the right way. Give it a base structure: rules for the agent, a plan and a decisions log.
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?project-setup"'
