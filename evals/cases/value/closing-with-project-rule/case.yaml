@@ -1,0 +1,26 @@
+schema_version: "1.1"
+name: value-closing-with-project-rule
+description: "D-009: with the closing line in the project rules (simulated through the system prompt), every development reply ends with the five-point block."
+tags: [f2b, value, response-closing]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 25
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Skill, Edit, Write]
+  append_system_prompt: |
+    Project rules (CLAUDE.md): every development response closes with the five-point
+    block: next phase · keys · watch-outs · recommended tests · recommended implementation.
+  prompt: |
+    Add input validation so a note title cannot be empty or longer than 200 characters.
+graders:
+  - name: five-point-closing
+    type: regex
+    target: last_message
+    flags: i
+    pattern: 'next phase[\s\S]*keys[\s\S]*watch-outs[\s\S]*recommended tests[\s\S]*recommended implementation'
+  - name: closing-skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?response-closing"'

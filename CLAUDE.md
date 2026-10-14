@@ -49,8 +49,13 @@ projects and generalized.
   eval` suite: activation in English and Spanish, compliance against a no-plugin
   baseline. Four descriptions tuned, one reverted, no false positives. **Key finding:
   on four small tasks the base model already did the right thing and the plugin cost
-  34% more; its value on harder tasks is still unproven.** Report:
-  `docs/F2-EVALUATION.md`. D-009: always-on behavior lives in the rules file.
+  34% more.** Report: `docs/F2-EVALUATION.md`. D-009: always-on behavior lives in
+  the rules file. Merged to `main` and pushed.
+- **2026-10-13 · F2b value** (branch `feat/f2b-value`). On tasks with a hidden trap the
+  plugin adds the safeguard the base model skips: import size limit (Δ +1.00), backup
+  before a schema change (+0.50), regression test (+0.33), at about 70 to 100% more
+  tokens for that task. The closing is reliable once its line is in the rules file
+  (4 of 4). Open: `tests-that-bite` on bug reports, `security-first` in Spanish.
 
 ## 3. Structure
 

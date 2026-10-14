@@ -99,6 +99,15 @@ The skills activate on their own when the task matches their description. You ca
 ask for one by name ("use safe-database before this migration"). To give a new project
 the full structure, ask for **project-setup**.
 
+Skills load per task, so for the five-point closing on **every** reply, add this line to
+your project's `CLAUDE.md`, or to `~/.claude/CLAUDE.md` for all your projects
+(`project-setup` adds it for you):
+
+```markdown
+Every development response closes with the five-point block: next phase · keys ·
+watch-outs · recommended tests · recommended implementation.
+```
+
 ## Design principles
 
 1. **Three layers.** *Senses* (skills) say what to do and why. *Guards* (tests, scripts,

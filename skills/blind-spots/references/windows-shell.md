@@ -37,7 +37,9 @@
 - Arguments containing `=/` get rewritten as Windows paths (`x=/` becomes
   `x=C:/Program Files/Git/`). Prefix the command with `MSYS_NO_PATHCONV=1`.
 - Heredocs and `sed` can eat backslashes: `\d` loses its slash and `\v` becomes a vertical
-  tab. Write code, regexes and Windows paths with a file-editing tool.
+  tab. Write code, regexes and Windows paths with a file-editing tool. A heredoc turned
+  `[\\/]` into `[\/]` in a YAML file, a class that never matches a Windows path, and
+  inline code (`node -e`) lost the backslashes of a regex. Confirmed again 2026-10-13.
 - **Git for Windows ships GNU grep 3.0, which aborts (exit 134) on `-i` combined with
   more than one pattern** (`-f file` or several `-e`). Inside a loop, that abort looks
   like "no match", so a privacy or lint check passes without checking anything. Lowercase

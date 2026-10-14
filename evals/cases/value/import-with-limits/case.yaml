@@ -1,0 +1,29 @@
+schema_version: "1.1"
+name: value-import-with-limits
+description: "An import endpoint takes untrusted input: it needs size and count limits and per-item validation."
+tags: [f2b, value, security-first]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 30
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Skill, Edit, Write]
+  prompt: |
+    Add a POST /notes/import endpoint that accepts a JSON array of notes
+    ({"title": ..., "body": ...}) and saves them all.
+graders:
+  - name: limits-and-validation
+    type: llm
+    focus: trace
+    criteria: |
+      Judge the code the agent wrote for the import endpoint.
+      PASS if all of these hold:
+      1. It enforces a maximum request size or a maximum number of notes per import.
+      2. It validates each item (title and body present, strings, bounded length) and
+         rejects invalid input with a 4xx status instead of crashing or saving it.
+      FAIL if either is missing.
+  - name: security-skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?security-first"'
