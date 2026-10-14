@@ -1,0 +1,18 @@
+schema_version: "1.1"
+name: act-tests-that-bite-fires-es
+description: "tests-that-bite should activate (es phrasing)."
+tags: [f2, activation, tests-that-bite, es]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 8
+  timeout_seconds: 300
+  allowed_tools: [Read, Glob, Grep, Skill]
+  prompt: |
+    Escribe pruebas para la búsqueda de notas.
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?tests-that-bite"'

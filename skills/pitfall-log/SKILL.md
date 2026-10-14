@@ -1,6 +1,6 @@
 ---
 name: pitfall-log
-description: Use whenever something fails in a surprising way, a test passes for the wrong reason, a tool or framework behaves unexpectedly, or a fix took more than one attempt. Records the lesson as a dated pitfall with symptom, cause, rule and the check that now catches it, so the same mistake is never paid for twice.
+description: Use while debugging anything that behaved unexpectedly, and right after the fix: a flaky or order-dependent test, a failure that only happens on another machine, time zone or environment, a test that passed for the wrong reason, a tool or framework surprise, or a bug the user says they already tried to fix. Records the lesson as a dated pitfall with symptom, cause, rule and the check that now catches it, so the same mistake is never paid for twice.
 ---
 
 # Pitfall log

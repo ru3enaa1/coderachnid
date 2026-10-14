@@ -1,0 +1,18 @@
+schema_version: "1.1"
+name: act-blind-spots-fires-en
+description: "blind-spots should activate (en phrasing)."
+tags: [f2, activation, blind-spots, en]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 8
+  timeout_seconds: 300
+  allowed_tools: [Read, Glob, Grep, Skill]
+  prompt: |
+    The code looks right to me, so we're good to ship this, right?
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?blind-spots"'

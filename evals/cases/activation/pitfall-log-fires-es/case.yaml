@@ -1,0 +1,18 @@
+schema_version: "1.1"
+name: act-pitfall-log-fires-es
+description: "pitfall-log should activate (es phrasing)."
+tags: [f2, activation, pitfall-log, es]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 8
+  timeout_seconds: 300
+  allowed_tools: [Read, Glob, Grep, Skill]
+  prompt: |
+    La prueba pasó en mi máquina pero falló en la de un compañero por la zona horaria. Ya intenté arreglarlo dos veces. Revísalo.
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?pitfall-log"'

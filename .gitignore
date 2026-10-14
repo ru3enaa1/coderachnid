@@ -11,3 +11,6 @@ CLAUDE.local.md
 Thumbs.db
 .vscode/
 .idea/
+
+# Eval run output (summaries are recorded in docs/)
+evals/results/

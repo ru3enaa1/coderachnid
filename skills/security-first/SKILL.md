@@ -1,6 +1,6 @@
 ---
 name: security-first
-description: Use at the start of every phase, feature or endpoint, and before every commit. Applies threat modeling, trust boundaries, input validation, secret handling, safe logging and a pre-commit security checklist so security is designed in, not bolted on at the end.
+description: Use whenever code touches untrusted input or sensitive data: adding or changing an endpoint, route, form, file upload, import, query, authentication, session or permission, secrets or personal data; at the start of each phase; and before every commit. Applies threat modeling, trust boundaries, input validation, secret handling, safe logging and a pre-commit security checklist so security is designed in, not bolted on at the end.
 ---
 
 # Security first

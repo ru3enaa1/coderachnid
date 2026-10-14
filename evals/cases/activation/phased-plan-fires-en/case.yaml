@@ -1,0 +1,18 @@
+schema_version: "1.1"
+name: act-phased-plan-fires-en
+description: "phased-plan should activate (en phrasing)."
+tags: [f2, activation, phased-plan, en]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 8
+  timeout_seconds: 300
+  allowed_tools: [Read, Glob, Grep, Skill]
+  prompt: |
+    Break the roadmap for this app into phases: auth, sharing notes and a mobile client.
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?phased-plan"'
