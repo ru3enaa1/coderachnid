@@ -35,7 +35,11 @@
 ## Git Bash / MSYS
 
 - Arguments containing `=/` get rewritten as Windows paths (`x=/` becomes
-  `x=C:/Program Files/Git/`). Prefix the command with `MSYS_NO_PATHCONV=1`.
+  `x=C:/Program Files/Git/`), and so does a leading `/`: `claude -p "/output-style"`
+  arrived as `C:/Program Files/Git/output-style`. Prefix **that one command** with
+  `MSYS_NO_PATHCONV=1`. Never export it for a whole script: it also stops the conversion
+  other tools need, and `git -C "/c/Users/..."` then fails, so a reset step silently
+  did nothing. Confirmed 2026-10-14.
 - Heredocs and `sed` can eat backslashes: `\d` loses its slash and `\v` becomes a vertical
   tab. Write code, regexes and Windows paths with a file-editing tool. A heredoc turned
   `[\\/]` into `[\/]` in a YAML file, a class that never matches a Windows path, and

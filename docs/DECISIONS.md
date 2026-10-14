@@ -73,3 +73,14 @@ every guard has one in `guards/tests/test-guards.sh`. The suite caught a real bu
 first run (a line-ending check that could never see CRLF on Windows). Guards meant for
 other projects live in `skills/project-setup/templates/guards/`, so the skill that sets
 up a project can copy them and `check-skills.sh` verifies the paths it mentions exist.
+
+## D-011 · The closing ships as an opt-in output style (2026-10-14)
+
+D-009 put always-on behavior in the rules file, which meant one line in every project.
+A plugin can ship output styles, and `keep-coding-instructions: true` keeps Claude Code's
+default instructions while the style adds only its own. `coderachnid:closing` adds the
+five-point block and nothing else. Users select it once, per project or in
+`~/.claude/settings.json`; it is not forced (`force-for-plugin` stays off), so it never
+overrides a style the user chose. The `CLAUDE.md` line remains for those who prefer it.
+Evidence: three headless runs with the style selected. An English task and a Spanish task
+ended with the block (labels translated), and a one-line question did not get it.
