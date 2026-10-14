@@ -37,6 +37,11 @@ claude plugin eval . --tag compliance --scaffold --trust-plugin --no-publish --a
   limit" error and score 0, which looks like a regression. Read each run's error, then
   rerun only those cases after the reset.
 - **Repeating `--case` keeps only the last one.** Use a glob or separate runs.
+- **A loaded skill's text is part of the trace.** A `regex` on `target: trace` for
+  "backup" passes in every with-plugin run, because `safe-database` says "backup".
+  Match only what the agent wrote: `'"name":"(?:Edit|Write)"[^\n]*<pattern>'`.
+- **Write grader patterns with a file tool, never a shell heredoc.** On Windows the
+  heredoc turned `[\\/]` into `[\/]`, a class that can never match a Windows path.
 - **Measure in isolation.** The F1 runner used the maintainer's own environment and
   reported 18 of 18; the isolated suite with more phrasings found four weak skills.
 - `--keep-temp` keeps a run's workspace and trace for debugging. Read only `out/`,

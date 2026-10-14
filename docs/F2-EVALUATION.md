@@ -84,9 +84,41 @@ About 15 USD at API prices across all runs (activation, compliance, diagnostics 
 reruns). On a subscription it comes out of the plan's usage window, and this phase hit
 the session limit once.
 
+## F2b · Value on harder tasks
+
+Finding 1 asked for tasks where the base model is expected to fail. Four cases, 2 runs
+per arm, with `Edit` and `Write` (`evals/cases/value/`). Every grader pattern was first
+checked against the agent's own edit and against a decoy (a loaded skill's text is in
+the trace too).
+
+| Case | With | Without | Δ | Cost with plugin |
+|---|---|---|---|---|
+| Import notes from JSON: size or count limit, per-item validation | **1.00** | 0.00 | **+1.00** | +107% |
+| Add a column to a database that already holds data: real `ALTER TABLE` and a backup | **1.00** | 0.50 | **+0.50** | +71% |
+| Wildcard bug in search: regression test written | **0.67** | 0.33 | **+0.33** | +69% |
+| Closing with the rule in the project rules file | 1.00 | 1.00 | 0 | +62% |
+
+- **Import:** without the plugin the endpoint checked types but read the whole body
+  with no size limit. With it, every run added a byte limit answered with 413, plus a
+  test for it. Checked in the code, not only by the judge (3 of 3 votes in every run).
+- **Schema change:** both arms altered the existing table; only the plugin arm backed
+  up the database first.
+- **Wildcard bug:** both arms escaped `%` and `_`; only the plugin arm added a
+  regression test. Neither wrote the test before the fix, and `tests-that-bite` did not
+  load: "fixing a bug" in its description was not enough. Open.
+- **Closing:** with the line in the rules file, all four runs closed with the five
+  points, with or without the plugin. That settles F1 finding 2 and confirms D-009.
+
+**Reading:** on small, well-specified tasks the plugin adds cost and nothing else. On
+tasks with a hidden trap (untrusted input, existing data, a regression) it adds the
+safeguard the base model skipped, at roughly 70 to 100% more tokens for that task. For
+a capped plan the trade is the cost of finding the same gap later, in another session.
+That later cost was not measured here.
+
 ## Status
 
 The F2 criterion is met: every skill was measured, and four descriptions were tuned on
-evidence (one tuning reverted). Open: the value of the plugin on harder tasks (finding
-1), Spanish activation of `security-first`, and repeating the tuned cases with more
-runs.
+evidence (one tuning reverted). F2b showed the value on harder tasks and made the
+closing reliable through the rules file. Open: `tests-that-bite` on bug reports
+(red-first), Spanish activation of `security-first`, trimming what each skill loads,
+and repeating the tuned cases with more runs.

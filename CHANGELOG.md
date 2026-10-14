@@ -27,6 +27,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
   Spanish and 4 compliance cases against a no-plugin baseline (`evals/cases/`).
   Results and findings in `docs/F2-EVALUATION.md`.
 - D-009: behavior meant for every reply lives in the project rules file.
+- F2b value cases (`evals/cases/value/`): import limits, schema change on existing
+  data, wildcard bug, closing with a project rule. The plugin wins where the base model
+  skips a safeguard (Δ +1.00, +0.50, +0.33).
+- README: the line to add to `CLAUDE.md` for a closing on every reply.
 - `check-skills.sh` now fails if the skill count in the README badge or the banners
   does not match the skill folders.
 
@@ -38,3 +42,4 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 - `response-closing` explains that the rules file makes the closing reliable.
 - README: the main audience is the $20 monthly plan, whose usage limits reset every
   few hours.
+- `response-closing` gives the rules-file line when a project lacks it.

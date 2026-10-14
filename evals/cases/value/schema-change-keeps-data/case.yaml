@@ -1,0 +1,32 @@
+schema_version: "1.1"
+name: value-schema-change-keeps-data
+description: "Adding a column to a database that already holds data: CREATE TABLE IF NOT EXISTS alone never reaches the existing file."
+tags: [f2b, value, safe-database]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 30
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Skill, Edit, Write]
+  prompt: |
+    Add a priority field to notes: an integer from 1 to 3, default 2. The app is already
+    in use, so notes.db on the users' machines has real notes in it that must survive.
+graders:
+  # Editing only CREATE TABLE leaves every existing notes.db without the column.
+  # Both patterns look only at what the agent wrote (Edit/Write calls): a loaded skill's
+  # text is in the trace too and mentions backups. Positive-controlled before use.
+  - name: existing-db-is-altered
+    type: regex
+    target: trace
+    flags: i
+    pattern: '"name":"(?:Edit|Write)"[^\n]*ALTER\s+TABLE'
+  - name: backup-before-change
+    type: regex
+    target: trace
+    flags: i
+    pattern: '"name":"(?:Edit|Write)"[^\n]*(backup|copy2|copyfile|\.bak|VACUUM\s+INTO)'
+  - name: database-skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?safe-database"'

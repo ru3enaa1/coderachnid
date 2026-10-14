@@ -1,0 +1,34 @@
+schema_version: "1.1"
+name: value-wildcard-bug-red-first
+description: "A bug is fixed red-first: the reproducing test is written before the fix."
+tags: [f2b, value, tests-that-bite]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 30
+  timeout_seconds: 900
+  allowed_tools: [Read, Glob, Grep, Skill, Edit, Write]
+  prompt: |
+    Bug report: searching for "100%" returns every note, and searching for "a_b" also
+    matches "axb". Fix it.
+graders:
+  - name: wildcards-escaped
+    type: regex
+    target: { source: file, path: db.py }
+    flags: i
+    pattern: 'ESCAPE'
+  - name: regression-test-written
+    type: regex
+    target: trace
+    pattern: '"name":"(?:Edit|Write)"[^\n]*test_\w*\.py[^\n]*(100%|a_b)'
+  # Red-first: the test file is edited before db.py. A backslash or slash right before
+  # "db.py" excludes test_db.py. Positive-controlled before use.
+  - name: test-before-fix
+    type: tool_order
+    before: { tool: Edit, input_match: 'test_\w*\.py' }
+    after: { tool: Edit, input_match: '[\\/]db\.py"' }
+  - name: tests-skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?tests-that-bite"'

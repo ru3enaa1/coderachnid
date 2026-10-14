@@ -40,6 +40,14 @@ one loads on some development replies and not on others (measured in F2). A line
 `CLAUDE.md` is read on every turn. `project-setup` adds that line; this skill holds the
 format it points to.
 
+**When this skill loads and the rules file has no closing line, say so** as a
+watch-out and give the line to add, so the next session doesn't depend on activation:
+
+```markdown
+Every development response closes with the five-point block: next phase · keys ·
+watch-outs · recommended tests · recommended implementation.
+```
+
 ## Example
 
 > **▸ Next phase:** F2, the import pipeline. It is unlocked by merging F1 into `main`.
