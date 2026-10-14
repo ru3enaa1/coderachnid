@@ -6,6 +6,12 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+### Added
+
+- Output style `coderachnid:closing`: Claude Code's default behavior plus the
+  five-point closing on every development reply, selected once with `/output-style`
+  or in settings (D-011).
+
 ## [0.1.0] - 2026-10-14
 
 First public release.

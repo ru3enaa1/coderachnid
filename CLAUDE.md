@@ -81,6 +81,7 @@ projects and generalized.
 .claude-plugin/marketplace.json   makes the repo installable with /plugin marketplace add
 skills/<name>/SKILL.md            one sense per folder; detail in references/
 skills/project-setup/templates/   CLAUDE.template.md, DEVELOPMENT_PLAN.md, ADR.md
+output-styles/                    coderachnid:closing, the opt-in five-point closing (D-011)
 guards/                           scripts that verify (the third layer)
 docs/DECISIONS.md                 why the plugin is shaped this way
 assets/                           README artwork; edit build-assets.mjs, never the SVGs

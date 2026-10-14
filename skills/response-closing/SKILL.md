@@ -35,13 +35,14 @@ greeting), or when the project's rules say otherwise.
 
 ## Make it reliable
 
-**Put the closing rule in the project rules file.** Skills are chosen per task, so this
-one loads on some development replies and not on others (measured in F2). A line in
-`CLAUDE.md` is read on every turn. `project-setup` adds that line; this skill holds the
-format it points to.
+**Make the closing always-on, not activation-dependent.** Skills are chosen per task, so
+this one loads on some development replies and not on others (measured in F2). Two
+things are read on every turn: the plugin's output style `coderachnid:closing`
+(selected with `/output-style`, or `outputStyle` in settings) and a line in `CLAUDE.md`,
+which `project-setup` adds. This skill holds the format both point to.
 
-**When this skill loads and the rules file has no closing line, say so** as a
-watch-out and give the line to add, so the next session doesn't depend on activation:
+**When this skill loads and neither is in place, say so** as a watch-out and recommend
+the output style, or give the line to add:
 
 ```markdown
 Every development response closes with the five-point block: next phase · keys ·

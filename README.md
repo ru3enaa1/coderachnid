@@ -99,9 +99,15 @@ The skills activate on their own when the task matches their description. You ca
 ask for one by name ("use safe-database before this migration"). To give a new project
 the full structure, ask for **project-setup**.
 
-Skills load per task, so for the five-point closing on **every** reply, add this line to
-your project's `CLAUDE.md`, or to `~/.claude/CLAUDE.md` for all your projects
-(`project-setup` adds it for you):
+Skills load per task, so the five-point closing on **every** development reply comes
+from the plugin's output style. It keeps Claude Code's default behavior and tone and adds
+only the closing. Select it once:
+
+- in a project: `/output-style coderachnid:closing`
+- in every project: `"outputStyle": "coderachnid:closing"` in `~/.claude/settings.json`
+
+Prefer not to change your output style? Add this line to the project's `CLAUDE.md`
+instead (`project-setup` adds it for you):
 
 ```markdown
 Every development response closes with the five-point block: next phase · keys ·
