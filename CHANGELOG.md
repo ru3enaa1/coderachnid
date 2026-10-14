@@ -6,11 +6,18 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-10-14
+
 ### Added
 
 - Output style `coderachnid:closing`: Claude Code's default behavior plus the
   five-point closing on every development reply, selected once with `/output-style`
-  or in settings (D-011).
+  or in settings (D-011). No project needs the `CLAUDE.md` line anymore.
+
+### Changed
+
+- `response-closing` recommends the output style first and the `CLAUDE.md` line second.
+- Pitfall: `MSYS_NO_PATHCONV=1` goes on one command, never exported for a script.
 
 ## [0.1.0] - 2026-10-14
 
@@ -63,5 +70,6 @@ First public release.
 - `security-first` names any endpoint, even one that edits a field; `tests-that-bite`
   leads with reported bugs and a failing test first.
 
-[Unreleased]: https://github.com/ru3enaa1/coderachnid/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/ru3enaa1/coderachnid/compare/v0.2.0...HEAD
+[0.2.0]: https://github.com/ru3enaa1/coderachnid/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/ru3enaa1/coderachnid/releases/tag/v0.1.0

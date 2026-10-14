@@ -12,7 +12,7 @@
       "name": "coderachnid",
       "source": "./",
       "description": "A sixth sense for AI coding agents: security-first design, precise code, tests that bite, safe database work, phased plans and a pitfall log distilled from real projects.",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "category": "development"
     }
   ]
