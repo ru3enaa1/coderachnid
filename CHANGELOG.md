@@ -6,6 +6,20 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-14
+
+### Changed
+
+- `blind-spots` now activates when editing or reviewing CSS and page layout, server
+  templates (Thymeleaf, HTMX), build files and shell scripts, not only before declaring
+  work done. Measured: 0 of 6 runs before, 6 of 6 after, with no regression on its
+  earlier cases and no false positive on its "should not" cases.
+
+### Added
+
+- Eval cases for templates and CSS, and `evals/activation/web-fixture.sh`, a sample
+  with a Thymeleaf template and a stylesheet.
+
 ## [0.2.0] - 2026-10-14
 
 ### Added
@@ -70,6 +84,7 @@ First public release.
 - `security-first` names any endpoint, even one that edits a field; `tests-that-bite`
   leads with reported bugs and a failing test first.
 
-[Unreleased]: https://github.com/ru3enaa1/coderachnid/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/ru3enaa1/coderachnid/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/ru3enaa1/coderachnid/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/ru3enaa1/coderachnid/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/ru3enaa1/coderachnid/releases/tag/v0.1.0

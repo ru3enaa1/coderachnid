@@ -1,0 +1,25 @@
+schema_version: "1.1"
+name: value-template-review
+description: "Reviewing a Thymeleaf template, the agent catches `<` inside a th:* attribute and suggests `lt` (v0.2.1)."
+tags: [f5, value, blind-spots]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 15
+  timeout_seconds: 600
+  allowed_tools: [Read, Glob, Grep, Skill]
+  prompt: |
+    Revisa la plantilla Thymeleaf templates/notes.html y dime si algo puede fallar al
+    renderizarla. No edites nada.
+graders:
+  # The fix for `<` inside a th:* attribute is Thymeleaf's `lt` operator. Matching the
+  # operator in backticks or quotes avoids counting the word "lt" in other contexts.
+  - name: suggests-lt-operator
+    type: regex
+    target: last_message
+    pattern: '[`"''( ]lt[`"'') ]'
+  - name: blind-spots-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?blind-spots"'

@@ -126,6 +126,30 @@ The red-first grader first checked only `Edit` and failed every run that created
 test file with `Write`. It now accepts either, and was checked against five traces
 (Write then fix, Edit then fix, fix then test, fix only, skill text) before use.
 
+## v0.2.1 · `blind-spots` on templates and CSS (2026-10-14)
+
+Found in real use: asked to review a Thymeleaf template, the agent never loaded
+`blind-spots`, although its references hold the template traps. Its description only
+named "before declaring work done" moments. New cases use a sample with a Thymeleaf
+template and a stylesheet (`evals/activation/web-fixture.sh`).
+
+| Case | Before | After first tuning | After second tuning |
+|---|---|---|---|
+| Review a Thymeleaf template (English) | 0/2 | 2/2 | **2/2** |
+| Review a Thymeleaf template (Spanish) | 0/2 | 2/2 | **2/2** |
+| Fix a CSS layout bug | 0/2 | 0/2 | **2/2** |
+| Earlier `blind-spots` cases (EN, ES) | 4/4 | 4/4 | **4/4** |
+| "Should not" cases (EN, ES) | 3/3 | 3/3 | **3/3** |
+
+The first tuning added templates and CSS to the middle of the description and fixed
+templates only. The second moved "CSS or page layout" to the front: the first triggers
+in a description weigh most.
+
+**Value, honestly:** on the template's trap (`<` inside a `th:if`, which needs `lt`),
+the base model also found it: 3 of 4 runs before the change and 4 of 4 after, with and
+without the plugin alike. The plugin now loads where its references apply; on this
+particular trap it added nothing the model didn't already know.
+
 ## Status
 
 The F2 criterion is met: every skill was measured, and four descriptions were tuned on
