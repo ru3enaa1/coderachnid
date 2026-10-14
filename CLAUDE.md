@@ -68,8 +68,11 @@ projects and generalized.
   (14 commits, no-reply address only, no private term, no secret). New
   `check-private-terms.sh --history` with positive controls (51 in total). Clean
   install from GitHub verified with an empty config folder: 0.1.0, 9 skills, 0 hooks.
-  CHANGELOG moved to 0.1.0. Checklist and record: `docs/RELEASING.md`. **Pending: the
-  maintainer's go-ahead to merge, push and tag `v0.1.0`.**
+  CHANGELOG moved to 0.1.0. Checklist and record: `docs/RELEASING.md`.
+- **2026-10-14 · v0.1.0 published.** F4 merged and pushed; the clean install was
+  repeated against the merged `main` (commit `82b2c89`) and passed; annotated tag
+  `v0.1.0` pushed. **Next: F5 · Grow** (stack references, PostgreSQL backups, trimming
+  what each skill loads, MySQL backup against a real server).
 
 ## 3. Structure
 
