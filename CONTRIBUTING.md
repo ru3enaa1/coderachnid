@@ -34,6 +34,9 @@ A pitfall or rule is accepted when it is:
    until both match.
 3. Explain how you checked that the skill activates for the intended task, and does not
    activate for an unrelated one.
+4. If you change or add a guard, add its known-bad fixture to
+   `guards/tests/test-guards.sh` and show the suite passing
+   (`bash guards/tests/test-guards.sh`).
 
 ## Versioning
 

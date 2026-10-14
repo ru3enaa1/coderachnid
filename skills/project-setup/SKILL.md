@@ -26,7 +26,13 @@ contributor) finds the rules, the plan and the history in the same places.
    rules file that was never run is a pitfall waiting to happen.
 5. **Set up the guards** for the stack: architecture test, coverage gate, exit-code
    check, `.gitattributes` with LF for byte-compared files, `.gitignore` for secrets,
-   backups and local data.
+   backups and local data. Ready-made guards in `templates/guards`, copied into the
+   project's own `guards/` folder:
+   - `check-forbidden-phrases.sh <list> <path>...` for promises the product must never
+     make in user-facing text, with the list in a file that grows with each review.
+   - `check-line-endings.sh '<pathspec>'...` for golden and generated files compared
+     byte for byte: pinned to LF in `.gitattributes` and no CRLF on disk.
+   Run each one once against a planted violation before trusting its "clean".
 6. **Close with the response block** (see `response-closing`), with F0 as the next phase.
 
 ## Rules

@@ -45,6 +45,10 @@
   like "no match", so a privacy or lint check passes without checking anything. Lowercase
   both sides and drop `-i`, treat any grep exit above 1 as an error, and run the check
   once against a planted term. Confirmed 2026-10-13.
+- **The same grep strips the carriage return at the end of each line before matching**,
+  so `grep $'\r'` never finds a CRLF file and a line-ending check reports "clean". Count
+  CRs with `tr -cd '\r' < file | wc -c` (or use `grep -U`), and prove the check on a
+  planted CRLF file. Confirmed 2026-10-13.
 - Windows Python cannot see Git Bash's `/tmp`. Convert paths with `cygpath -w`.
 - Tools installed for Windows (Node, Docker) may be missing from Git Bash's `PATH` in
   agent sessions. Prepend their install folder explicitly.

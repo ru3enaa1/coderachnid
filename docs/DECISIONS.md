@@ -65,3 +65,11 @@ only some development replies whatever its wording, so a rule meant for every re
 cannot rely on it. Behavior that must happen on every turn goes in the project rules
 file (`CLAUDE.md`), which `project-setup` writes from `CLAUDE.template.md`; the skill
 keeps the details that line points to. Evidence: `docs/F2-EVALUATION.md`.
+
+## D-010 · Every guard has a positive control; project guards ship as templates (2026-10-13)
+
+A guard is trusted only after it has failed on a known-bad fixture, so every rule of
+every guard has one in `guards/tests/test-guards.sh`. The suite caught a real bug on its
+first run (a line-ending check that could never see CRLF on Windows). Guards meant for
+other projects live in `skills/project-setup/templates/guards/`, so the skill that sets
+up a project can copy them and `check-skills.sh` verifies the paths it mentions exist.
