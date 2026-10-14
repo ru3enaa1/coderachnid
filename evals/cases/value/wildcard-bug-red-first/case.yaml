@@ -22,12 +22,14 @@ graders:
     type: regex
     target: trace
     pattern: '"name":"(?:Edit|Write)"[^\n]*test_\w*\.py[^\n]*(100%|a_b)'
-  # Red-first: the test file is edited before db.py. A backslash or slash right before
-  # "db.py" excludes test_db.py. Positive-controlled before use.
+  # Red-first: a test file is written (Edit, or Write for a new file) before db.py is
+  # edited. tool_order takes one tool name, so this is a regex over the trace. A
+  # backslash or slash right before "db.py" excludes test_db.py. Positive-controlled
+  # against: Write-then-fix, Edit-then-fix, fix-then-test, fix only, skill text.
   - name: test-before-fix
-    type: tool_order
-    before: { tool: Edit, input_match: 'test_\w*\.py' }
-    after: { tool: Edit, input_match: '[\\/]db\.py"' }
+    type: regex
+    target: trace
+    pattern: '"name":"(?:Edit|Write)","input":\{[^\n]*?"file_path":"[^"]*test_\w*\.py"[\s\S]*?"name":"Edit","input":\{[^\n]*?"file_path":"[^"]*[\\/]db\.py"'
   - name: tests-skill-fired
     type: tool_used
     tool: Skill

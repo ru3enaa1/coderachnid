@@ -95,7 +95,7 @@ the trace too).
 |---|---|---|---|---|
 | Import notes from JSON: size or count limit, per-item validation | **1.00** | 0.00 | **+1.00** | +107% |
 | Add a column to a database that already holds data: real `ALTER TABLE` and a backup | **1.00** | 0.50 | **+0.50** | +71% |
-| Wildcard bug in search: regression test written | **0.67** | 0.33 | **+0.33** | +69% |
+| Wildcard bug in search: regression test written (first run; see tuning below) | **0.67** | 0.33 | **+0.33** | +69% |
 | Closing with the rule in the project rules file | 1.00 | 1.00 | 0 | +62% |
 
 - **Import:** without the plugin the endpoint checked types but read the whole body
@@ -115,10 +115,21 @@ safeguard the base model skipped, at roughly 70 to 100% more tokens for that tas
 a capped plan the trade is the cost of finding the same gap later, in another session.
 That later cost was not measured here.
 
+## Tuning after F2b (2026-10-13)
+
+| Change | Measured on | Result |
+|---|---|---|
+| `security-first`: "any endpoint or route (even one that only edits a field)" | Spanish edit-endpoint prompt, 4 runs; Spanish "should not" prompt, 4 runs | **4/4** fires (was 2/4 across earlier runs), 4/4 quiet. An English twin of the prompt fired 2/2 before the change, so language cost some reliability but was not a block |
+| `tests-that-bite`: leads with "a bug is reported or fixed (failing test first)" | Wildcard bug, with and without the plugin; its activation cases | With **1.00** (test written before the fix in both runs), without 0.50: Δ **+0.50**. Activation 5/5, no false positive |
+
+The red-first grader first checked only `Edit` and failed every run that created a new
+test file with `Write`. It now accepts either, and was checked against five traces
+(Write then fix, Edit then fix, fix then test, fix only, skill text) before use.
+
 ## Status
 
 The F2 criterion is met: every skill was measured, and four descriptions were tuned on
 evidence (one tuning reverted). F2b showed the value on harder tasks and made the
-closing reliable through the rules file. Open: `tests-that-bite` on bug reports
-(red-first), Spanish activation of `security-first`, trimming what each skill loads,
-and repeating the tuned cases with more runs.
+closing reliable through the rules file, and the last two activation gaps were
+closed. Open: trimming what each skill loads, and more runs on the cases measured
+with two.
