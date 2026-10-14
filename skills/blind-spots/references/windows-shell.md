@@ -49,6 +49,11 @@
   so `grep $'\r'` never finds a CRLF file and a line-ending check reports "clean". Count
   CRs with `tr -cd '\r' < file | wc -c` (or use `grep -U`), and prove the check on a
   planted CRLF file. Confirmed 2026-10-13.
+- **Windows paths stop at 260 characters by default.** A `git clone` into a deeply
+  nested folder (a temp or scratch directory) fails with `Filename too long`, and a tool
+  that falls back to SSH then reports a confusing access error. Test in a short path, or
+  set `git config --global core.longpaths true`. Confirmed 2026-10-14 while testing a
+  plugin install from GitHub.
 - Windows Python cannot see Git Bash's `/tmp`. Convert paths with `cygpath -w`.
 - Tools installed for Windows (Node, Docker) may be missing from Git Bash's `PATH` in
   agent sessions. Prepend their install folder explicitly.

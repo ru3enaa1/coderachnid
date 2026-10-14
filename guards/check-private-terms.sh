@@ -7,8 +7,20 @@
 #
 # Scans every file git would publish (tracked + untracked, minus ignored).
 # Outside a git repository it scans the working tree, minus the ignored local files.
+#
+# --history also scans every commit on every branch (patches, messages, author lines).
+# Run it before a release: on a public repository, a term removed in a later commit is
+# still readable in the history.
+#
 # Exit code: 0 when clean, 1 when a term is found, 2 when nothing could be checked.
 set -u
+
+history=0
+case "${1:-}" in
+  "") ;;
+  --history) history=1 ;;
+  *) echo "usage: check-private-terms.sh [--history]"; exit 2 ;;
+esac
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 TERMS="$ROOT/.private-terms"
@@ -32,6 +44,25 @@ if [ ! -s "$patterns" ]; then
 fi
 
 cd "$ROOT" || exit 2
+
+if [ "$history" -eq 1 ]; then
+  git rev-parse --is-inside-work-tree > /dev/null 2>&1 \
+    || { echo "--history needs a git repository; nothing was checked"; exit 2; }
+  # One stream for the whole history; each match is shown with the commit it came from.
+  out="$(git log --all -p --format='commit %h%n%an <%ae>%n%B' | lower | awk '
+    /^commit [0-9a-f]+$/ { commit = $2 }
+    { print commit ":" $0 }' | grep -F -f "$patterns")"
+  status=$?
+  if [ "$status" -eq 0 ]; then
+    printf '%s\n' "$out" | head -n 20 | sed 's|^|history: |'
+    echo "private terms found in the git history (see above)"
+    exit 1
+  elif [ "$status" -gt 1 ]; then
+    echo "error: grep failed with status $status on the history"
+    exit 2
+  fi
+fi
+
 if git rev-parse --is-inside-work-tree > /dev/null 2>&1; then
   files="$(git ls-files --cached --others --exclude-standard)"
 else

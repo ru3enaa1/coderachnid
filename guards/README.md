@@ -12,7 +12,9 @@ fixture it must fail on. A check that has never failed proves nothing.
 | `check-private-terms.sh` | No private term (people, companies, paths, private repositories) appears in a publishable file | `bash guards/check-private-terms.sh` |
 
 `check-private-terms.sh` reads its list from `.private-terms` at the repository root. That
-file is git-ignored on purpose. Create it locally with one term per line.
+file is git-ignored on purpose. Create it locally with one term per line. Before a
+release, run it with `--history`: it also scans every commit, because on a public
+repository a term removed in a later commit is still readable.
 
 ## Guards for projects
 

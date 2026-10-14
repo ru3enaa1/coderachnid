@@ -88,6 +88,7 @@ terms_fixture() {
   mkdir -p "$d/guards"
   cp "$ROOT/guards/check-private-terms.sh" "$d/guards/"
   git -C "$d" init -q
+  git -C "$d" config core.autocrlf false   # keep fixture commits quiet on Windows
   printf '.private-terms\n' > "$d/.gitignore"
   printf '# fake terms used only by this test\nacme corp\nproject-bluebird\n' > "$d/.private-terms"
   echo "a harmless note" > "$d/notes.txt"
@@ -119,6 +120,22 @@ expect 1 "terms file with CRLF endings still matches" run_terms "$d"
 
 d="$(terms_fixture nogit)"; rm -rf "$d/.git"; echo "acme corp" > "$d/notes.txt"
 expect 1 "outside a git repository (find fallback)" run_terms "$d"
+
+# --history: a term committed once and removed later is clean on disk but still public.
+d="$(terms_fixture history)"
+echo "draft for Acme Corp" > "$d/notes.txt"
+git -C "$d" add notes.txt .gitignore
+git -C "$d" -c user.name=t -c user.email=t@example.invalid commit -qm "draft"
+echo "a harmless note" > "$d/notes.txt"
+git -C "$d" -c user.name=t -c user.email=t@example.invalid commit -qam "clean up"
+expect 0 "term removed from the files: working tree is clean" run_terms "$d"
+expect 1 "--history finds the term in an old commit" bash "$d/guards/check-private-terms.sh" --history
+
+d="$(terms_fixture historyclean)"
+git -C "$d" add notes.txt .gitignore
+git -C "$d" -c user.name=t -c user.email=t@example.invalid commit -qm "clean"
+expect 0 "--history on a clean history passes" bash "$d/guards/check-private-terms.sh" --history
+expect 2 "unknown option is a usage error" bash "$d/guards/check-private-terms.sh" --everything
 
 d="$(terms_fixture missing)"; rm "$d/.private-terms"
 expect 2 "no terms file: nothing was checked" run_terms "$d"
