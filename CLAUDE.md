@@ -71,8 +71,13 @@ projects and generalized.
   CHANGELOG moved to 0.1.0. Checklist and record: `docs/RELEASING.md`.
 - **2026-10-14 · v0.1.0 published.** F4 merged and pushed; the clean install was
   repeated against the merged `main` (commit `82b2c89`) and passed; annotated tag
-  `v0.1.0` pushed. **Next: F5 · Grow** (stack references, PostgreSQL backups, trimming
-  what each skill loads, MySQL backup against a real server).
+  `v0.1.0` pushed.
+- **2026-10-14 · v0.2.0 published.** The five-point closing ships as the opt-in output
+  style `coderachnid:closing` (D-011): default behavior and tone, plus the closing.
+  Clean install verified (0.2.0, style listed); tag `v0.2.0` on `0e513be`.
+  **Next: F5 · Grow** (stack references, PostgreSQL backups, trimming what each skill
+  loads, MySQL backup against a real server). Pending with the maintainer: install the
+  plugin, then trim §8 of a private project's rules file on its own branch.
 
 ## 3. Structure
 

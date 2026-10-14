@@ -53,6 +53,15 @@ git tag -a vX.Y.Z -m "coderachnid vX.Y.Z"
 git push origin vX.Y.Z
 ```
 
+## v0.2.0 record (2026-10-14)
+
+- Guards: skills 0, private terms with `--history` 0, positive controls 51 of 51,
+  `validate` passed with the two expected warnings.
+- Clean install from GitHub: 0.2.0 from commit `0e513be`, 9 skills, 0 hooks, and the
+  output style listed as `coderachnid:closing` (checked with `/output-style`; the
+  leading `/` needs `MSYS_NO_PATHCONV=1` on that one command in Git Bash).
+- Tag `v0.2.0` on `0e513be`.
+
 ## v0.1.0 record (2026-10-14)
 
 - Guards: skills 0, private terms with `--history` 0, positive controls 51 of 51,
