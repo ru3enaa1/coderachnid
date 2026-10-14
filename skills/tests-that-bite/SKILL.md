@@ -1,6 +1,6 @@
 ---
 name: tests-that-bite
-description: Use when writing or reviewing tests, fixing a bug, adding a security control, or deciding whether work is done. Catches vacuous tests, tests that assert the bug, negative cases that fail for the wrong reason, masked exit codes and coverage that proves nothing, using positive controls, mutation testing, property tests and golden files.
+description: Use whenever a bug is reported or fixed (reproduce it with a failing test before touching the code), and when writing or reviewing tests, adding a security control, or deciding whether work is done. Catches vacuous tests, tests that assert the bug, negative cases that fail for the wrong reason, masked exit codes and coverage that proves nothing, using positive controls, mutation testing, property tests and golden files.
 ---
 
 # Tests that bite

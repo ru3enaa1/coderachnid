@@ -12,6 +12,8 @@ four steps, in order, with no skipping.
 
 1. **Back up.** Take a complete, restorable copy and put it in
    `database/backups/YYYY-MM-DD-HHMM-reason/`. Confirm the copy opens before continuing.
+   For SQLite and MySQL, the backup-before-migrate script that `project-setup` installs
+   does both and exits non-zero when the copy does not verify.
 2. **Migrate** with the versioned migration tool (Flyway, Liquibase, Alembic, Prisma
    migrate…), never by hand-typed DDL.
 3. **Test** against a disposable database or a copy: the full suite, plus the

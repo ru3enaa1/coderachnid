@@ -55,7 +55,15 @@ projects and generalized.
   plugin adds the safeguard the base model skips: import size limit (Δ +1.00), backup
   before a schema change (+0.50), regression test (+0.33), at about 70 to 100% more
   tokens for that task. The closing is reliable once its line is in the rules file
-  (4 of 4). Open: `tests-that-bite` on bug reports, `security-first` in Spanish.
+  (4 of 4). Merged to `main` and pushed.
+- **2026-10-13 · Last activation gaps closed.** `security-first` in Spanish 4/4,
+  `tests-that-bite` writes the test before the fix (with 1.00, without 0.50).
+- **2026-10-14 · F3 guard hardening closed.** `guards/tests/test-guards.sh`: 47
+  positive controls, one known-bad fixture per rule of every guard; it fails when a
+  guard is broken. Four project guards ship as `project-setup` templates (D-010):
+  forbidden phrases, line endings, `run-checked.sh` and `backup-before-migrate.sh`
+  (SQLite and MySQL; MySQL against a real server still anticipated). The suite caught a
+  real bug: Git for Windows' grep can't see CRLF.
 
 ## 3. Structure
 
@@ -99,6 +107,7 @@ any `CLAUDE.md` it finds in a subfolder as live instructions.
 ```sh
 bash guards/check-skills.sh; echo $?          # skill shape and dangling references
 bash guards/check-private-terms.sh; echo $?   # privacy (needs local .private-terms)
+bash guards/tests/test-guards.sh; echo $?     # positive controls for every guard
 claude --plugin-dir "<path to this repo>"     # try the plugin without installing
 claude plugin validate .                      # validate the manifests
 node assets/build-assets.mjs                  # regenerate logo and banners
@@ -112,7 +121,7 @@ Every eval run is a real session on the maintainer's plan: filter with `--case` 
 Publishing (with the maintainer's explicit go-ahead; the repo is already public):
 
 ```sh
-bash guards/check-skills.sh && bash guards/check-private-terms.sh   # both must exit 0
+bash guards/check-skills.sh && bash guards/check-private-terms.sh && bash guards/tests/test-guards.sh
 git push -u origin main
 git tag v0.1.0 && git push origin --tags      # F4 only
 ```
