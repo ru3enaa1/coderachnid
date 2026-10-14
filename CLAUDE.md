@@ -63,7 +63,13 @@ projects and generalized.
   guard is broken. Four project guards ship as `project-setup` templates (D-010):
   forbidden phrases, line endings, `run-checked.sh` and `backup-before-migrate.sh`
   (SQLite and MySQL; MySQL against a real server still anticipated). The suite caught a
-  real bug: Git for Windows' grep can't see CRLF.
+  real bug: Git for Windows' grep can't see CRLF. Merged to `main` and pushed.
+- **2026-10-14 · F4 release prepared** (branch `feat/f4-release`). History review clean
+  (14 commits, no-reply address only, no private term, no secret). New
+  `check-private-terms.sh --history` with positive controls (51 in total). Clean
+  install from GitHub verified with an empty config folder: 0.1.0, 9 skills, 0 hooks.
+  CHANGELOG moved to 0.1.0. Checklist and record: `docs/RELEASING.md`. **Pending: the
+  maintainer's go-ahead to merge, push and tag `v0.1.0`.**
 
 ## 3. Structure
 
@@ -121,10 +127,12 @@ Every eval run is a real session on the maintainer's plan: filter with `--case` 
 Publishing (with the maintainer's explicit go-ahead; the repo is already public):
 
 ```sh
-bash guards/check-skills.sh && bash guards/check-private-terms.sh && bash guards/tests/test-guards.sh
+bash guards/check-skills.sh && bash guards/check-private-terms.sh --history && bash guards/tests/test-guards.sh
 git push -u origin main
-git tag v0.1.0 && git push origin --tags      # F4 only
+git tag -a v0.1.0 -m "coderachnid v0.1.0" && git push origin v0.1.0   # releases only
 ```
+
+Full release checklist, including the clean-machine install: `docs/RELEASING.md`.
 
 The `claude` CLI is not on Git Bash's `PATH` on the maintainer's machine. It ships with
 the VS Code extension (`.../anthropic.claude-code-*/resources/native-binary/claude.exe`).
