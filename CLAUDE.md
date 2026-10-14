@@ -76,8 +76,12 @@ projects and generalized.
   style `coderachnid:closing` (D-011): default behavior and tone, plus the closing.
   Clean install verified (0.2.0, style listed); tag `v0.2.0` on `0e513be`.
   **Next: F5 · Grow** (stack references, PostgreSQL backups, trimming what each skill
-  loads, MySQL backup against a real server). Pending with the maintainer: install the
-  plugin, then trim §8 of a private project's rules file on its own branch.
+  loads, MySQL backup against a real server).
+- **2026-10-14 · v0.2.1 published.** `blind-spots` activates on editing or reviewing
+  CSS and layout, server templates, build files and shell scripts (0/6 → 6/6, no
+  regression, no false positive). Tag `v0.2.1` on `b80134e`. The trim of a private
+  project's rules file was tried, measured (−3.0k tokens) and declined by the
+  maintainer: that project keeps its own rules and another harness.
 
 ## 3. Structure
 
