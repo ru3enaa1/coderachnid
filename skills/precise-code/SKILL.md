@@ -33,7 +33,8 @@ guess. Gaps appear where something was assumed, truncated or left implicit.
 - **Immutability by default:** value objects and records, defensive copies of
   collections, sealed or closed result types.
 - **Explicit errors:** no empty `catch`, no catch-all that hides the cause. Fail fast,
-  with a message the user can act on.
+  with a message the user can act on. When validating input written by people, collect
+  every problem (with file and path) instead of stopping at the first.
 - **Money:** integer minor units in storage, decimal types for presentation. Never
   binary floating point.
 - **Boundaries:** controllers expose DTOs, never database rows or entities. Repositories
@@ -56,6 +57,24 @@ Same input + same code version + same data = the same output, byte for byte.
 - **Never rely on hash-map iteration order** for output, hashing or seeds.
 - **Round once, in one tested place.** Two languages round x.xx5 differently, so a
   value rounded in the UI and again on the server will drift.
+- **Version plus content hash.** A version number alone doesn't pin data: someone edits
+  it and forgets to bump. Hash the content, after normalizing line endings and removing
+  a BOM, so the same data gives the same hash on every OS.
+
+## Dependencies
+
+- **One at a time**, in the step that needs it, so a failure has one suspect.
+- **Check the version against the registry's metadata that day**, never memory or a
+  blog post. When the framework manages a library, take the latest patch of the line it
+  supports, not the next minor.
+- **Read the full dependency tree** after adding one. A filtered view can hide the
+  transitive dependency that causes the conflict.
+
+## Data written by people
+
+Rules, content or configuration in YAML or JSON that people edit is code: closed
+structures, strict loading, every error at once, a test per format trap. Details:
+`references/data-as-code.md`.
 
 ## Architecture that enforces itself
 

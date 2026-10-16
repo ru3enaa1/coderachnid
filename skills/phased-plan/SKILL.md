@@ -45,8 +45,19 @@ It contains:
   the plan. Never let the scope drift quietly.
 - **Every architectural decision gets an ADR** (`docs/adr/NNNN-title.md`): context,
   options, decision, consequences. Template: `../project-setup/templates/ADR.md`.
-- **Dependencies enter in the phase that needs them**, one at a time, with the version
-  verified that day.
+  Smaller decisions made on the way (a library version, a formula detail) go, dated,
+  in the document they govern, not in a new ADR.
+- **Product intent becomes a constraint.** When the owner restates what the product
+  must or must not do, encode it: a required field in the data schema, a check, a test.
+  Tone alone drifts within a few sessions; a failing test doesn't.
+- **Work in sub-steps inside a phase**, each ending with a recommended test the owner
+  can run in minutes. Move on only after the owner confirms.
+- **Ask for inputs one step ahead**: mockups, copy or data that a screen needs are
+  requested in the sub-step before it, so work never waits on them.
+- **For a non-technical owner, one short learning note per phase**: what was built, why
+  it matters, an analogy. It keeps decisions theirs.
+- **Dependencies enter in the phase that needs them** (how to pick the version:
+  `precise-code`).
 - **The project rules file always says where the project really is** (current phase,
   what is closed, what is next), so a new session can start without re-explaining.
 - **After the milestone, validate in the field** before adding phases. The product is

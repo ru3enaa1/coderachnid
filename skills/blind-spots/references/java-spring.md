@@ -1,5 +1,12 @@
 # Java, Maven and Spring Boot pitfalls
 
+## Java
+
+- **Static fields initialize top to bottom.** A `static final` that uses another static
+  declared further down the class reads its default (`null`, `0`), with no compile error.
+  Declare dependencies first, or compute in a static method. A unit test that touches the
+  class catches it.
+
 ## Build
 
 - **Never `mvn clean` while the app runs from `target/`.** The live JVM loses its

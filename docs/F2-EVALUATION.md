@@ -150,6 +150,14 @@ the base model also found it: 3 of 4 runs before the change and 4 of 4 after, wi
 without the plugin alike. The plugin now loads where its references apply; on this
 particular trap it added nothing the model didn't already know.
 
+## v0.3.0 · `sourced-data` and field lessons (2026-10-15)
+
+| Check | Result |
+|---|---|
+| `sourced-data` fires on research figures (EN) and market prices (ES) | **4/4** |
+| `sourced-data` stays quiet on an ordinary code change (ES) | **2/2** |
+| Every other skill's English "should fire" case, with 10 skills listed (1 run each) | 9/10; the miss is `response-closing`, expected (D-009, D-011) |
+
 ## Status
 
 The F2 criterion is met: every skill was measured, and four descriptions were tuned on
