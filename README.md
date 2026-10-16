@@ -63,20 +63,33 @@ check that captured nothing.
 
 | Skill | Activates when | What it adds |
 |---|---|---|
-| `security-first` | A phase, feature or endpoint starts, and before every commit | Threat modeling, trust boundaries, secret handling, a pre-commit checklist |
-| `precise-code` | Writing or changing code | Read before change, no truncation, comments that explain *why*, determinism |
-| `tests-that-bite` | Writing tests, fixing bugs, deciding "done" | Positive controls, red-first fixes, mutation testing, golden files |
+| `security-first` | Code touches untrusted input or sensitive data (any endpoint, form, upload, import, auth), each phase, every commit | Threat modeling fitted to the real threat model, trust boundaries, secret handling, security tests as acceptance criteria, a pre-commit checklist |
+| `precise-code` | Writing or changing code | Read before change, no truncation, comments that explain *why*, determinism and content hashes, dependencies verified the day they enter, data files treated as code |
+| `tests-that-bite` | A bug is reported or fixed, writing tests, deciding "done" | Failing test before the fix, positive controls, mutation testing, golden files, tests on the project's real content |
 | `safe-database` | Migrations, schema changes, data fixes, test runs | Backup → migrate → test → verify; disposable test databases; cleanup by id |
-| `blind-spots` | Before declaring done, running builds, killing processes | The traps agents repeatedly fall into, and the check for each |
-| `phased-plan` | Planning, starting or closing a phase | One ordered plan, frozen scope, one branch per phase, ADRs |
-| `response-closing` | The end of every development response | Five points: next phase, keys, watch-outs, tests, next step |
-| `pitfall-log` | Something fails in a surprising way | Turns each mistake into a dated rule with the check that catches it |
-| `project-setup` | Starting a project or adopting coderachnid | Rules file, plan, ADR folder and database layout from templates |
+| `blind-spots` | Editing or reviewing CSS and layout, server templates, build files or scripts; before saying work is done | The traps agents repeatedly fall into, and the check for each |
+| `phased-plan` | Planning, starting or closing a phase | One ordered plan, frozen scope, one branch per phase, sub-steps with a test the owner can run, product intent turned into checks |
+| `response-closing` | Development work (made always-on by the output style below) | Five points: next phase, keys, watch-outs, tests, next step |
+| `pitfall-log` | Debugging something that behaved unexpectedly, or a fix that already failed | Turns each mistake into a dated rule with the check that catches it |
+| `project-setup` | Starting a project or adopting coderachnid | Rules file, plan, ADR folder, database layout and project guards from templates |
 | `sourced-data` | The product shows prices, statistics, research or rules people rely on | A primary source, date and range for every figure; "no source, no number" |
 
 Stack-specific knowledge lives in each skill's `references/` and is loaded only when the
-stack matches: Windows shells, Java/Spring, server-side templates and HTMX, web
-frontend, SQLite and MySQL.
+task needs it: Windows shells, Java/Spring, server-side templates and HTMX, web
+frontend, SQLite and MySQL, apps served on the user's own machine, AI model
+integration, and data files written by people (YAML, JSON).
+
+## Guards for your project
+
+`project-setup` copies ready-made guards into your project. Each one passes or fails by
+its exit code, and each was proven to fail on a known-bad case before shipping.
+
+| Guard | What it proves |
+|---|---|
+| `check-forbidden-phrases.sh` | No promise your product must never make appears in user-facing text |
+| `check-line-endings.sh` | Files compared byte for byte are pinned to LF and have no CRLF on disk |
+| `run-checked.sh` | A build or test command's real exit code, not the one a pipe or a red console shows |
+| `backup-before-migrate.sh` | A verified backup exists before a migration runs (SQLite or MySQL) |
 
 ## Install
 
@@ -86,6 +99,8 @@ In Claude Code:
 /plugin marketplace add ru3enaa1/coderachnid
 /plugin install coderachnid@coderachnid
 ```
+
+To update later: `/plugin marketplace update coderachnid`.
 
 To try a local clone without installing:
 
@@ -115,6 +130,19 @@ Every development response closes with the five-point block: next phase · keys 
 watch-outs · recommended tests · recommended implementation.
 ```
 
+On a capped plan, every installed skill's description is read in every session. For a
+session that isn't development work, `/plugin disable coderachnid` and
+`/plugin enable coderachnid` turn it off and on.
+
+## How it is checked
+
+- **Activation:** every skill has cases, in English and Spanish, for tasks that should
+  trigger it and tasks that should not, run with `claude plugin eval` (`evals/`).
+- **Value:** cases that compare the same task with and without the plugin, to keep only
+  what changes the result.
+- **Guards:** `guards/tests/test-guards.sh` plants a violation for every rule of every
+  guard and fails if any guard lets it through.
+
 ## Design principles
 
 1. **Three layers.** *Senses* (skills) say what to do and why. *Guards* (tests, scripts,
@@ -124,7 +152,9 @@ watch-outs · recommended tests · recommended implementation.
 3. **Load only what's needed.** Short skills, with detail in `references/`, to keep the
    agent's context clean.
 4. **No hooks by default.** Nothing runs on every turn unless you opt in.
-5. **Vendor-neutral.** Patterns, not products.
+5. **Measured, not assumed.** A skill or a rule stays only if a test shows it fires when
+   it should and changes the result.
+6. **Vendor-neutral.** Patterns, not products.
 
 ## What it is not
 

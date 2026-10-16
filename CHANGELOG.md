@@ -29,6 +29,9 @@ Lessons from a full project lifecycle, generalized (D-012).
   checklists to the real threat model; review exactly what is staged before committing.
 - Pitfalls: real-viewport sizes from the user's screenshots and geometric overlap
   checks (web frontend); Java static fields initialize top to bottom.
+- README brought up to date: current triggers in the skills table, all stack
+  references, the four project guards, how to update or turn the plugin off, and how
+  each part is checked.
 
 ## [0.2.1] - 2026-10-14
 
