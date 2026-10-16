@@ -85,8 +85,10 @@ projects and generalized.
 - **2026-10-15 · v0.3.0 prepared** (branch `feat/v0.3.0-field-lessons`). Lessons from a
   full project lifecycle, generalized (D-012): new skill `sourced-data` (10 skills now),
   data-as-code as a `precise-code` reference, and additions to `precise-code`,
-  `tests-that-bite`, `phased-plan`, `security-first` and two references. Pending: the
-  maintainer's go-ahead to publish.
+  `tests-that-bite`, `phased-plan`, `security-first` and two references.
+- **2026-10-15 · v0.3.0 published.** README brought up to date and cross-checked against
+  the repository. Clean install verified (10 skills, 0 hooks, about 1,010 tokens always
+  on); tag `v0.3.0` on `ad789e5`.
 
 ## 3. Structure
 

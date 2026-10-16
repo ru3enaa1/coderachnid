@@ -53,6 +53,16 @@ git tag -a vX.Y.Z -m "coderachnid vX.Y.Z"
 git push origin vX.Y.Z
 ```
 
+## v0.3.0 record (2026-10-15)
+
+- Guards: skills 0, private terms with `--history` 0, positive controls 51 of 51,
+  `validate` passed with the two expected warnings.
+- README cross-checked against the repository: every skill folder in the table, every
+  listed guard and reference present.
+- Clean install from GitHub: 0.3.0 from commit `ad789e5`, 10 skills, 0 hooks, new files
+  present. `plugin details`: about 1,010 tokens always on (was about 870 with nine
+  skills). Tag `v0.3.0` on `ad789e5`.
+
 ## v0.2.1 record (2026-10-14)
 
 - Guards: skills 0, private terms with `--history` 0, positive controls 51 of 51,
