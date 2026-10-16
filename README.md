@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fru3enaa1%2Fcoderachnid%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=3a3f47" alt="version">
-  <img src="https://img.shields.io/badge/skills-9-3a3f47" alt="skills: 9">
+  <img src="https://img.shields.io/badge/skills-10-3a3f47" alt="skills: 10">
   <img src="https://img.shields.io/badge/hooks-off%20by%20default-3a3f47" alt="hooks: off by default">
   <img src="https://img.shields.io/badge/plugin-Claude%20Code-3a3f47" alt="plugin: Claude Code">
   <img src="https://img.shields.io/badge/license-MIT-3a3f47" alt="license: MIT">
@@ -72,6 +72,7 @@ check that captured nothing.
 | `response-closing` | The end of every development response | Five points: next phase, keys, watch-outs, tests, next step |
 | `pitfall-log` | Something fails in a surprising way | Turns each mistake into a dated rule with the check that catches it |
 | `project-setup` | Starting a project or adopting coderachnid | Rules file, plan, ADR folder and database layout from templates |
+| `sourced-data` | The product shows prices, statistics, research or rules people rely on | A primary source, date and range for every figure; "no source, no number" |
 
 Stack-specific knowledge lives in each skill's `references/` and is loaded only when the
 stack matches: Windows shells, Java/Spring, server-side templates and HTMX, web

@@ -1,0 +1,19 @@
+schema_version: "1.1"
+name: act-sourced-data-fires-es
+description: "sourced-data should activate on prices and market figures, Spanish phrasing (v0.3.0)."
+tags: [f5, activation, sourced-data, es]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 8
+  timeout_seconds: 300
+  allowed_tools: [Read, Glob, Grep, Skill]
+  prompt: |
+    Agrega al README una sección con el precio promedio de las apps de notas del mercado
+    y cuántos usuarios tienen.
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?sourced-data"'

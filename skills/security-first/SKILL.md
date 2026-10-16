@@ -19,9 +19,12 @@ wish.**
 3. **Run STRIDE on each boundary** (Spoofing, Tampering, Repudiation, Information
    disclosure, Denial of service, Elevation of privilege). Write the threats and their
    controls in the plan or in an ADR, not only in the conversation.
-4. **Check the current OWASP Top 10** against the feature, item by item.
+4. **Check the current OWASP Top 10** against the feature, item by item, and fit it to
+   the real threat model: rate limiting or CORS rules written for public services may
+   not apply to a single-user local app, while host checks and one-time tokens do.
 5. **Give every control its test** (see `tests-that-bite`): no token → rejected,
    foreign `Host` → rejected, missing CSRF → rejected, log contains no customer data.
+   Those tests are the phase's acceptance criteria: the phase is not done until they pass.
 
 ## Rules that do not bend
 
@@ -52,7 +55,7 @@ wish.**
   of the applicable law.
 - **Nothing leaves the machine** without explicit, per-feature, revocable consent.
 - **Dependencies** enter one at a time, in the phase that needs them, with the version
-  verified that day. Scan them (SCA) and keep an SBOM.
+  verified that day (how: `precise-code`). Scan them (SCA) and keep an SBOM.
 - **Distribute signed artifacts** and publish their checksums.
 
 ## Pre-commit checklist
@@ -69,6 +72,8 @@ wish.**
 - [ ] Network exposure unchanged (still loopback-only, if that is the design).
 - [ ] On a public repository, commits use a no-reply author email. Every commit stores
       it, so a personal address is published with the first push.
+- [ ] What is staged is exactly what was meant (`git diff --cached --stat`), above all
+      after `git add -A`, which also picks up stray files.
 - [ ] Full build and test suite green, confirmed by the **exit code**.
 
 ## References

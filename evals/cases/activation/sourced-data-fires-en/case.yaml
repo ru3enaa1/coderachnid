@@ -1,0 +1,19 @@
+schema_version: "1.1"
+name: act-sourced-data-fires-en
+description: "sourced-data should activate when figures users rely on are about to be written (v0.3.0)."
+tags: [f5, activation, sourced-data, en]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 8
+  timeout_seconds: 300
+  allowed_tools: [Read, Glob, Grep, Skill]
+  prompt: |
+    Add a help section to the README that tells users how many notes a productive
+    person takes per day, according to research.
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?sourced-data"'

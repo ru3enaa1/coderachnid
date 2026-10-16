@@ -84,3 +84,13 @@ five-point block and nothing else. Users select it once, per project or in
 overrides a style the user chose. The `CLAUDE.md` line remains for those who prefer it.
 Evidence: three headless runs with the style selected. An English task and a Spanish task
 ended with the block (labels translated), and a one-line question did not get it.
+
+## D-012 · Field lessons: one new skill, the rest in existing ones (2026-10-15)
+
+An analysis of a full project lifecycle (about 1,300 tool calls) found that the value
+was in disciplines applied in the main thread, not in orchestration, and listed
+practices worth generalizing. Each became original text with its reason and check.
+Only `sourced-data` became a new skill: it has a trigger no other skill covers. The
+data-as-code practices went into a `precise-code` reference instead of a skill of their
+own, because every skill's description costs tokens in every session and competes in a
+listing whose budget is 1% of the context window; a reference loads only when needed.

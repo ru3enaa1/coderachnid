@@ -33,7 +33,12 @@ say a wrong line would be *noticed*.
     There is no shared database to dirty (see `safe-database`). Tests point the app's
     data folder inside the build output, never at the user's real one.
 11. **Never edit a test to match broken behavior, and never delete one to get green.**
-12. **A green build does not prove the app starts.** Start it and open it.
+12. **A green build does not prove the app starts.** Start it and open it. Run the
+    packaged artifact once too: resources read from inside a package can behave
+    differently from the folders the tests use.
+13. **Test the real content, not only fixtures.** Load the project's real data and allow
+    only an explicit list of known-pending problems, each tied to the step that fixes
+    it. The list only shrinks; at zero the test demands "no problems" for good.
 
 ## The pyramid
 

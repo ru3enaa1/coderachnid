@@ -82,6 +82,11 @@ projects and generalized.
   regression, no false positive). Tag `v0.2.1` on `b80134e`. The trim of a private
   project's rules file was tried, measured (−3.0k tokens) and declined by the
   maintainer: that project keeps its own rules and another harness.
+- **2026-10-15 · v0.3.0 prepared** (branch `feat/v0.3.0-field-lessons`). Lessons from a
+  full project lifecycle, generalized (D-012): new skill `sourced-data` (10 skills now),
+  data-as-code as a `precise-code` reference, and additions to `precise-code`,
+  `tests-that-bite`, `phased-plan`, `security-first` and two references. Pending: the
+  maintainer's go-ahead to publish.
 
 ## 3. Structure
 

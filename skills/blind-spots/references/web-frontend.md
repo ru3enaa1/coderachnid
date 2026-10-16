@@ -31,6 +31,12 @@
 
 - Desktop Chrome won't go narrower than about 500 px, so a `--window-size=390` screenshot
   looks broken without being broken. Use device emulation.
+- **Test at the user's real sizes, not a standard list.** OS scaling shrinks the
+  viewport (1080p at 125% is 1536×737), and a screenshot from the user can reveal an
+  in-between size the design never planned for. Add it to the checked sizes.
+- **Check for overlap geometrically.** "No horizontal scrollbar" misses two components
+  painted on top of each other. Compare their bounding rectangles in the browser and fail
+  when any two intersect.
 - Headless Edge/Chrome won't take a screenshot when `--enable-logging` is on. Capture
   and log in separate runs.
 - Headless Edge/Chrome without its own `--user-data-dir` can hand off to the user's
