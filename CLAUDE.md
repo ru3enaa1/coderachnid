@@ -115,6 +115,8 @@ projects and generalized.
   `evals/chain/`: 12 graders positive-controlled (Sonnet judge; Haiku was unreliable).
   Commands 1.00 (2/2 each) vs loose prompts 0.10 and 0.29. The "anticipated" mark became
   the measured result. Found and fixed: the chain never recorded the competitors' look.
+- **2026-10-24 · v0.6.1 published.** Clean install verified (both plugins at 0.6.1);
+  tag `v0.6.1` on `cced920`. **Next:** a first real run of the chain.
 
 ## 3. Structure
 

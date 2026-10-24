@@ -55,6 +55,16 @@ git tag -a vX.Y.Z -m "coderachnid vX.Y.Z"
 git push origin vX.Y.Z
 ```
 
+## v0.6.1 record (2026-10-24)
+
+- Guards: skills 0 (14 skills), private terms with `--history` 0, positive controls 76
+  of 76, `validate` passed with the two expected root warnings.
+- History: no-reply address only; no secret; no personal path.
+- Clean install from GitHub: both plugins at 0.6.1 from commit `cced920`; `offer` and
+  `product-brief` carry their measured result, `market-research` records competitors'
+  look. 14 skills, 0 hooks; relay 3 hooks at no model context cost. Tag `v0.6.1` on
+  `cced920`.
+
 ## v0.6.0 record (2026-10-24)
 
 - Guards: skills 0 (14 skills), private terms with `--history` 0, positive controls 76
