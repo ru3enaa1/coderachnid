@@ -23,8 +23,9 @@ about `CLAUDE.md` and `CLAUDE.local.md` at the root, which are maintainer files.
 
 ## 3. Version
 
-- Bump `version` in **both** `.claude-plugin/plugin.json` and
-  `.claude-plugin/marketplace.json` (Semantic Versioning, see `CONTRIBUTING.md`).
+- Bump `version` in `.claude-plugin/plugin.json`, in both entries of
+  `.claude-plugin/marketplace.json` and in `plugins/relay/.claude-plugin/plugin.json`
+  (Semantic Versioning, see `CONTRIBUTING.md`).
 - Move the `Unreleased` entries in `CHANGELOG.md` under the new version and date.
 
 ## 4. Install on a clean machine
@@ -36,7 +37,8 @@ Windows stops at 260 characters and a deep folder makes `git clone` fail.
 export CLAUDE_CONFIG_DIR="$HOME/.cr-clean"          # empty, short path
 claude plugin marketplace add ru3enaa1/coderachnid
 claude plugin install coderachnid@coderachnid
-claude plugin list                                  # version, enabled
+claude plugin install coderachnid-relay@coderachnid # the opt-in hooks plugin
+claude plugin list                                  # versions, enabled
 claude plugin details coderachnid                   # 9 skills, 0 hooks
 rm -rf "$HOME/.cr-clean"
 ```

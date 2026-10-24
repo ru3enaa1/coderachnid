@@ -6,6 +6,30 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-24
+
+Keep long sessions light, and start projects with evidence (D-013).
+
+### Added
+
+- Second plugin in the same repository, **`coderachnid-relay`** (`plugins/relay/`), opt-in:
+  reloads `.coderachnid/HANDOFF.md` after `/clear` or compaction, asks for a handoff when
+  a conversation passes a token threshold, warns before resuming a large conversation
+  whose cache expired, and keeps every compaction summary. Plain bash, no jq, Python or
+  Node. An optional status line shows context and the five-hour usage limit.
+- Skill `handoff`: a short handoff file (task, decisions, files, next step, open
+  questions) so `/clear` costs nothing. Activation 4 of 4, quiet 2 of 2.
+- Skill `market-research`, run by hand with `/coderachnid:market-research`: sourced
+  market size, demand drivers, competition, unmet needs from real reviews and money
+  flows, ending in the riskiest assumptions and how to test them. No listing cost.
+- `phased-plan`: a discovery phase before F0.
+- 25 positive controls for the relay hooks and status line (76 in total), and an
+  end-to-end check in real Windows sessions.
+
+### Changed
+
+- README: the two new skills, the relay plugin and market research.
+
 ## [0.4.0] - 2026-10-23
 
 A second round of lessons from the same project lifecycle, from data loading to PDF
@@ -153,7 +177,8 @@ First public release.
 - `security-first` names any endpoint, even one that edits a field; `tests-that-bite`
   leads with reported bugs and a failing test first.
 
-[Unreleased]: https://github.com/ru3enaa1/coderachnid/compare/v0.4.0...HEAD
+[Unreleased]: https://github.com/ru3enaa1/coderachnid/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/ru3enaa1/coderachnid/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/ru3enaa1/coderachnid/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/ru3enaa1/coderachnid/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/ru3enaa1/coderachnid/compare/v0.2.0...v0.2.1

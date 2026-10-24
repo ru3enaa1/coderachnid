@@ -251,6 +251,83 @@ expect 1 "mysql: dump cut short fails" env STUB_MODE=truncated PATH="$b/bin:$PAT
 expect 2 "mysql: --password= on the command line is refused" env PATH="$b/bin:$PATH" bash "$BK" mysql shop "$b/root" pw1 -- --password=secret
 expect 2 "mysql: -p<password> on the command line is refused" env PATH="$b/bin:$PATH" bash "$BK" mysql shop "$b/root" pw2 -- -psecret
 
+# ---- plugins/relay (coderachnid-relay hooks and status line) --------------------
+
+RELAY="$ROOT/plugins/relay"
+rl="$WORK/relay"
+proj="$rl/proj"
+mkdir -p "$proj/.coderachnid"
+# relay <script> <json>: runs a hook script on JSON input, outside any Claude session;
+# its output goes to $rl/out.
+relay() { printf '%s' "$2" | env -u CLAUDE_PROJECT_DIR bash "$RELAY/scripts/$1" > "$rl/out" 2>&1; }
+has() { grep -q -- "$1" "$rl/out"; }
+silent() { [ ! -s "$rl/out" ]; }
+win_escaped() { cygpath -w "$1" | sed 's/\\/\\\\/g'; }   # how JSON carries a Windows path
+
+echo
+echo "coderachnid-relay hooks"
+for script in $(grep -o 'scripts/[a-z-]*\.sh' "$RELAY/hooks/hooks.json" | sort -u); do
+  expect 0 "hooks.json points to an existing $script" test -f "$RELAY/$script"
+done
+
+j="{\"source\":\"startup\",\"cwd\":\"$proj\"}"
+expect 0 "session-start: exits 0 without a handoff" relay session-start.sh "$j"
+expect 0 "session-start: prints nothing without a handoff" silent
+printf '# Handoff\ncodeword: amber-thread\n' > "$proj/.coderachnid/HANDOFF.md"
+echo 150000 > "$proj/.coderachnid/.relay-warned"
+relay session-start.sh "$j"
+expect 0 "session-start: injects the handoff" has "amber-thread"
+expect 0 "session-start: clears the size warning marker" test ! -e "$proj/.coderachnid/.relay-warned"
+if command -v cygpath > /dev/null 2>&1; then
+  relay session-start.sh "{\"source\":\"clear\",\"cwd\":\"$(win_escaped "$proj")\"}"
+  expect 0 "session-start: reads an escaped Windows path" has "amber-thread"
+fi
+
+relay resume-check.sh '{"source":"resume","context_tokens":250000,"prompt_cache_likely_expired":true,"estimated_cache_write_usd":1.87}'
+expect 0 "resume-check: warns on a large resume with an expired cache" has "re-sends about 250000"
+relay resume-check.sh '{"source":"resume","context_tokens":250000,"prompt_cache_likely_expired":false}'
+expect 0 "resume-check: quiet while the cache is warm" silent
+relay resume-check.sh '{"source":"resume","context_tokens":20000,"prompt_cache_likely_expired":true}'
+expect 0 "resume-check: quiet on a small conversation" silent
+relay resume-check.sh '{"source":"resume"}'
+expect 0 "resume-check: quiet when the fields are absent" silent
+
+t="$rl/transcript.jsonl"
+usage_line() { printf '{"type":"assistant","message":{"usage":{"input_tokens":2,"cache_creation_input_tokens":1000,"cache_read_input_tokens":%s,"output_tokens":10}}}\n' "$1"; }
+{ usage_line 5000; usage_line 150000; } > "$t"
+j="{\"transcript_path\":\"$t\",\"cwd\":\"$proj\"}"
+CODERACHNID_RELAY_TOKENS=200000 relay context-check.sh "$j"
+expect 0 "context-check: quiet below the threshold" silent
+relay context-check.sh "$j"
+expect 0 "context-check: warns past the threshold (sums the last usage)" has "about 151002 tokens"
+expect 0 "context-check: remembers the warned size" grep -q '^151002$' "$proj/.coderachnid/.relay-warned"
+relay context-check.sh "$j"
+expect 0 "context-check: quiet again within the same size band" silent
+usage_line 220000 >> "$t"
+relay context-check.sh "$j"
+expect 0 "context-check: warns again one step later" has "about 221002 tokens"
+relay context-check.sh "{\"transcript_path\":\"$rl/none.jsonl\",\"cwd\":\"$proj\"}"
+expect 0 "context-check: quiet when the transcript is missing" silent
+if command -v cygpath > /dev/null 2>&1; then
+  rm -f "$proj/.coderachnid/.relay-warned"
+  relay context-check.sh "{\"transcript_path\":\"$(win_escaped "$t")\",\"cwd\":\"$(win_escaped "$proj")\"}"
+  expect 0 "context-check: reads escaped Windows paths" has "about 221002 tokens"
+fi
+
+# In the JSON below, \n is a newline and \" a quote, as Claude Code sends them.
+j="{\"trigger\":\"auto\",\"cwd\":\"$proj\",\"compact_summary\":\"Line one\\nLine \\\"two\\\"\"}"
+relay save-compact.sh "$j"
+saved="$(ls -1t "$proj/.coderachnid/compact"/compact-*.md 2> /dev/null | head -n 1)"
+expect 0 "save-compact: writes the summary to a file" test -n "$saved"
+expect 0 "save-compact: undoes newline and quote escapes" grep -q '^Line "two"$' "${saved:-/nonexistent}"
+for i in 1 2 3 4 5 6; do touch -d "2020-01-0$i" "$proj/.coderachnid/compact/compact-2020010$i-000000.md"; done
+relay save-compact.sh "$j"
+expect 0 "save-compact: keeps only the five most recent" test "$(ls -1 "$proj/.coderachnid/compact"/compact-*.md | wc -l)" -le 5
+
+sl() { printf '%s' "$1" | bash "$RELAY/statusline.sh"; }
+expect 0 "statusline: context and five-hour limit" test "$(sl '{"context_window":{"total_input_tokens":182000,"context_window_size":1000000},"rate_limits":{"five_hour":{"used_percentage":41.2}}}')" = "ctx 182k/1000k (18%) · 5h 41%"
+expect 0 "statusline: placeholder before the first response" test "$(sl '{}')" = "ctx -"
+
 echo
 echo "$pass passed, $fail failed"
 [ "$fail" -eq 0 ]
