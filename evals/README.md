@@ -14,6 +14,7 @@ from `activation/sandbox/` into the run's empty workspace.
 | `cases/activation/<skill>-fires-<lang>` | The skill activates on another phrasing, in English and in Spanish | `tool_used: Skill` |
 | `cases/activation/<skill>-quiet-es` | The skill stays out of an unrelated request in Spanish | `tool_used: Skill`, `min: 0`, `max: 0` |
 | `cases/compliance/*` | Once loaded, the skill changes the result, measured against a no-plugin baseline | `regex` on files or the reply, `llm` rubric, plus a skill indicator |
+| `cases/chain/*` | `offer` and `product-brief` by their commands against loose prompts, plus positive controls for every grader (generated, see `chain/README.md`) | `llm` rubric on the written document, judged by Sonnet |
 
 ```sh
 claude plugin eval . --tag activation --ablation none --scaffold --trust-plugin --no-publish -j 2

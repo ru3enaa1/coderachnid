@@ -111,6 +111,10 @@ projects and generalized.
 - **2026-10-24 · v0.6.0 published.** Clean install verified (both plugins at 0.6.0, 14
   skills, 0 hooks in `coderachnid`); tag `v0.6.0` on `2827944`. **Next:** evals for the
   chain and a first real run of it before `offer` and `product-brief` lose "anticipated".
+- **2026-10-24 · v0.6.1 prepared: chain evals** (branch `feat/v0.6.1-chain-evals`).
+  `evals/chain/`: 12 graders positive-controlled (Sonnet judge; Haiku was unreliable).
+  Commands 1.00 (2/2 each) vs loose prompts 0.10 and 0.29. The "anticipated" mark became
+  the measured result. Found and fixed: the chain never recorded the competitors' look.
 
 ## 3. Structure
 

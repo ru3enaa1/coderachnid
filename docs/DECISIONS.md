@@ -122,3 +122,8 @@ loaded only by `product-brief` (Art-Directed Editorial), written in original wor
 patterns seen in modern landing pages, with no brand names and no reused art; the user's
 own identity always overrides it, and polishing is left to a design tool. Both new skills
 are marked anticipated (D-006) until used on a real project.
+
+Update (2026-10-24): at the maintainer's request the anticipated mark was replaced by the
+measured result of the chain evals (`docs/F2-EVALUATION.md`), with the note that neither
+skill has met a real project yet. A fictional fixture proves the skills deliver what
+they promise; only a real project can show what they miss.

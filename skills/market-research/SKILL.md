@@ -46,7 +46,8 @@ say so and deliver only the research plan, with no figures (see `sourced-data`).
      counts over time). Mark the **three fastest growing**.
 6. **Competition:** the substitutes people use instead, then the **five main
    competitors**, each with what they do better, where they are weak, two quoted
-   reviews with source, the customer they ignore, and their price. Then:
+   reviews with source, the customer they ignore, their price, and how their home page
+   looks (palette, imagery, type, tone), which `product-brief` uses. Then:
    - a **positioning map** on the two axes that matter most to the customers found in
      steps 4 and 5 (for example price × depth, or self-serve × done-for-you), with every
      competitor placed and the reason for each placement;
