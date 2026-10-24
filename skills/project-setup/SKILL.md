@@ -29,7 +29,9 @@ contributor) finds the rules, the plan and the history in the same places.
    backups and local data. Ready-made guards in `templates/guards`, copied into the
    project's own `guards/` folder:
    - `check-forbidden-phrases.sh <list> <path>...` for promises the product must never
-     make in user-facing text, with the list in a file that grows with each review.
+     make in user-facing text, with the list in a file that grows with each review. Keep
+     one list at the repository root, read by every module's tests too, and run it over
+     generated output, not only templates.
    - `check-line-endings.sh '<pathspec>'...` for golden and generated files compared
      byte for byte: pinned to LF in `.gitattributes` and no CRLF on disk.
    - `run-checked.sh -- <build or test command>` to read the command's real exit code

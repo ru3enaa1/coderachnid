@@ -7,6 +7,10 @@
   `NativeCommandError` and sets `$?` to false **even when the build passed**. Trust
   `$LASTEXITCODE`, not the red text.
 - `Set-Content` defaults to the ANSI code page. Pass `-Encoding utf8` explicitly.
+- **A `.ps1` without a BOM is read as ANSI**, so accented literals in it don't match.
+  Save scripts as UTF-8 with BOM.
+- **A `.ps1` with `$ErrorActionPreference = "Stop"` dies when its output is redirected**:
+  native tools that print warnings on stderr (Maven does) become terminating errors.
 - PowerShell splits `-Dkey=path/file.txt` at the dot, and Maven then reads `.txt` as a
   build phase. Quote every `-D` argument that contains a dot.
 
@@ -58,6 +62,8 @@
   that falls back to SSH then reports a confusing access error. Test in a short path, or
   set `git config --global core.longpaths true`. Confirmed 2026-10-14 while testing a
   plugin install from GitHub.
+- A Python heredoc in Git Bash may read the text as cp1252, so a replacement with accents
+  finds nothing. Edit accented documents with a file tool.
 - Windows Python cannot see Git Bash's `/tmp`. Convert paths with `cygpath -w`.
 - Tools installed for Windows (Node, Docker) may be missing from Git Bash's `PATH` in
   agent sessions. Prepend their install folder explicitly.
@@ -71,6 +77,8 @@
 - `core.autocrlf` / `text=auto` converts generated files to CRLF on checkout, which
   breaks byte-for-byte comparisons. Pin them (`*.svg text eol=lf`, golden files) in
   `.gitattributes` and verify on a fresh clone.
+- **A folder-wide `text eol=lf` rule corrupts binaries placed there later** (a PDF golden
+  in the goldens folder). Add a `binary` exception for them *after* the folder rule.
 
 ## Display
 

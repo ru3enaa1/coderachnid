@@ -54,8 +54,17 @@ It contains:
   can run in minutes. Move on only after the owner confirms.
 - **Ask for inputs one step ahead**: mockups, copy or data that a screen needs are
   requested in the sub-step before it, so work never waits on them.
-- **For a non-technical owner, one short learning note per phase**: what was built, why
-  it matters, an analogy. It keeps decisions theirs.
+- **Review each mockup as a table before building the screen**: what the mockup says,
+  what gets built, and why they differ. Deviations are explained and the designer sees
+  which rule won.
+- **Keep a living table of recommendations** (R1…Rn): whatever a closing recommends and
+  isn't applied in that step goes in, with what, why and who receives it, and is marked
+  "applied" when done. Nothing recommended gets lost between sessions.
+- **For a non-technical owner, a top-down document** of the whole system, updated when
+  each sub-step closes, plus one short learning note per phase (what was built, why it
+  matters, an analogy). It keeps decisions theirs.
+- **The end client never sees "coming soon".** What doesn't exist yet doesn't appear on
+  screen, in documents or in their table of contents.
 - **Dependencies enter in the phase that needs them** (how to pick the version:
   `precise-code`).
 - **The project rules file always says where the project really is** (current phase,

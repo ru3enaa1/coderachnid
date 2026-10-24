@@ -19,6 +19,9 @@ browser window. Each control below has bitten a real project when it was missing
   browser send a request to localhost.
 - **Strict CSP** (`default-src 'self'`), no inline script or style. Vendor JS and fonts
   are served locally, with their version, license and SHA-256 recorded.
+- **No framing** (`frame-ancestors 'none'`) by default. If one page must be framed by the
+  app itself, give only that route `frame-ancestors 'self'` (and `SAMEORIGIN`) in its own
+  security chain, and test that every other route still denies framing.
 
 ## The window
 
@@ -37,4 +40,5 @@ be capturing anything.
 ## Tests to have
 
 No cookie → 403 · reused token → 403 · foreign `Host` → 403 · POST without CSRF → 403 ·
-LAN IP connection fails · technical log contains no customer name.
+LAN IP connection fails · technical log contains no customer name · routes other than
+the framed one deny framing.

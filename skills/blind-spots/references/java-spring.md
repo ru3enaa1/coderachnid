@@ -19,7 +19,14 @@
 - `dependency:build-classpath -pl <module>` cannot find reactor SNAPSHOTs. Add `-am`
   and `package` in the same run, with one output file per module.
 - `spring-boot.run.arguments` splits on commas, so `1366,657` becomes two arguments.
-  Use `1366x657`.
+  Use `1366x657`. In the other direction, a comma did *not* separate two arguments:
+  pass several properties to `spring-boot:run` as environment variables instead.
+- **Packaging only the app module can keep a stale copy of a changed sibling module**
+  inside the executable jar, and reproducible builds hide it by fixing timestamps. Delete
+  the app jar before packaging and check the new class is inside.
+- **A native library loaded with `System.load`** (some JDBC drivers do) triggers a
+  warning on recent Java, and will be blocked: add `Enable-Native-Access: ALL-UNNAMED`
+  to the jar manifest and confirm the repackage step keeps it.
 - A Maven wrapper that pins the `.zip` checksum fails with "distribution might be
   compromised" when `unzip` is missing and it downloads the `.tar.gz`. Install `unzip`
   in the container.

@@ -25,6 +25,8 @@ into a workflow: the human can read only the block and still know where things s
   plain words. Never imply that it passed.
 - **One next step**, not a menu. If a decision belongs to the human, name it as a
   watch-out and recommend an option.
+- **Recommendations not applied in this step go to the plan's living table** (see
+  `phased-plan`), so they survive the session instead of scrolling away.
 - **Write in the user's language.** The labels may be translated, but their order stays
   the same.
 

@@ -46,7 +46,8 @@ wish.**
   rejected.
 - **Logs carry no personal or customer data.** Check what your libraries log too:
   migration tools and ORMs often print connection URLs and file names, which can contain
-  a customer's name. Turn those loggers down.
+  a customer's name. Turn those loggers down, also on code paths that run without the
+  framework (a terminal command), where its logging configuration is never read.
 - **Never swallow an exception** or flatten it into a generic error that hides the
   cause, and never leak internals to the end user.
 - **Privacy by design:** counts, not contents; roles, not people. No surveillance

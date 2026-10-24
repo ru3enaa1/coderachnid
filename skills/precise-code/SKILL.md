@@ -60,6 +60,11 @@ Same input + same code version + same data = the same output, byte for byte.
 - **Version plus content hash.** A version number alone doesn't pin data: someone edits
   it and forgets to bump. Hash the content, after normalizing line endings and removing
   a BOM, so the same data gives the same hash on every OS.
+- **Outputs that must reproduce exactly** (simulations, reports, drawings compared byte
+  for byte) need your own generator with its test vector, one random stream per datum,
+  a canonical input, strict math and fixed document metadata. Details:
+  `references/reproducible-outputs.md`. Documents rendered to screen and PDF:
+  `../blind-spots/references/documents-and-pdf.md`.
 
 ## Dependencies
 
@@ -68,7 +73,13 @@ Same input + same code version + same data = the same output, byte for byte.
   blog post. When the framework manages a library, take the latest patch of the line it
   supports, not the next minor.
 - **Read the full dependency tree** after adding one. A filtered view can hide the
-  transitive dependency that causes the conflict.
+  transitive dependency that causes the conflict. When a library pulls an old family of
+  modules, pin every module of that family, not only the ones it names.
+- **Read the release notes and the license before adding**, looking for usage clauses.
+  A library's new version asked not to be used with AI agents: respect it and take
+  another path.
+- **Skip same-day releases**; wait for the version to settle. Ban optional script engines
+  a library can pull in (with the build's enforcer or equivalent).
 
 ## Data written by people
 

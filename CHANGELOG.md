@@ -6,6 +6,48 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-23
+
+A second round of lessons from the same project lifecycle, from data loading to PDF
+reports (D-012). No new skill: the detail lives in references that load only when
+needed.
+
+### Added
+
+- `precise-code/references/reproducible-outputs.md`: your own generator with its test
+  vector, one random stream per datum, canonical inputs, money rounded once at
+  persistence, one formatting rule per number, stable tie-breaks, strict math, byte-
+  identical PDFs, time zone from the data.
+- `blind-spots/references/documents-and-pdf.md`: model before view, the snapshot not the
+  present, CSS for the most limited engine, XML-only PDF engines, `@media` order, glyphs
+  checked in the font, PDF/UA alt text, page-by-page image review, quiet logging that
+  keeps diagnostics.
+- `tests-that-bite/references/test-traps.md`: negative cases that can produce output,
+  mutation survivors read as questions, known equivalent mutants, clock-safe dates,
+  absence checks that skip embedded CSS, banned phrases over generated output, writer
+  and reader round-trips, permuted-order determinism, review tools that close what they
+  open.
+- `precise-code` Dependencies: read release notes and license for usage clauses
+  (including clauses about AI agents), pin a whole transitive family, skip same-day
+  releases, ban optional script engines.
+- `safe-database`: guarded `DROP`, old-format fixtures built by migrating, renamed
+  migrations leaving stale build copies. SQLite: `ADD COLUMN` rewriting stored DDL,
+  ASCII-only `lower()`, drivers scanning the temp folder.
+- `phased-plan`: mockup reviewed as a table, a living table of recommendations, a
+  top-down document for the owner, never "coming soon" to the end client.
+  `response-closing` sends unapplied recommendations to that table.
+- Pitfalls: `.ps1` encoding and `Stop` with redirection, Python heredocs in cp1252,
+  folder-wide `eol` rules hitting binaries, browser extensions in clean profiles,
+  one-time keys, screen-reader labels stretching scrollers, SVG attributes under CSP,
+  `__...__` preprocessing, template engines without their framework, stale nested jars,
+  native access on recent Java, framing one route only, logging on paths without the
+  framework.
+
+### Changed
+
+- `blind-spots` also activates on generated documents and PDFs (all 8 of its cases,
+  15 of 15 runs).
+
 ## [0.3.0] - 2026-10-15
 
 Lessons from a full project lifecycle, generalized (D-012).
@@ -111,7 +153,8 @@ First public release.
 - `security-first` names any endpoint, even one that edits a field; `tests-that-bite`
   leads with reported bugs and a failing test first.
 
-[Unreleased]: https://github.com/ru3enaa1/coderachnid/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/ru3enaa1/coderachnid/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/ru3enaa1/coderachnid/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/ru3enaa1/coderachnid/compare/v0.2.1...v0.3.0
 [0.2.1]: https://github.com/ru3enaa1/coderachnid/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/ru3enaa1/coderachnid/compare/v0.1.0...v0.2.0

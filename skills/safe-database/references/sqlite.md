@@ -19,3 +19,12 @@
   it read-only, with the app stopped.
 - `schema.sql` written in SQLite dialect will not run in a MySQL tool. Say so in the file
   header.
+- **`ALTER TABLE ADD COLUMN` rewrites the stored `CREATE TABLE`**, appending the column
+  after the last one, before table constraints, with no line break. A test that compares
+  a readable `schema.sql` with the database must normalize whitespace around commas and
+  parentheses.
+- **`lower()` folds ASCII only**: "Recepción" and "recepcion" stay different. Compare
+  names for duplicates in code, without accents, case or extra spaces.
+- **Some drivers scan the whole temp folder when loading their native library**; one
+  damaged entry there stops every database from opening. Give the driver its own temp
+  folder.
