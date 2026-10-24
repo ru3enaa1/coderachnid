@@ -11,8 +11,9 @@ arguments: [product]
 The decision to make: **what exactly do we sell to whom, at what price, and how do we
 find out cheaply whether they buy it?** Product: $product.
 
-> **Anticipated:** these rules were written from practice elsewhere and have not
-> yet been used on a real project with this plugin. Record what fails in `pitfall-log`.
+> **Measured** (2026-10-24, fictional product): every section delivered in 2 of 2 runs;
+> a loose prompt for the same offer scored 0.10. Not yet used on a real project: record
+> what fails in `pitfall-log`.
 
 Write in the user's language. If the product argument is missing, take the idea from
 `docs/MARKET.md` and confirm it with the user.

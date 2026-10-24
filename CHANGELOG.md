@@ -6,6 +6,23 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-10-24
+
+### Added
+
+- Evals for the discovery chain (`evals/chain/`): a fictional product with a finished
+  market report, `offer` and `product-brief` run by their commands against loose
+  prompts, and a known-good and known-bad document for every grader. Commands 1.00 in
+  2 of 2 runs each; loose prompts 0.10 (offer) and 0.29 (brief).
+
+### Changed
+
+- `offer` and `product-brief` are no longer marked anticipated: they carry their
+  measured result and still ask for real-project failures in `pitfall-log`.
+- `market-research` records how each competitor's home page looks; `product-brief`
+  looks for the user's material in the repository first, and looks up or asks for the
+  competitors' look instead of inventing it.
+
 ## [0.6.0] - 2026-10-24
 
 The discovery chain: research → offer → product brief → code (D-014).

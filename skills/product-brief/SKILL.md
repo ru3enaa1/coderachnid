@@ -11,8 +11,9 @@ arguments: [product]
 The decision to make: **what does the first version look like and what must it do, in
 enough detail that design and code can start without guessing?** Product: $product.
 
-> **Anticipated:** these rules were written from practice elsewhere and have not yet
-> been used on a real project with this plugin. Record what fails in `pitfall-log`.
+> **Measured** (2026-10-24, fictional product): every section delivered in 2 of 2 runs;
+> a loose prompt for the same brief scored 0.29. Not yet used on a real project: record
+> what fails in `pitfall-log`.
 
 Write in the user's language. If the product argument is missing, take it from
 `docs/OFFER.md` and confirm it with the user.
@@ -23,19 +24,21 @@ Write in the user's language. If the product argument is missing, take it from
   recommend running the earlier links (`/coderachnid:market-research`, then
   `/coderachnid:offer`). If the user goes on anyway, label what rests on no evidence as
   ASSUMPTION.
-- **Ask for the user's own material**, all in one question: logo, typefaces, colors,
-  pages or apps they like and why, things they dislike, and any brand rules. **Their
-  taste always wins over this skill's defaults**; where they give nothing, the brief
-  proposes, and says it is a proposal.
+- **Look for the user's own material in the repository first** (brand notes, logo
+  files, a `docs/` or `brand/` folder), then ask only for what is missing, all in one
+  question: logo, typefaces, colors, pages or apps they like and why, things they
+  dislike, and any brand rules. **Their taste always wins over this skill's defaults**;
+  where they give nothing, the brief proposes, and says it is a proposal.
 
 ## Part A · Design direction
 
 Read `references/art-directed-editorial.md` before writing this part.
 
 1. **What the competitors look like.** For the five main competitors in the market
-   report: palette, type, hero imagery, layout, tone. Name the **category default** (the
-   look most of them share) and the **free visual position**, the look nobody in the
-   category uses that still fits the customer.
+   report: palette, type, hero imagery, layout, tone. If the report doesn't record it,
+   look at their sites with web tools or ask the user for screenshots; never invent it.
+   Name the **category default** (the look most of them share) and the **free visual
+   position**, the look nobody in the category uses that still fits the customer.
 2. **Branding skeleton.** Built on the user's material when given; otherwise proposed:
    the family from the reference and why it fits the niche and stands apart from the
    competitors, a type pairing, a palette of neutrals plus **one accent** (hex values,

@@ -180,6 +180,46 @@ The rest of v0.4.0 adds references and rules inside skills; no description other
 | Relay, real resumed session past the threshold: writes the handoff, asks for `/clear` | **Yes**; the first try showed that writes under `.claude/` need permission, so the handoff moved to `.coderachnid/` |
 | Both plugins install from the same marketplace in a clean configuration | **Yes**; the relay's hooks carry no model context cost |
 
+## v0.6.1 · The discovery chain: `offer` and `product-brief` (2026-10-24)
+
+A fictional product (RecallKit, reminders for small dental clinics) with a finished
+market report, so no run needs web search. Each skill, run by its command, is compared
+with a loose prompt in Spanish asking for the same document, the way an owner would
+type it. All runs with the plugin loaded; graders judged by Sonnet. Suite and fixtures:
+`evals/chain/`.
+
+| Check | Result |
+|---|---|
+| Positive controls: 12 graders over a known-good and a known-bad document | good **1.00**, bad **0.00** for both skills |
+| `/coderachnid:offer` (5 graders) | **1.00** (2 of 2 runs) · USD 0.61 per run |
+| Loose prompt for the same offer | **0.10** · USD 0.38 per run |
+| `/coderachnid:product-brief` (7 graders) | **1.00** (2 of 2 runs) · USD 1.58 per run |
+| Loose prompt for the same brief | **0.29** · USD 0.52 per run |
+
+What the runs found:
+
+- **The default judge was not reliable enough.** With Haiku, the known-good brief failed
+  the data-and-threats grader 3 votes to 0 and two offer graders split. With Sonnet as
+  judge the controls came out clean, after one ambiguous clause was removed from the
+  "never promise" grader (it overlapped the guarantee grader). The chain suite uses
+  `--judge-model sonnet`.
+- **The first brief runs scored 0.86, and the skill was right.** The market report had no
+  record of how the competitors look, the runs had no web tools, and the brief refused
+  to invent it: it marked the table "not observed" and opened a question. The gap was in
+  the chain, so `market-research` now records each competitor's home-page look and
+  `product-brief` says to look or ask, never invent. With that, 1.00.
+- **What the loose prompts missed:** three anchored tiers, a guarantee checked against
+  consumer law, a numeric threshold for the test, a "never promise" list; a one-accent
+  palette, a mockup prompt, stories with acceptance criteria, data and threats, entities
+  and an explicit "not in" scope. Their documents were reasonable, but the graders
+  measure what the skills promise, which a loose prompt doesn't ask for: this shows the
+  skills deliver their structure, not that the base model can't.
+- **Cost:** the command runs cost about 1.6 times (offer) and 3 times (brief) as much as
+  the loose prompts, for documents two to three times longer. The whole measurement,
+  controls included, cost about USD 11 at API prices.
+- The fixture's regions were renamed after the offer runs (a privacy-guard hit); the
+  final control run used the renamed files.
+
 ## Status
 
 The F2 criterion is met: every skill was measured, and four descriptions were tuned on

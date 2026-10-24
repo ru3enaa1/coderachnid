@@ -173,8 +173,10 @@ each one by hand, in its own session; each reads the file the previous one wrote
    criteria, personal data and threats, entities, frozen MVP scope).
 
 Your own logo, typefaces, colors and references always win over the brief's proposal.
-The brief becomes the plan's discovery phase and its frozen scope before F0. `offer`
-and `product-brief` are new and not yet tried on a real project.
+The brief becomes the plan's discovery phase and its frozen scope before F0. On a
+fictional product, `offer` and `product-brief` delivered every section they promise in
+2 of 2 runs each, where a loose prompt for the same document covered 10% and 29%
+(`evals/chain/`). They are not yet tried on a real project.
 
 ## How it is checked
 
