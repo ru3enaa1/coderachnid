@@ -55,6 +55,16 @@ git tag -a vX.Y.Z -m "coderachnid vX.Y.Z"
 git push origin vX.Y.Z
 ```
 
+## v0.5.0 record (2026-10-24)
+
+- Guards: skills 0, private terms with `--history` 0, positive controls 76 of 76,
+  `validate` passed for both plugins (the root with the two expected warnings).
+- Clean install from GitHub: both plugins at 0.5.0 from commit `9ea855f`. `coderachnid`:
+  12 skills, 0 hooks; `plugin details` estimates about 1,197 tokens always on, but that
+  counts `market-research`, which `/context` shows is absent from the listing.
+  `coderachnid-relay`: 0 skills, 3 hooks, no model context cost, scripts present.
+  Tag `v0.5.0` on `9ea855f`.
+
 ## v0.4.0 record (2026-10-23)
 
 - Guards: skills 0, private terms with `--history` 0, positive controls 51 of 51,

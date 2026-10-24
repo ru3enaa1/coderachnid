@@ -6,6 +6,9 @@ CLAUDE.local.md
 # Local tooling installed per machine
 .claude/
 
+# Session handoff written by the handoff skill
+.coderachnid/
+
 # OS and editor
 .DS_Store
 Thumbs.db

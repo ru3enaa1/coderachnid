@@ -99,7 +99,11 @@ projects and generalized.
   (model-invoked) and `market-research` (by hand only, no listing cost), a discovery
   phase in `phased-plan`, and a second opt-in plugin `coderachnid-relay` with hooks and a
   status line (D-013). 76 positive controls; the relay checked end to end in real
-  Windows sessions. Pending: the maintainer's go-ahead to publish.
+  Windows sessions.
+- **2026-10-24 · v0.5.0 published.** Clean install verified (both plugins at 0.5.0, 12
+  skills, 0 hooks in `coderachnid`, 3 hooks with no context cost in the relay); tag
+  `v0.5.0` on `9ea855f`. **Next: v0.6.0 · discovery chain** (plan in
+  `.coderachnid/HANDOFF.md` while it is being built).
 
 ## 3. Structure
 
