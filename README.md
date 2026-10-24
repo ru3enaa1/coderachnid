@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fru3enaa1%2Fcoderachnid%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=3a3f47" alt="version">
-  <img src="https://img.shields.io/badge/skills-12-3a3f47" alt="skills: 12">
+  <img src="https://img.shields.io/badge/skills-14-3a3f47" alt="skills: 14">
   <img src="https://img.shields.io/badge/hooks-opt--in%20plugin-3a3f47" alt="hooks: opt-in plugin">
   <img src="https://img.shields.io/badge/plugin-Claude%20Code-3a3f47" alt="plugin: Claude Code">
   <img src="https://img.shields.io/badge/license-MIT-3a3f47" alt="license: MIT">
@@ -74,13 +74,16 @@ check that captured nothing.
 | `project-setup` | Starting a project or adopting coderachnid | Rules file, plan, ADR folder, database layout and project guards from templates |
 | `sourced-data` | The product shows prices, statistics, research or rules people rely on | A primary source, date and range for every figure; "no source, no number" |
 | `handoff` | The conversation has grown long, or you want to continue in a fresh session | A short handoff file so `/clear` costs nothing and the next session picks up the thread |
-| `market-research` | Only when you run `/coderachnid:market-research` (no cost in other sessions) | Market size, demand drivers, competitors, unmet needs from real reviews and money flows, every figure sourced, ending in the riskiest assumptions and how to test them |
+| `market-research` | Only when you run `/coderachnid:market-research` (no cost in other sessions) | Market size, demand drivers, the top ten problems ranked by urgency and willingness to pay, competitors on a positioning map with the free position, every figure sourced, ending in the riskiest assumptions and how to test them |
+| `offer` | Only when you run `/coderachnid:offer` (no cost in other sessions) | A one-sentence value proposition, three price tiers anchored to competitor prices, a guarantee you can honor, the cheapest test of the offer, and the promises the product must never make |
+| `product-brief` | Only when you run `/coderachnid:product-brief` (no cost in other sessions) | A design direction with a mockup prompt for your design tool, plus stories with acceptance criteria, personal data and threats, entities and a frozen MVP scope |
 
 Stack-specific knowledge lives in each skill's `references/` and is loaded only when the
 task needs it: Windows shells, Java/Spring, server-side templates and HTMX, web
 frontend and generated art, documents rendered to screen and PDF, SQLite and MySQL, apps
 served on the user's own machine, AI model integration, data files written by people
-(YAML, JSON), reproducible outputs, and the ways a test passes without proving anything.
+(YAML, JSON), reproducible outputs, the ways a test passes without proving anything, and
+an editorial design direction for product pages.
 
 ## Guards for your project
 
@@ -152,12 +155,26 @@ large conversation whose cache has expired, and keeps every compaction summary.
 Details, settings and an optional status line with your five-hour usage:
 [plugins/relay/README.md](plugins/relay/README.md).
 
-### Start with evidence: `/coderachnid:market-research`
+### Start with evidence: the discovery chain
 
-Before building, run
-`/coderachnid:market-research "idea" "customer" "industry" "regions"`. It writes
-`docs/MARKET.md` with sourced figures and the three riskiest assumptions, which become
-the plan's discovery phase before F0.
+Before building, three commands take an idea to a brief the code can start from. Run
+each one by hand, in its own session; each reads the file the previous one wrote.
+
+1. `/coderachnid:market-research "idea" "customer" "industry" "regions"` writes
+   `docs/MARKET.md`: sourced figures, the top ten problems, the five main competitors
+   and the position none of them holds, and the three riskiest assumptions.
+2. `/coderachnid:offer "product"` writes `docs/OFFER.md`: what you sell, to whom, at
+   which price (anchored to the competitors' prices and labelled an assumption until
+   tested), the cheapest way to test it, and a list of promises your product must never
+   make, ready for the forbidden-phrases guard.
+3. `/coderachnid:product-brief "product"` writes `docs/BRIEF.md`: a design direction
+   chosen to stand apart from the competitors, a mockup prompt to hand to your design
+   skill or image generator, and the system requirements (stories with acceptance
+   criteria, personal data and threats, entities, frozen MVP scope).
+
+Your own logo, typefaces, colors and references always win over the brief's proposal.
+The brief becomes the plan's discovery phase and its frozen scope before F0. `offer`
+and `product-brief` are new and not yet tried on a real project.
 
 ## How it is checked
 

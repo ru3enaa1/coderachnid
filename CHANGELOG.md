@@ -6,6 +6,38 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-24
+
+The discovery chain: research → offer → product brief → code (D-014).
+
+### Added
+
+- Skill `offer`, run by hand with `/coderachnid:offer`: reads `docs/MARKET.md` and writes
+  `docs/OFFER.md` with a one-sentence value proposition, three price tiers anchored to
+  competitor prices (assumptions until tested), a guarantee that can be honored and is
+  legal in the regions, why it wins from the free position, the cheapest test of the
+  offer with its threshold, and the promises the product must never make. Anticipated.
+- Skill `product-brief`, run by hand with `/coderachnid:product-brief`: reads the market
+  report, the offer and the user's own references, and writes `docs/BRIEF.md` with a
+  design direction, a self-contained mockup prompt, user stories with acceptance
+  criteria, personal data and threats, entities and a frozen MVP scope. Anticipated.
+- `product-brief/references/art-directed-editorial.md`: eight shared rules, four
+  families (Technical Neo-Swiss, Blueprint Engraving, Atmospheric Scene, Hero Object),
+  how to choose one against the competitors' look, and guardrails for social proof,
+  contrast, weight and rights.
+
+### Changed
+
+- `market-research`: a top-ten problems table ranked by urgency × willingness to pay
+  (read from current spend on workarounds), with trend and the three fastest growing;
+  the five main competitors with quoted reviews, the customer they ignore, a positioning
+  map and the free position.
+- `phased-plan`: discovery runs as the chain, one link per session, and the brief's
+  frozen scope becomes the plan's.
+- `project-setup`: seeds the forbidden-phrases list from the offer and the plan from
+  the brief.
+- README: 14 skills, the discovery chain.
+
 ## [0.5.0] - 2026-10-24
 
 Keep long sessions light, and start projects with evidence (D-013).

@@ -1,6 +1,6 @@
 {
   "name": "coderachnid-relay",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Opt-in hooks for coderachnid: reload a handoff after /clear, warn when a conversation grows past a token threshold or is resumed with an expired cache, and keep every compaction summary.",
   "author": {
     "name": "ru3enaa1",
