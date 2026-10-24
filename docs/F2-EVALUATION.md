@@ -158,6 +158,17 @@ particular trap it added nothing the model didn't already know.
 | `sourced-data` stays quiet on an ordinary code change (ES) | **2/2** |
 | Every other skill's English "should fire" case, with 10 skills listed (1 run each) | 9/10; the miss is `response-closing`, expected (D-009, D-011) |
 
+## v0.4.0 · `blind-spots` on documents and PDFs (2026-10-23)
+
+| Check | Result |
+|---|---|
+| New case: add a PDF export rendered from a template | **2/2** (not measured before the change) |
+| Every earlier `blind-spots` case (EN, ES, templates, CSS) | **11/11** |
+| "Should not" cases (EN, ES) | **3/3** |
+
+The rest of v0.4.0 adds references and rules inside skills; no description other than
+`blind-spots` changed, so activation of the other skills is unaffected.
+
 ## Status
 
 The F2 criterion is met: every skill was measured, and four descriptions were tuned on

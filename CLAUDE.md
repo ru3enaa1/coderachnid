@@ -89,6 +89,10 @@ projects and generalized.
 - **2026-10-15 · v0.3.0 published.** README brought up to date and cross-checked against
   the repository. Clean install verified (10 skills, 0 hooks, about 1,010 tokens always
   on); tag `v0.3.0` on `ad789e5`.
+- **2026-10-23 · v0.4.0 prepared** (branch `feat/v0.4.0-field-lessons-2`). Second round
+  of field lessons: three new references (reproducible outputs, documents and PDF, test
+  traps) and rules in seven skills; `blind-spots` covers documents and PDFs (15/15 runs).
+  No new skill. Pending: the maintainer's go-ahead to publish.
 
 ## 3. Structure
 

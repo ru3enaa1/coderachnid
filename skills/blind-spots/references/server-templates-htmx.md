@@ -19,6 +19,12 @@ These break at render time, not at compile time.
 - A form that is re-rendered needs a class with getters and setters. `th:field` reads
   JavaBean getters, so a `record` doesn't work.
 - `@{/x(p=${null})}` writes `p=` (empty) rather than omitting it.
+- **`__...__` is preprocessing.** Two BEM classes (`block__element`) in one expression
+  break the template. Build the class name in code.
+- **Without its framework the engine may switch expression language** (Thymeleaf with
+  Spring uses SpEL; on its own, OGNL). Record properties read the same, but list
+  selection is written differently and static class access is best avoided. Before
+  writing the template, probe the exact expressions you need in a ten-line test.
 - Templates and Java changes need a restart. Edited static files are served from the
   build output, so copy them there or restart.
 - Fingerprinted static URLs (`app-<hash>.css`): templates always use `@{...}`, and tests

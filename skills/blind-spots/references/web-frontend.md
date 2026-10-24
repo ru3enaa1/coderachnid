@@ -14,6 +14,10 @@
   Put the grid in a container inside the fieldset.
 - A utility class that sets `position: relative` must come before any rule that
   positions the same element differently.
+- **Screen-reader-only labels positioned absolutely stretch a scrolling container** that
+  is not their containing block. Make the scroller `position: relative`.
+- Under a strict CSP with no inline styles, position chart marks with **SVG attributes**
+  (`x`, `width`), which are not styles.
 - Use design tokens for every color and size, with both themes defined. No inline
   `style=""` (CSP).
 - Don't copy fixed heights from a desktop mockup. A panel designed at 1440×900 runs off
@@ -34,6 +38,10 @@
 - **Test at the user's real sizes, not a standard list.** OS scaling shrinks the
   viewport (1080p at 125% is 1536×737), and a screenshot from the user can reveal an
   in-between size the design never planned for. Add it to the checked sizes.
+- **A clean profile still loads extensions installed for the whole machine** (one wallet
+  extension flooded the console). Launch the test browser with extensions disabled.
+- **A one-time key is spent by the first tool that uses it.** Order the review tools, or
+  restart the app between them.
 - **Check for overlap geometrically.** "No horizontal scrollbar" misses two components
   painted on top of each other. Compare their bounding rectangles in the browser and fail
   when any two intersect.
@@ -54,3 +62,13 @@
 
 - JS `Math.round(n*100)/100` and Java `%.2f` disagree on x.xx5 values. Round once, on
   one side, with a tested rule.
+
+## Generated art
+
+- **Green tests on generated art say nothing about how it reads.** Every test passed
+  while a drawing was plainly wrong. Keep the golden as a viewable sheet (HTML with every
+  variant), capture it at 3× and look before closing.
+- **Brand characters as one parametric formula**, not one drawing per case: the
+  silhouette fixed by category, the expression driven by the case's data. Each piece is
+  unique without randomness and reproducible. Describe third-party references in words
+  in the brief instead of attaching their images to a generator.

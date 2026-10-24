@@ -39,6 +39,12 @@ say a wrong line would be *noticed*.
 13. **Test the real content, not only fixtures.** Load the project's real data and allow
     only an explicit list of known-pending problems, each tied to the step that fixes
     it. The list only shrinks; at zero the test demands "no problems" for good.
+14. **A negative case must be able to produce output if the filter breaks.** An excluded
+    item with no data proves nothing: give it data that would trigger the rule.
+15. **Green is not "looks right".** For screens, documents and generated art, look at
+    the rendered result before closing (see `blind-spots`).
+
+More traps, from mutation testing to scripted input: `references/test-traps.md`.
 
 ## The pyramid
 

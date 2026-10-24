@@ -45,6 +45,15 @@ four steps, in order, with no skipping.
 
 - **Forward-only and non-destructive:** no `DROP` of data-bearing objects. Rename via
   add-copy-switch, and keep removals for a later release.
+- **An unavoidable `DROP` gets a guard.** Before dropping a table that should be empty,
+  count its rows into a temporary table with `CHECK (rows = 0)`: one row makes the
+  migration fail and roll back. The "no DROP" test whitelists exactly those statements
+  and checks the guard comes first.
+- **Build an old-format fixture by running the real migrations up to that version**,
+  never from a saved copy of old SQL. Test-only migrations are numbered after the last
+  real one, and the "current format" constant moves with every new migration.
+- **Renaming a migration file leaves the old copy in the build output**, and the tool
+  then finds two migrations with one number. Clean the build output after a rename.
 - **Applied automatically on open/start**, so a pending migration cannot be forgotten.
   A pending migration can break *every* integration test, not just its module's: schema
   validation at startup checks the whole schema.
