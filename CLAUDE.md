@@ -95,6 +95,11 @@ projects and generalized.
   No new skill.
 - **2026-10-23 · v0.4.0 published.** Clean install verified (10 skills, 0 hooks, about
   1,019 tokens always on, new references present); tag `v0.4.0` on `ee5763d`.
+- **2026-10-24 · v0.5.0 prepared** (branch `feat/v0.5.0-relay`). Skills `handoff`
+  (model-invoked) and `market-research` (by hand only, no listing cost), a discovery
+  phase in `phased-plan`, and a second opt-in plugin `coderachnid-relay` with hooks and a
+  status line (D-013). 76 positive controls; the relay checked end to end in real
+  Windows sessions. Pending: the maintainer's go-ahead to publish.
 
 ## 3. Structure
 
@@ -104,6 +109,7 @@ projects and generalized.
 skills/<name>/SKILL.md            one sense per folder; detail in references/
 skills/project-setup/templates/   CLAUDE.template.md, DEVELOPMENT_PLAN.md, ADR.md
 output-styles/                    coderachnid:closing, the opt-in five-point closing (D-011)
+plugins/relay/                    coderachnid-relay, the opt-in hooks plugin (D-013)
 guards/                           scripts that verify (the third layer)
 docs/DECISIONS.md                 why the plugin is shaped this way
 assets/                           README artwork; edit build-assets.mjs, never the SVGs
@@ -168,7 +174,9 @@ the VS Code extension (`.../anthropic.claude-code-*/resources/native-binary/clau
 
 - Branch per phase (`feat/f1-local-trial`), conventional commits, merge to `main` with
   the maintainer's approval. Commit only when asked.
-- Bump `version` in **both** manifests and move CHANGELOG entries on every release.
+- Bump `version` in **all three** manifests (`.claude-plugin/plugin.json`, both entries of
+  `.claude-plugin/marketplace.json`, `plugins/relay/.claude-plugin/plugin.json`) and move
+  CHANGELOG entries on every release.
 
 ---
 

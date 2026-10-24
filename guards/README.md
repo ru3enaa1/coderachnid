@@ -32,6 +32,13 @@ The MySQL path is tested against a stand-in `mysqldump` (good, failed and trunca
 dumps). Running it against a real server is still **anticipated**: confirm it on the
 first project that uses it.
 
+## Relay hooks
+
+The `coderachnid-relay` plugin (`plugins/relay/`) is covered by the same suite: every
+hook script and the status line run on planted inputs (handoff present or missing,
+sizes below and above the threshold, warm and expired caches, escaped Windows paths),
+and each must print exactly what it should, or nothing, and exit 0.
+
 ## Exit codes
 
 All guards share one convention:

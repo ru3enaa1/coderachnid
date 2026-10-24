@@ -50,6 +50,6 @@
 <text x="632" y="366" xml:space="preserve"><tspan fill="#c27400">data</tspan>      never touches the original</text>
 <text x="632" y="396" xml:space="preserve"><tspan fill="#c27400">phases</tspan>    done once, closed clean</text>
 </g>
-<text x="632" y="452" font-size="12" fill="#5b626c">10 skills · no hooks by default · Claude Code plugin</text>
+<text x="632" y="452" font-size="12" fill="#5b626c">12 skills · no hooks by default · Claude Code plugin</text>
 </g>
 </svg>

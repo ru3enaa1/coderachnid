@@ -1,0 +1,19 @@
+schema_version: "1.1"
+name: act-handoff-fires-es
+description: "handoff should activate when the user wants to continue in a fresh session, Spanish phrasing (v0.5.0)."
+tags: [f5, activation, handoff, es]
+runs: 2
+context:
+  scaffold_script: fixture.sh
+execution:
+  max_turns: 8
+  timeout_seconds: 300
+  allowed_tools: [Read, Glob, Grep, Skill]
+  prompt: |
+    Mañana seguimos en un chat nuevo. Deja guardado el contexto de lo que estamos haciendo
+    para no tener que explicarlo otra vez.
+graders:
+  - name: skill-fired
+    type: tool_used
+    tool: Skill
+    input_match: '"skill"\s*:\s*"(?:[\w-]+:)?handoff"'

@@ -11,8 +11,8 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fru3enaa1%2Fcoderachnid%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=3a3f47" alt="version">
-  <img src="https://img.shields.io/badge/skills-10-3a3f47" alt="skills: 10">
-  <img src="https://img.shields.io/badge/hooks-off%20by%20default-3a3f47" alt="hooks: off by default">
+  <img src="https://img.shields.io/badge/skills-12-3a3f47" alt="skills: 12">
+  <img src="https://img.shields.io/badge/hooks-opt--in%20plugin-3a3f47" alt="hooks: opt-in plugin">
   <img src="https://img.shields.io/badge/plugin-Claude%20Code-3a3f47" alt="plugin: Claude Code">
   <img src="https://img.shields.io/badge/license-MIT-3a3f47" alt="license: MIT">
 </p>
@@ -73,6 +73,8 @@ check that captured nothing.
 | `pitfall-log` | Debugging something that behaved unexpectedly, or a fix that already failed | Turns each mistake into a dated rule with the check that catches it |
 | `project-setup` | Starting a project or adopting coderachnid | Rules file, plan, ADR folder, database layout and project guards from templates |
 | `sourced-data` | The product shows prices, statistics, research or rules people rely on | A primary source, date and range for every figure; "no source, no number" |
+| `handoff` | The conversation has grown long, or you want to continue in a fresh session | A short handoff file so `/clear` costs nothing and the next session picks up the thread |
+| `market-research` | Only when you run `/coderachnid:market-research` (no cost in other sessions) | Market size, demand drivers, competitors, unmet needs from real reviews and money flows, every figure sourced, ending in the riskiest assumptions and how to test them |
 
 Stack-specific knowledge lives in each skill's `references/` and is loaded only when the
 task needs it: Windows shells, Java/Spring, server-side templates and HTMX, web
@@ -135,6 +137,28 @@ On a capped plan, every installed skill's description is read in every session. 
 session that isn't development work, `/plugin disable coderachnid` and
 `/plugin enable coderachnid` turn it off and on.
 
+### Keep long sessions light: `coderachnid-relay`
+
+Every message re-reads the whole conversation, so long sessions get expensive. The
+optional second plugin in this repository keeps the thread in a short handoff file
+instead: past a token threshold it asks Claude to write the handoff, you type `/clear`,
+and the next session starts with the handoff loaded. It also warns before resuming a
+large conversation whose cache has expired, and keeps every compaction summary.
+
+```
+/plugin install coderachnid-relay@coderachnid
+```
+
+Details, settings and an optional status line with your five-hour usage:
+[plugins/relay/README.md](plugins/relay/README.md).
+
+### Start with evidence: `/coderachnid:market-research`
+
+Before building, run
+`/coderachnid:market-research "idea" "customer" "industry" "regions"`. It writes
+`docs/MARKET.md` with sourced figures and the three riskiest assumptions, which become
+the plan's discovery phase before F0.
+
 ## How it is checked
 
 - **Activation:** every skill has cases, in English and Spanish, for tasks that should
@@ -152,7 +176,8 @@ session that isn't development work, `/plugin disable coderachnid` and
 2. **Every rule comes from a real failure.** It carries its reason and points to a check.
 3. **Load only what's needed.** Short skills, with detail in `references/`, to keep the
    agent's context clean.
-4. **No hooks by default.** Nothing runs on every turn unless you opt in.
+4. **No hooks by default.** Nothing runs on every turn unless you opt in; the hooks live
+   in the separate `coderachnid-relay` plugin.
 5. **Measured, not assumed.** A skill or a rule stays only if a test shows it fires when
    it should and changes the result.
 6. **Vendor-neutral.** Patterns, not products.

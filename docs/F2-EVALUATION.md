@@ -169,6 +169,17 @@ particular trap it added nothing the model didn't already know.
 The rest of v0.4.0 adds references and rules inside skills; no description other than
 `blind-spots` changed, so activation of the other skills is unaffected.
 
+## v0.5.0 · `handoff`, `market-research` and the relay (2026-10-24)
+
+| Check | Result |
+|---|---|
+| `handoff` fires when the user wants to continue in a fresh session (EN, ES) | **4/4** |
+| `handoff` stays quiet on an ordinary question about the code (ES) | **2/2** |
+| `market-research` absent from the skill listing (`/context` in a real session) | **Absent**: no cost until run. `plugin details` estimates ~90 tokens; its estimate ignores `disable-model-invocation` |
+| Relay, real Windows session: new session answers from the handoff without reading files | **Yes** (a codeword only present in the handoff) |
+| Relay, real resumed session past the threshold: writes the handoff, asks for `/clear` | **Yes**; the first try showed that writes under `.claude/` need permission, so the handoff moved to `.coderachnid/` |
+| Both plugins install from the same marketplace in a clean configuration | **Yes**; the relay's hooks carry no model context cost |
+
 ## Status
 
 The F2 criterion is met: every skill was measured, and four descriptions were tuned on

@@ -94,3 +94,16 @@ Only `sourced-data` became a new skill: it has a trigger no other skill covers. 
 data-as-code practices went into a `precise-code` reference instead of a skill of their
 own, because every skill's description costs tokens in every session and competes in a
 listing whose budget is 1% of the context window; a reference loads only when needed.
+
+## D-013 · Hooks ship as a second, opt-in plugin in the same repository (2026-10-24)
+
+Long conversations re-read their whole context on every message, and resuming one after
+the prompt cache expires re-sends all of it. Claude Code lets hooks see the transcript,
+inject a file into a new session and react to compaction, but no hook can clear a
+session. So the design keeps one manual step (`/clear`) and automates the rest: a
+`handoff` skill writes `.coderachnid/HANDOFF.md`, and hooks ask for it past a token
+threshold and reload it in the next session. D-004 holds: the hooks live in
+`coderachnid-relay`, a second plugin listed by the same marketplace and installed only by
+those who want it. The handoff lives in `.coderachnid/`, not `.claude/`, because Claude
+Code asks permission for every write under `.claude/` (found in a real session).
+`market-research` sets `disable-model-invocation`, so it costs nothing until it is run.
