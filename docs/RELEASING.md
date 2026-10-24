@@ -55,6 +55,20 @@ git tag -a vX.Y.Z -m "coderachnid vX.Y.Z"
 git push origin vX.Y.Z
 ```
 
+## v0.6.0 record (2026-10-24)
+
+- Guards: skills 0 (14 skills), private terms with `--history` 0, positive controls 76
+  of 76, `validate` passed (the two expected root warnings, plus a plugin-directory note
+  that there is no PNG icon, which doesn't change the result).
+- History: every author and committer uses the no-reply address; no secret; no
+  personal path.
+- Clean install from GitHub: both plugins at 0.6.0 from commit `2827944`. `coderachnid`:
+  14 skills, 0 hooks, `offer`, `product-brief` and its reference present. `plugin
+  details` estimates about 1,432 tokens always on, but that counts the three by-hand
+  skills (about 320 tokens) that the listing leaves out, so about 1,110 in practice.
+  `coderachnid-relay`: 0 skills, 3 hooks, no model context cost. Tag `v0.6.0` on
+  `2827944`.
+
 ## v0.5.0 record (2026-10-24)
 
 - Guards: skills 0, private terms with `--history` 0, positive controls 76 of 76,

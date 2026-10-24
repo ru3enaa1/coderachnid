@@ -108,6 +108,9 @@ projects and generalized.
   (D-014): `market-research` gains the top ten problems and the free position; new
   by-hand skills `offer` and `product-brief` (14 skills, both anticipated), with the
   Art-Directed Editorial design reference. Evals for the chain still open.
+- **2026-10-24 · v0.6.0 published.** Clean install verified (both plugins at 0.6.0, 14
+  skills, 0 hooks in `coderachnid`); tag `v0.6.0` on `2827944`. **Next:** evals for the
+  chain and a first real run of it before `offer` and `product-brief` lose "anticipated".
 
 ## 3. Structure
 
