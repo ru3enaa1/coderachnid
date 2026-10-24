@@ -53,6 +53,14 @@ git tag -a vX.Y.Z -m "coderachnid vX.Y.Z"
 git push origin vX.Y.Z
 ```
 
+## v0.4.0 record (2026-10-23)
+
+- Guards: skills 0, private terms with `--history` 0, positive controls 51 of 51,
+  `validate` passed with the two expected warnings.
+- Clean install from GitHub: 0.4.0 from commit `ee5763d`, 10 skills, 0 hooks, the three
+  new references present; about 1,019 tokens always on (1,012 in 0.3.0). Tag `v0.4.0`
+  on `ee5763d`.
+
 ## v0.3.0 record (2026-10-15)
 
 - Guards: skills 0, private terms with `--history` 0, positive controls 51 of 51,

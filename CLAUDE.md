@@ -92,7 +92,9 @@ projects and generalized.
 - **2026-10-23 · v0.4.0 prepared** (branch `feat/v0.4.0-field-lessons-2`). Second round
   of field lessons: three new references (reproducible outputs, documents and PDF, test
   traps) and rules in seven skills; `blind-spots` covers documents and PDFs (15/15 runs).
-  No new skill. Pending: the maintainer's go-ahead to publish.
+  No new skill.
+- **2026-10-23 · v0.4.0 published.** Clean install verified (10 skills, 0 hooks, about
+  1,019 tokens always on, new references present); tag `v0.4.0` on `ee5763d`.
 
 ## 3. Structure
 
