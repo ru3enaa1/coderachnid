@@ -32,9 +32,12 @@ It contains:
 
 ## Rules
 
-- **Discovery comes before F0** for a new product: market research
-  (`/coderachnid:market-research`), the three riskiest assumptions, and the cheapest test
-  for each. F0 starts when the owner decides "go" on that evidence, not on enthusiasm.
+- **Discovery comes before F0** for a new product, as a chain run by hand, one link per
+  session: `/coderachnid:market-research` (`docs/MARKET.md`: the three riskiest
+  assumptions and the cheapest test for each), `/coderachnid:offer` (`docs/OFFER.md`:
+  the offer and its test), `/coderachnid:product-brief` (`docs/BRIEF.md`: design
+  direction, stories, data, frozen scope). F0 starts when the owner decides "go" on that
+  evidence, not on enthusiasm; the brief's frozen scope becomes the plan's.
 - **F0 is foundations**: build, tests, architecture tests, coverage gates, the data
   layer with migrations, security baseline, project rules file. Nothing visible to users
   is built on sand.

@@ -18,7 +18,8 @@ contributor) finds the rules, the plan and the history in the same places.
    - `CLAUDE.md` from `CLAUDE.template.md`: the project rules (non-negotiables, where we
      really are, architecture, stack, conventions, pitfalls, commands, document map,
      response closing). The template has another name so it isn't loaded as live rules.
-   - `DEVELOPMENT_PLAN.md`: goal, frozen scope, phases F0…Fn (see `phased-plan`).
+   - `DEVELOPMENT_PLAN.md`: goal, frozen scope, phases F0…Fn (see `phased-plan`). When
+     `docs/BRIEF.md` exists, its frozen scope and stories seed the plan.
    - `docs/adr/0001-<first-decision>.md`, from `ADR.md`.
    - `database/` with `migrations/`, `schema.sql`, `examples/`, plus `dev/` and
      `backups/` git-ignored (see `safe-database`).
@@ -31,7 +32,8 @@ contributor) finds the rules, the plan and the history in the same places.
    - `check-forbidden-phrases.sh <list> <path>...` for promises the product must never
      make in user-facing text, with the list in a file that grows with each review. Keep
      one list at the repository root, read by every module's tests too, and run it over
-     generated output, not only templates.
+     generated output, not only templates. Seed it from the "never promise" list in
+     `docs/OFFER.md` when the project has one.
    - `check-line-endings.sh '<pathspec>'...` for golden and generated files compared
      byte for byte: pinned to LF in `.gitattributes` and no CRLF on disk.
    - `run-checked.sh -- <build or test command>` to read the command's real exit code

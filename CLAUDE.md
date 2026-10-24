@@ -104,6 +104,10 @@ projects and generalized.
   skills, 0 hooks in `coderachnid`, 3 hooks with no context cost in the relay); tag
   `v0.5.0` on `9ea855f`. **Next: v0.6.0 · discovery chain** (plan in
   `.coderachnid/HANDOFF.md` while it is being built).
+- **2026-10-24 · v0.6.0 prepared** (branch `feat/v0.6.0-discovery`). Discovery chain
+  (D-014): `market-research` gains the top ten problems and the free position; new
+  by-hand skills `offer` and `product-brief` (14 skills, both anticipated), with the
+  Art-Directed Editorial design reference. Evals for the chain still open.
 
 ## 3. Structure
 

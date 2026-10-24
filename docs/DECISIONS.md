@@ -107,3 +107,18 @@ threshold and reload it in the next session. D-004 holds: the hooks live in
 those who want it. The handoff lives in `.coderachnid/`, not `.claude/`, because Claude
 Code asks permission for every write under `.claude/` (found in a real session).
 `market-research` sets `disable-model-invocation`, so it costs nothing until it is run.
+
+## D-014 · Discovery runs as a chain of by-hand skills, one file each (2026-10-24)
+
+`market-research` answered "is it worth building?" but left a gap before code: what to
+sell, at which price, and what the first version looks like. Two skills close it,
+`offer` and `product-brief`, and `market-research` gains the inputs they need (the top
+ten problems ranked by urgency × willingness to pay, and the free position among the five
+main competitors). All three set `disable-model-invocation`, so they cost nothing in
+sessions that don't run them, and each writes one file the next one reads
+(`docs/MARKET.md` → `docs/OFFER.md` → `docs/BRIEF.md`), so each can run in its own
+session with the handoff carrying the thread. The design direction lives in a reference
+loaded only by `product-brief` (Art-Directed Editorial), written in original words from
+patterns seen in modern landing pages, with no brand names and no reused art; the user's
+own identity always overrides it, and polishing is left to a design tool. Both new skills
+are marked anticipated (D-006) until used on a real project.
