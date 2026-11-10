@@ -15,7 +15,8 @@ say a wrong line would be *noticed*.
    reproduced.
 2. **Prove the test can fail (positive control).** Break the code or the input once on
    purpose and see the test go red. "Zero violations" means nothing until a known
-   violation shows up in the same check.
+   violation shows up in the same check. For an automated review check, put back the
+   exact defect it targets (how: `references/test-traps.md`).
 3. **"No longer exists" tests can pass vacuously.** Assert that the thing *existed*
    before asserting that it is gone.
 4. **A test can assert the bug.** When writing the expected value, read it as the end
@@ -38,7 +39,8 @@ say a wrong line would be *noticed*.
     differently from the folders the tests use.
 13. **Test the real content, not only fixtures.** Load the project's real data and allow
     only an explicit list of known-pending problems, each tied to the step that fixes
-    it. The list only shrinks; at zero the test demands "no problems" for good.
+    it. The list only shrinks; at zero the test demands "no problems" for good. Text
+    checks run over every sample case too, not only the unit fixture.
 14. **A negative case must be able to produce output if the filter breaks.** An excluded
     item with no data proves nothing: give it data that would trigger the rule.
 15. **Green is not "looks right".** For screens, documents and generated art, look at
@@ -64,7 +66,8 @@ More traps, from mutation testing to scripted input: `references/test-traps.md`.
 
 - Coverage minimum: 80% overall, ~90% for the core.
 - **Mutation testing** (PIT, Stryker, mutmut) on the core: at least 80% of mutants
-  killed. It catches the `> 5` guard that lets through exactly the case it should stop.
+  killed, for each new class as well as overall. It catches the `> 5` guard that lets
+  through exactly the case it should stop.
 - **Every security control has a test** (see `security-first`).
 - **Forbidden-content tests** for product promises: a test scans every user-facing
   text for forbidden phrases (for example "guaranteed" or "risk-free"). The list lives in

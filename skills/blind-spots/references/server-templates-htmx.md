@@ -25,8 +25,14 @@ These break at render time, not at compile time.
   Spring uses SpEL; on its own, OGNL). Record properties read the same, but list
   selection is written differently and static class access is best avoided. Before
   writing the template, probe the exact expressions you need in a ten-line test.
-- Templates and Java changes need a restart. Edited static files are served from the
-  build output, so copy them there or restart.
+- **With Spring, SpEL only calls public methods.** A package-private view `record` failed
+  at render time with "method cannot be found", although it had the method. Make view
+  models `public record`s with public methods. OGNL (the engine without Spring) reads them.
+- Templates and Java changes need a restart. **Where an edited stylesheet is served from
+  depends on how the app runs.** One project served static files from the build output
+  (copy them there, or restart); another, under `spring-boot:run`, served them straight
+  from the source folder, where touching the build output changes nothing. A packaged jar
+  needs repackaging. Check which before "fixing" a stale stylesheet.
 - Fingerprinted static URLs (`app-<hash>.css`): templates always use `@{...}`, and tests
   match with a pattern.
 

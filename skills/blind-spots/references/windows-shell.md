@@ -7,8 +7,18 @@
   `NativeCommandError` and sets `$?` to false **even when the build passed**. Trust
   `$LASTEXITCODE`, not the red text.
 - `Set-Content` defaults to the ANSI code page. Pass `-Encoding utf8` explicitly.
-- **A `.ps1` without a BOM is read as ANSI**, so accented literals in it don't match.
-  Save scripts as UTF-8 with BOM.
+- **A `.ps1` without a BOM is read as ANSI**, so accented literals in it don't match, and
+  neither does a symbol such as `·`: a wait for a window title containing one ran to its
+  timeout. Save scripts as UTF-8 with BOM, or match around the symbol (`-like "App*Home"`).
+  A template with accents that such a script writes lives in its own file.
+- **`Start-Process -ArgumentList @(...)` does not quote its arguments.** A folder under
+  `C:\Users\First Last` arrived split in two, and the program exited complaining about an
+  extra argument. Quote each path by hand (`` "`"$path`"" ``). Java's `ProcessBuilder`
+  does quote.
+- **A commit message with double quotes inside breaks.** The here-string reaches `git`
+  split, the pieces are read as paths (`pathspec '...' did not match`), the commit doesn't
+  happen, and what was staged goes into the next commit. Write the message to a file and
+  run `git commit -F <file>`. Confirmed 2026-11-09.
 - **A `.ps1` with `$ErrorActionPreference = "Stop"` dies when its output is redirected**:
   native tools that print warnings on stderr (Maven does) become terminating errors.
 - PowerShell splits `-Dkey=path/file.txt` at the dot, and Maven then reads `.txt` as a
@@ -22,6 +32,9 @@
 - A headless browser driven over a debugging port leaves child processes alive if you
   kill only the parent, and they lock the profile folder. Close it with the protocol's
   close command, or by PID filtered on the profile path.
+- **Two processes can't write the same log file.** A development server being stopped kept
+  writing for a few seconds, and the new one failed to start, with no message. Give each
+  start its own log file.
 
 ## Environment
 
@@ -48,6 +61,8 @@
   tab. Write code, regexes and Windows paths with a file-editing tool. A heredoc turned
   `[\\/]` into `[\/]` in a YAML file, a class that never matches a Windows path, and
   inline code (`node -e`) lost the backslashes of a regex. Confirmed again 2026-10-13.
+  Even a heredoc feeding an interpreter (`python - <<'EOF'`) lost them in an agent
+  session: a `\\n` became a real line break inside generated code (2026-11-09).
 - **Git for Windows ships GNU grep 3.0, which aborts (exit 134) on `-i` combined with
   more than one pattern** (`-f file` or several `-e`). Inside a loop, that abort looks
   like "no match", so a privacy or lint check passes without checking anything. Lowercase

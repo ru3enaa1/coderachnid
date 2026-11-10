@@ -36,6 +36,10 @@ in them is a bug, so they get the same discipline as code.
 - **Version plus content hash** for anything that produces a result from this data.
   Normalize line endings (Git on Windows converts LF to CRLF) and strip a BOM before
   hashing, or the same data hashes differently per machine.
+- **When the hash covers the raw text, a comment moves the figures.** Editing a comment in
+  a reference file changed the seed and every simulated range. Regenerate the goldens and
+  search the tests for hard-coded figures in the same commit, or hash the parsed content
+  when comments must not count.
 
 ## Testing the real content
 

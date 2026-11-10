@@ -37,6 +37,14 @@ in the UI, in reports, in knowledge files, in help pages.
   from a deterministic, tested formula; a model may explain them, never compute them
   (see `../security-first/references/llm-integration.md`).
 
+## Compare ranges, not points
+
+- **Two estimates differ only when their ranges don't overlap.** Touching is not
+  changing; otherwise say "no clear change". Overlapping ranges are compatible with no
+  change at all, so "better" or "worse" would claim more than the data shows.
+- **Match items by a stable key**, never by their position on screen, and list what got
+  worse first.
+
 ## Keep it fresh
 
 - **Every figure has a review date.** Prices, rates and regulations change; a test or a

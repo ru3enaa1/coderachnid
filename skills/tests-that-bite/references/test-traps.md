@@ -29,6 +29,9 @@ time in a project before it became a rule.
   half-even changes nothing; keep the call, because it documents the rule.
 - **Survivors on accessors nobody reads are a design smell, not a test gap.** Hold the
   finished value inside the draft instead of mirroring its fields.
+- **Break the score down per class after each feature.** A 93% total for the project hid
+  49% in a new reader. Hand-built edge cases raised the new code, on its own, above the
+  bar.
 - Mutation tools may run the tests in the build tool's runtime, not the toolchain's.
   Check which one when results differ from a normal run.
 
@@ -51,6 +54,43 @@ time in a project before it became a rule.
   covered without touching the test.
 - **One banned-phrase list for the whole repository**, read by every module's tests and
   by the guard, so a phrase added once is enforced everywhere.
+- **Text taken from data carries its own capital letter and final period.** Embedded in
+  the middle of a sentence it gave "a The same role…" and "next..". Place it after a colon,
+  strip its final period, and test the output for `..`. A name can also end in a period
+  ("Corp."), so the helper that closes a sentence must not add a second one.
+- **Run text checks over every sample case and the real data**, not only the unit
+  fixture. The double period came from the third sample case, the only one whose company
+  name ended in a period.
+- **An explanation built in code states the real effect of each cause.** "Why the cap"
+  also appeared for a cause that only delays. Each line takes its label from the effect
+  stored in the data, and a test asserts the label per cause.
+- **Tie text that quotes a fact to the source of that fact.** A screen named a backup file
+  after the schema version and went stale with the next migration. A test now compares
+  the text with the highest migration in the build.
+
+## Checks over screens
+
+- **A new automated check passes in a vacuum until its positive control.** A check for
+  overlapping text said "all good" twice: it filtered on a width property its boxes never
+  had. Prove each check by putting back the exact defect it targets: reverse-apply the
+  fixing commit's change (`git diff <fix>~1 <fix> -- <file> | git apply -R`), see the
+  check fail, then restore the file.
+- **One defect, one check.** Overlapping text, a squashed scroll region, a primary action
+  covered by another element, and a label clipped by its container's top edge are four
+  different checks, and none of them sees the others. A panel that covers on purpose (a
+  dismissible one) is not a collision: look for an element with a background on top.
+- **A review script that falls back to an empty state reports green.** One resumed "the
+  last record" only when a marker file existed; without it, it reviewed empty screens and
+  said all good. Print the state reached first and read that line before the verdict.
+- **Prepare state that lives only in server memory inside the same run** (an upload
+  preview: upload the sample through the browser protocol). A one-use login link won't let
+  a second script in.
+- **A browser script's expected texts change with the screens' texts.** A journey test
+  waiting for the old greeting failed after a copy change. Review those expectations with
+  every change of screen text.
+- **A tool that checks a placeholder view by its route stops checking it once that section
+  is built.** When building a section, search the tools for its route and point them at a
+  view that is still a placeholder.
 
 ## Tools and fixtures
 
@@ -61,5 +101,8 @@ time in a project before it became a rule.
   spent).
 - **Share test fixtures across modules as a test artifact** (a test-jar or its
   equivalent) instead of copying them, so presentation tests run on real core output.
+- **Native dialogs go behind a port.** File pickers and the file explorer are reached
+  through an interface with a primary test double, or a test pops a window on the
+  developer's screen.
 - **Scripted terminal input: an empty line is "Enter".** Use comments, never blank
   lines, as visual separators in an answers script.

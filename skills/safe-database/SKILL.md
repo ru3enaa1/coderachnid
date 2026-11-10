@@ -67,7 +67,12 @@ four steps, in order, with no skipping.
 
 - **The rule is enforced in both the service and the schema** (`CHECK`, `NOT NULL`,
   `UNIQUE`, foreign keys). Example: "a discard requires a reason" is checked by the
-  service *and* by a `CHECK`.
+  service (a friendly message) *and* by a `CHECK` (no direct write skips it), with a test
+  for each.
+- **Imports count every row:** read = accepted + rejected, each rejection with its
+  reason, and a `CHECK` that enforces the sum. Undo restores what was there before, not
+  only deletes. Importing a customer's file:
+  `../security-first/references/customer-imports.md`.
 - Use strict typing where the engine offers it (SQLite `STRICT` tables).
 - Store money as integers in minor units.
 - The application connects with a **least-privilege user** (DML only). Migrations run

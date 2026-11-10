@@ -117,6 +117,11 @@ projects and generalized.
   the measured result. Found and fixed: the chain never recorded the competitors' look.
 - **2026-10-24 · v0.6.1 published.** Clean install verified (both plugins at 0.6.1);
   tag `v0.6.1` on `cced920`. **Next:** a first real run of the chain.
+- **2026-11-09 · v0.7.0 prepared** (branch `feat/v0.7.0-field-lessons-3`). Third round of
+  field lessons (D-012) from the source project's MVP, desktop window, installer,
+  importer and releases: three new references (`desktop-apps`, `supply-chain`,
+  `customer-imports`), a screen-checks section in `test-traps`, rules in seven skills and
+  one correction (where edited static files are served from). No description changed.
 
 ## 3. Structure
 

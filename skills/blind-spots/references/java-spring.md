@@ -6,6 +6,10 @@
   declared further down the class reads its default (`null`, `0`), with no compile error.
   Declare dependencies first, or compute in a static method. A unit test that touches the
   class catches it.
+- **Immutable maps reject a null key even on lookup.** `Map.of(...).getOrDefault(null, x)`
+  throws `NullPointerException`: a record without an optional field turned a page into a
+  500, and tests with invented data never had the null. Check for null before the lookup,
+  and let a test load the real data.
 
 ## Build
 
@@ -30,6 +34,12 @@
 - A Maven wrapper that pins the `.zip` checksum fails with "distribution might be
   compromised" when `unzip` is missing and it downloads the `.tar.gz`. Install `unzip`
   in the container.
+- **"Unresolved compilation problems" in a test that compiles fine is the editor.** An
+  IDE's Java extension compiling into `target/` while Maven runs can leave broken classes
+  there. Delete the class from `target/test-classes` and run again; the code is fine.
+- **Search build logs for the test runner's failure marker** (`<<< FAIL` in Surefire),
+  never a bare `FAIL`: it also matches the "CHECK constraint failed" that the database
+  logs during the tests that expect it.
 
 ## Spring Boot
 
@@ -57,6 +67,9 @@
 - `?flag` with no value is `""` in Tomcat and `null` in MockMvc. Use
   `getParameterMap().containsKey(...)`.
 - `@WebMvcTest` slices need mocks for every bean a `@ControllerAdvice` touches.
+- In Spring 7, `MockMvcRequestBuilders.multipart(...)` is not a
+  `MockHttpServletRequestBuilder`: a test helper that decorates requests needs its own
+  overload for uploads.
 - An HTTP client for a third-party API is tested against the JDK's `HttpServer`
   imitating that API, never against the real API.
 - Default form-binding errors (`typeMismatch`) return technical text. Resolve messages

@@ -30,6 +30,8 @@ browser window. Each control below has bitten a real project when it was missing
 - Closing the window stops the server. Nothing stays listening in the background.
 - If the framework starts headless by default, opening the system browser needs
   headless mode explicitly turned off.
+- A native shell instead of a browser window (start order, permissions, webview cache,
+  installer): `../../blind-spots/references/desktop-apps.md`.
 
 ## Proving "zero CSP violations"
 

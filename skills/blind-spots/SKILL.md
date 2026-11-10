@@ -19,6 +19,7 @@ that has actually happened, and the check that would have caught it. When a row 
 | A metric estimated instead of measured (contrast, performance, size) | Measure it with a tool or a test; never copy a self-reported number |
 | A test edited to match the bug, or deleted to get green | Never. Fix the code, or explain why the test was wrong |
 | All tests and automated layout checks green, so it "looks right" | Look at screenshots at the user's real sizes, and at generated art at 3×, before closing |
+| A review script reports green on an empty or unexpected state | Print the state it reached first (which record, which screen) and read that line before the verdict |
 
 ## Assumptions
 
@@ -27,7 +28,8 @@ that has actually happened, and the check that would have caught it. When a row 
 | An API, column or file assumed to exist | Open it. Search for it. Read its tests |
 | Code copied from another project or library version | Check the version in use. Packages get renamed between majors |
 | A dependency added "at latest" | Pin an exact version, verified that day, added in the phase that needs it |
-| A mockup or example that breaks a project rule | The rule wins. Say so explicitly |
+| A mockup or example that breaks a project rule, or contradicts the data | The rule and the data win; say so. A screen reads what it says about the method from the data the engine uses, never from the mockup |
+| A mockup's handful of sample rows | Review every new screen with a realistic dataset before closing: six items in the mockup were thirty-two in real use, five on the same day |
 | A formula taken from a spec document | Work one case by hand, with units, before coding it: a spec can be wrong |
 | Long session: rules remembered loosely | Re-read the plan and the project rules before each new phase |
 
@@ -52,6 +54,8 @@ that has actually happened, and the check that would have caught it. When a row 
 | Screenshot at a size the browser can't render (desktop windows have a minimum width) | Emulate the device. Check at the real scaled viewport (1920×1080 at 125% is 1536×737) |
 | Accents encoded as entities in attributes | Compare with what the engine really emits, or use a regex |
 | YAML that loads but means something else: an unquoted `: ` in a sentence, a comma inside `{ }` or `[ ]`, `no`/`yes` read as booleans (YAML 1.1), a duplicate key silently overwriting | A test loads every data file with a loader that rejects duplicate keys |
+| A link that sends the user elsewhere "to do X" | X must be there, in that state. Only an end-to-end walk in the browser finds it: each screen's own test passed |
+| Screenshots for a public page (README, store listing) | Capture against a neutral data folder with invented data, look at every image before publishing, then delete the folder. The first batch showed the developer's home path |
 
 ## Stack references (load only the one you need)
 
@@ -60,5 +64,7 @@ that has actually happened, and the check that would have caught it. When a row 
 - `references/server-templates-htmx.md`: Thymeleaf-style templates and HTMX.
 - `references/web-frontend.md`: CSS, browsers, headless capture, clipboard, generated art.
 - `references/documents-and-pdf.md`: reports rendered to screen and PDF, fonts, PDF/UA.
+- `references/desktop-apps.md`: a native window around a local web app, installers,
+  trimmed runtimes, window captures, release screenshots.
 
 When you find a new blind spot, record it with `pitfall-log`.

@@ -46,7 +46,13 @@ It contains:
 - **Before starting a phase:** read its section, read the existing code, say what is
   missing and what will change, and agree on it *before* writing code.
 - **Closing a phase:** run the definition of done, write the status line, update the
-  project rules file ("where we really are"), merge.
+  project rules file ("where we really are"), merge. Re-check every "not built yet"
+  placeholder against the plan: three still promised phases that had already closed. One with
+  no phase says it has no date, and a section whose parts are built needs its own entry
+  route (one finished section still opened its placeholder).
+- **Build the skeleton of a future feature as real data that is empty today** (a list of
+  permissions, a queue), so every screen that will show it already reads it, and prove
+  the future state with a test that injects one fake entry.
 - **Scope changes are decisions.** Record them in an ADR with date and reason, and update
   the plan. Never let the scope drift quietly.
 - **Every architectural decision gets an ADR** (`docs/adr/NNNN-title.md`): context,

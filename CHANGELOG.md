@@ -6,6 +6,52 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-11-09
+
+A third round of field lessons, from the same project's last phases: the MVP, a native
+desktop window, the installer, a customer-data importer and the first releases (D-012).
+No new skill and no description changed, so the fixed cost per session stays the same.
+
+### Added
+
+- `blind-spots/references/desktop-apps.md`: keep the server in charge and swap only the
+  window, a closed list of window permissions, the window starts first and reads a
+  one-time link from stdout, a generation number per start, the webview's cache hiding a
+  broken control, window captures that never take the whole screen, the packager's
+  install folder, a trimmed runtime gated by a real document, signing as a switch, a
+  wizard dragged off-screen, release screenshots from a neutral data folder.
+- `security-first/references/supply-chain.md`: vulnerability scans inside the release
+  build (before the installer exists), reading each CVE because scanners match by name,
+  narrow suppressions with a reason, static-analysis exclusions justified in a file,
+  SBOM and checksums computed from the shared file, never rebuilding a shared artifact.
+- `security-first/references/customer-imports.md`: read a customer's export in memory,
+  strike personal headers, hash free identifiers with the file, read = accepted +
+  rejected with a `CHECK`, undo that restores, sample exports marked binary.
+- `test-traps.md`, new section on screen checks: a positive control for every new
+  automated check (reverse-apply the fix), one defect per check, review scripts that
+  print the state they reached, server-side state prepared in the same run, expected
+  texts that follow the screens, tools that stop checking a placeholder once it is built.
+- Rules in `blind-spots` (sample rows in mockups hide scale, a screen reads the method
+  from the data, a link "to do X" must find X, public screenshots), `tests-that-bite`
+  (mutation score per class, text from data and its final period, labels by real effect,
+  text tied to its source, native dialogs behind a port), `precise-code` (one count in
+  one place, persisted records next to their port, search indexes that lag behind the
+  repository), `sourced-data` (compare ranges, not points), `phased-plan` (stale
+  placeholders checked when a phase closes, a future feature's skeleton as empty data)
+  and `safe-database` (imports count every row).
+- Stack references: orphaned headings and inherited checks in PDFs; one-column grids in
+  fixed-height boxes, `aria-current`, collision checks that miss overflowing art, the
+  fold, CDP for review state; `Start-Process` quoting, commit messages with quotes,
+  symbols in BOM-less scripts, shared log files; null keys in immutable maps, the
+  editor compiling into `target/`, the runner's failure marker, multipart in Spring 7;
+  SpEL calling public methods only.
+
+### Changed
+
+- `server-templates-htmx.md`: where an edited stylesheet is served from depends on how
+  the app runs (`spring-boot:run` served it from the source folder); the old rule said
+  only "the build output".
+
 ## [0.6.1] - 2026-10-24
 
 ### Added

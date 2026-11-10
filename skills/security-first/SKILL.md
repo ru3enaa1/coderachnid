@@ -56,8 +56,12 @@ wish.**
   of the applicable law.
 - **Nothing leaves the machine** without explicit, per-feature, revocable consent.
 - **Dependencies** enter one at a time, in the phase that needs them, with the version
-  verified that day (how: `precise-code`). Scan them (SCA) and keep an SBOM.
-- **Distribute signed artifacts** and publish their checksums.
+  verified that day (how: `precise-code`). Scan them (SCA) inside the release build,
+  before packaging, and keep an SBOM.
+- **Distribute signed artifacts** and publish their checksums, computed from the shared
+  file itself (`references/supply-chain.md`).
+- **Imported customer files keep only what the measurement needs** and account for every
+  row (`references/customer-imports.md`).
 
 ## Pre-commit checklist
 
@@ -81,3 +85,5 @@ wish.**
 
 - `references/local-web-app.md`: hardening a web server that runs on the user's own machine.
 - `references/llm-integration.md`: calling an AI model without leaking data or trusting its output.
+- `references/supply-chain.md`: vulnerability scans, static-analysis exclusions, SBOM and checksums.
+- `references/customer-imports.md`: reading a customer's export without keeping it.
