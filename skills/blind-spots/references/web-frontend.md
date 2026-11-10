@@ -23,6 +23,14 @@
 - Don't copy fixed heights from a desktop mockup. A panel designed at 1440×900 runs off
   a 1536×737 viewport (1080p at 125%). Use `min(<mockup height>, 100dvh − header −
   footer)` and check at the real viewport.
+- **A one-column grid inside a fixed-height container squeezes its rows until they
+  overlap.** At a narrow width two columns stacked into one, and a list covered the
+  primary button. Switch to a scrolling flex column there (`display: flex;
+  flex-direction: column; overflow: auto`, children `flex: none`) and look at the narrow
+  capture of every new screen.
+- **Size fixed-height boxes for their text at the smallest viewport.** Text that runs out
+  of a fixed-height box is neither clipped nor overlapping, so the automated layout check
+  passed; only the screenshot showed a label sitting on the box's border.
 
 ## Accessibility and contrast
 
@@ -30,6 +38,9 @@
   Text on glass is measured over the composited glass on top of each tile of the real
   background.
 - Severity or state is never color alone: add text and an icon.
+- **`aria-current="page"` belongs to the main navigation only.** Tabs that also said
+  `page` gave the page two "current pages" (a test caught it). Tabs and in-page lists use
+  `aria-current="true"`.
 
 ## Browsers and capture
 
@@ -45,6 +56,19 @@
 - **Check for overlap geometrically.** "No horizontal scrollbar" misses two components
   painted on top of each other. Compare their bounding rectangles in the browser and fail
   when any two intersect.
+- **Collision checks compare element boxes, not what the elements draw.** Art that
+  overflows its box on purpose (an SVG with `overflow: visible`) touched the text beside
+  it, and the check said "fine". Capture and look whenever art is placed outside its
+  container. Each kind of breakage needs its own check: `../../tests-that-bite/references/test-traps.md`.
+- **What the user must see goes above the fold.** An automated layout check accepts
+  scrolling inside a panel, which is correct, so it passed while the key element sat
+  below the fold at 1366×657. Look at the smallest real screen.
+- **Prepare a capture's state through the browser's debugging protocol**
+  (`Runtime.evaluate` over CDP is not bound by the page's CSP). Never relax the app's
+  CSP for a tool.
+- **State held by the server outlives the script.** A capture script that opened a record
+  found it still open on its second run, and waited forever for an "open" form that was
+  no longer there. Check the server's state before preparing, or start it fresh.
 - Headless Edge/Chrome won't take a screenshot when `--enable-logging` is on. Capture
   and log in separate runs.
 - Headless Edge/Chrome without its own `--user-data-dir` can hand off to the user's
@@ -54,9 +78,9 @@
   scripts. Use a system font stack or convert the text to paths. Anticipated.
 - A scripted `focus()` doesn't trigger `:focus-visible` in a headless browser. Test it
   with real pointer and keyboard events.
-- `navigator.clipboard` doesn't exist without HTTPS (for example a phone on
-  `http://192.168.x.x`). Fall back to a hidden textarea plus `execCommand('copy')`, and
-  test with the API removed.
+- `navigator.clipboard` doesn't exist without a secure context (for example a phone on
+  `http://192.168.x.x`, or a native shell's custom origin). Fall back to a hidden
+  textarea plus `execCommand('copy')`, and test with the API removed.
 
 ## Numbers
 

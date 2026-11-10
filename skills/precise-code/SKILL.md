@@ -41,6 +41,9 @@ guess. Gaps appear where something was assumed, truncated or left implicit.
   hold no business logic. Templates are dumb: every number arrives precomputed.
 - **Partial updates:** `null` means *don't touch*, empty means *clear*. A form that
   omits a field must not erase it.
+- **One count, one place.** A number or a sentence shown on several screens or documents
+  is built by one function in the core. A count written in four places with two rules was
+  fixed in one; the fourth, a PDF footer, only showed up in the page image.
 - **One language per concern.** Choose the language of domain terms and of technical
   structure once, and keep to it.
 
@@ -71,7 +74,9 @@ Same input + same code version + same data = the same output, byte for byte.
 - **One at a time**, in the step that needs it, so a failure has one suspect.
 - **Check the version against the registry's metadata that day**, never memory or a
   blog post. When the framework manages a library, take the latest patch of the line it
-  supports, not the next minor.
+  supports, not the next minor. Search indexes lag: one was months behind on two
+  frameworks. Read the repository's own directory listing, and sort versions as numbers
+  (an alphabetical listing puts `11.0.9` after `11.0.27`).
 - **Read the full dependency tree** after adding one. A filtered view can hide the
   transitive dependency that causes the conflict. When a library pulls an old family of
   modules, pin every module of that family, not only the ones it names.
@@ -92,6 +97,9 @@ structures, strict loading, every error at once, a test per format trap. Details
 - Keep the core free of frameworks (no web, SQL or JSON library imports) and **enforce
   it with an architecture test** (ArchUnit, dependency-cruiser, import-linter).
 - Ports and adapters: the core declares interfaces and the outer modules implement them.
+- **Persisted records live next to the port that stores them**, and the logic that
+  proposes them in its own package. Kept with their proposer, they made a package cycle
+  through the storage port.
 - Decisions that shape the code go in numbered ADRs.
 
 ## Before saying "done"

@@ -40,12 +40,21 @@ these traps pass every test and only show when someone looks at the page.
 - **An empty `alt` isn't "decorative" for every engine.** Some PDF/UA engines count it as
   missing and can't mark artifacts. Give decorative-but-meaningful marks a short text that
   makes sense read aloud.
+- **Every new document inherits the first one's checks.** Copy "the PDF text has no
+  missing-glyph marker", "zero accessibility warnings" and the byte-identical golden to
+  each new template. On the day they were copied, they found a symbol set in a font that
+  lacks it.
 
 ## Look at the pages
 
 - **Review the PDF page by page as images.** A temporary test renders each page to PNG
   with the same PDF library; look at them, then delete the temporary test and keep the
-  PDF golden. This finds footers in mid-page, lost patterns and missing glyphs.
+  PDF golden. This finds footers in mid-page, lost patterns and missing glyphs. With no
+  rasterizer installed, a ten-line program on the same library counts the pages and draws
+  one; a pattern over the file can't count them, because pages live in compressed streams.
+- **Keep a heading with the block it introduces.** A heading ended one page while its box
+  started the next. Wrap the heading, its note and the box in one block with
+  `page-break-inside: avoid`. Only the page images showed it.
 - **For the HTML version, take one tall headless screenshot and cut it per page.** A
   caption pushed under headings by `display: block`, whitespace between `inline-block`
   items breaking a row, and long citations stretching a narrow table only show there.

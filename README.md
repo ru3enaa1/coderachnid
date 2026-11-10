@@ -63,9 +63,9 @@ check that captured nothing.
 
 | Skill | Activates when | What it adds |
 |---|---|---|
-| `security-first` | Code touches untrusted input or sensitive data (any endpoint, form, upload, import, auth), each phase, every commit | Threat modeling fitted to the real threat model, trust boundaries, secret handling, security tests as acceptance criteria, a pre-commit checklist |
+| `security-first` | Code touches untrusted input or sensitive data (any endpoint, form, upload, import, auth), each phase, every commit | Threat modeling fitted to the real threat model, trust boundaries, secret handling, security tests as acceptance criteria, vulnerability scans before packaging, a pre-commit checklist |
 | `precise-code` | Writing or changing code | Read before change, no truncation, comments that explain *why*, reproducible outputs (own seeded generator, canonical inputs, byte-identical documents), dependencies vetted the day they enter, data files treated as code |
-| `tests-that-bite` | A bug is reported or fixed, writing tests, deciding "done" | Failing test before the fix, positive controls, mutation testing read as questions, golden files, tests on the project's real content, negative cases that can actually fail |
+| `tests-that-bite` | A bug is reported or fixed, writing tests, deciding "done" | Failing test before the fix, positive controls (also for every automated review check), mutation testing read as questions and per class, golden files, tests on the project's real content, negative cases that can actually fail |
 | `safe-database` | Migrations, schema changes, data fixes, test runs | Backup → migrate → test → verify; disposable test databases; cleanup by id |
 | `blind-spots` | Editing or reviewing CSS and layout, server templates, generated documents or PDFs, build files or scripts; before saying work is done | The traps agents repeatedly fall into, and the check for each |
 | `phased-plan` | Planning, starting or closing a phase | One ordered plan, frozen scope, one branch per phase, sub-steps with a test the owner can run, product intent turned into checks, a living table of recommendations |
@@ -81,9 +81,11 @@ check that captured nothing.
 Stack-specific knowledge lives in each skill's `references/` and is loaded only when the
 task needs it: Windows shells, Java/Spring, server-side templates and HTMX, web
 frontend and generated art, documents rendered to screen and PDF, SQLite and MySQL, apps
-served on the user's own machine, AI model integration, data files written by people
-(YAML, JSON), reproducible outputs, the ways a test passes without proving anything, and
-an editorial design direction for product pages.
+served on the user's own machine, desktop apps (a native window, the installer, the
+release), vulnerability scans and release artifacts, importing a customer's file, AI
+model integration, data files written by people (YAML, JSON), reproducible outputs, the
+ways a test passes without proving anything, and an editorial design direction for
+product pages.
 
 ## Guards for your project
 
