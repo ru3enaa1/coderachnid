@@ -55,6 +55,18 @@ git tag -a vX.Y.Z -m "coderachnid vX.Y.Z"
 git push origin vX.Y.Z
 ```
 
+## v0.7.0 record (2026-11-09)
+
+- Guards: skills 0 (14 skills), private terms with `--history` 0, positive controls 76
+  of 76, `validate` passed with the two expected root warnings. Cross-skill links checked
+  by a script with its own positive control (a planted broken link was caught).
+- No skill description changed (checked on the diff), so activation is unaffected and
+  `plugin details` still estimates about 1,432 tokens always on (about 1,110 in practice).
+- History: no-reply address only; no secret; no personal path.
+- Clean install from GitHub: both plugins at 0.7.0 from commit `3e5efdd`; the three new
+  references present and the corrected static-files rule shipped. 14 skills, 0 hooks;
+  relay 3 hooks at no model context cost. Tag `v0.7.0` on `3e5efdd`.
+
 ## v0.6.1 record (2026-10-24)
 
 - Guards: skills 0 (14 skills), private terms with `--history` 0, positive controls 76

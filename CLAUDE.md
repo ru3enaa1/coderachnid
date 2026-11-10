@@ -122,6 +122,9 @@ projects and generalized.
   importer and releases: three new references (`desktop-apps`, `supply-chain`,
   `customer-imports`), a screen-checks section in `test-traps`, rules in seven skills and
   one correction (where edited static files are served from). No description changed.
+- **2026-11-09 · v0.7.0 published.** Clean install verified (both plugins at 0.7.0, 14
+  skills, fixed cost unchanged); tag `v0.7.0` on `3e5efdd`. **Next:** a first real run of
+  the discovery chain in a new project.
 
 ## 3. Structure
 
