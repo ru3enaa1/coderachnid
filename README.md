@@ -32,6 +32,9 @@ coderachnid gives your agent the sense to feel those threads **before** it write
 phase is done once, done right, and closed with a short note on where your project
 stands and what comes next.
 
+**New here?** The [getting-started guide](docs/GETTING-STARTED.md) walks a project from
+an empty folder to its first release, stage by stage, with what to type at each one.
+
 ## Built for tight budgets. Useful on any.
 
 It was shaped with the $20 monthly plan in mind, where usage limits reset every few
@@ -142,23 +145,11 @@ also ask for one by name ("use safe-database before this migration"). The three
 discovery skills run only when you type their command, so they cost nothing in other
 sessions.
 
-### From idea to release
-
-1. **Install it in the project** (above) and choose the closing (below).
-2. **Discovery**, one command per session: `market-research`, then `offer`, then
-   `product-brief` (see "Start with evidence"). Decide "go" on the market report's
-   verdicts, or record that you build first and defer its tests.
-3. **Set up:** ask for a stack proposal as an ADR, then for **project-setup**. It writes
-   the project rules file, the plan seeded from the PRD, the first ADR, the database
-   layout and the project guards.
-4. **Build phase by phase** ("start F0", then F1…). `phased-plan` keeps the order and the
-   frozen scope. While you work, `precise-code`, `tests-that-bite`, `security-first`,
-   `safe-database`, `sourced-data` and `blind-spots` step in on their own, and
-   `pitfall-log` turns each surprise into a dated rule.
-5. **Keep sessions light:** `handoff`, or the relay below, before each `/clear`.
-6. **Release:** vulnerability scans before packaging and checksums from the shipped file
-   (`security-first`), installer traps (`blind-spots`). After the milestone, run the
-   tests you deferred and validate in the field before adding phases.
+In order: install it in the project → discovery (`market-research`, `offer`,
+`product-brief`) → `project-setup` → build phase by phase with `phased-plan`, while the
+other skills step in on their own → `handoff` between long sessions → release. Each
+stage, with the commands to type and what you get:
+**[the getting-started guide](docs/GETTING-STARTED.md)**.
 
 ### The five-point closing
 
@@ -200,37 +191,21 @@ Details, settings and an optional status line with your five-hour usage:
 
 ### Start with evidence: the discovery chain
 
-Before building, three commands take an idea to requirements the code can start from.
-Run each one by hand, in its own session; each reads the files the previous one wrote.
+Before building, three commands take an idea to requirements the code can start from,
+each by hand and in its own session:
 
-1. `/coderachnid:market-research "idea or problem" "customer" "industry" "regions"`
-   writes `docs/MARKET.md`. It frames the idea as a problem, looks for people already
-   describing it in forums and reviews (quotes only from pages it opened), finds
-   products that already earn money from it, then sizes the market, ranks the top ten
-   problems and maps the five main competitors and the position none of them holds. It
-   ends with a verdict for each claim the idea makes and the three riskiest assumptions.
-2. `/coderachnid:offer "product"` writes `docs/OFFER.md`: what you sell, to whom, at
-   which price (anchored to the competitors' prices and labelled an assumption until
-   tested), the cheapest way to test it, and a list of promises your product must never
-   make, ready for the forbidden-phrases guard.
-3. `/coderachnid:product-brief "product"` writes two documents. `docs/PRD.md` holds the
-   requirements in a fixed structure: what is being built, for whom and where, the
-   problem, the core features and how each works, stories with acceptance criteria,
-   personal data and threats, entities, and the frozen MVP scope, all traced back to the
-   problems in the market report. `docs/BRIEF.md` holds a design direction chosen to
-   stand apart from the competitors and a mockup prompt for your design skill or image
-   generator.
+```
+/coderachnid:market-research "idea or problem" "customer" "industry" "regions"
+/coderachnid:offer "product"
+/coderachnid:product-brief "product"
+```
 
-Before the third command, put your logo, typefaces, colors and the pages you like in a
-`brand/` or `docs/` folder: `product-brief` reads them first and asks only for what is
-missing. Your own references always win over the brief's proposal. The PRD becomes the
-plan's frozen scope before F0.
-
-On a fictional product, `product-brief` delivered every section of both documents in 2
-of 2 runs, where a loose prompt for the same two documents covered 32%; `offer`
-delivered every section in 2 of 2 runs against 10% (`evals/chain/`). `market-research`
-needs live web search and is not part of that measurement. The chain has since run on
-one real project, and what that run showed is in the current version.
+They write `docs/MARKET.md` (the idea validated claim by claim, with sourced evidence),
+`docs/OFFER.md` (what you sell and how to test it), `docs/PRD.md` (the requirements)
+and `docs/BRIEF.md` (the design direction and a mockup prompt). The PRD becomes the
+plan's frozen scope before F0. Your own logo, typefaces and references always win over
+the brief's proposal. What each command does, and what it asks of you:
+[the guide, stage 1](docs/GETTING-STARTED.md#stage-1--discovery-one-command-per-session).
 
 ## How it is checked
 
@@ -241,8 +216,10 @@ one real project, and what that run showed is in the current version.
   what changes the result.
 - **Documents:** `offer` and `product-brief` are graded on the files they write, by
   graders that first had to pass a known-good document and fail a known-bad one
-  (`evals/chain/`). `market-research` needs live web search, so it is tried on real
-  projects instead.
+  (`evals/chain/`). On a fictional product each delivered every section in 2 of 2 runs,
+  where a loose prompt for the same documents covered 10% (offer) and 32% (PRD and
+  brief). `market-research` needs live web search, so it is tried on real projects
+  instead; the chain's first real run shaped the current version.
 - **Guards:** `guards/tests/test-guards.sh` plants a violation for every rule of every
   guard and fails if any guard lets it through.
 
