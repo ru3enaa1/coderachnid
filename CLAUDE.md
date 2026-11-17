@@ -137,6 +137,12 @@ projects and generalized.
   skills, real fixed cost unchanged; `precise-code` about 300 tokens more per load); tag
   `v0.8.0` on `ce637d3`. **Next:** the maintainer's next project runs the new
   `market-research` with live web search; what fails comes back as the next round.
+- **2026-11-17 · README cross-checked after v0.8.0** (docs only, no version change).
+  Install rewritten around the CLI and `--scope local`, the two-step update, `/plugin`
+  missing in some IDE extensions and installs tied to the folder's path; a "From idea to
+  release" order of the skills; claims corrected (rules from published sources,
+  activation cases for the 11 model-invoked skills only). Same install text in the
+  relay README.
 
 ## 3. Structure
 

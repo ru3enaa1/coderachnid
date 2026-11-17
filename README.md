@@ -54,10 +54,11 @@ leaves holes. Code written with discipline is like well-sifted cement: it spread
 and sets dense and solid.
 
 The model is already intelligent. What it lacks is **memory of what went wrong before**
-and **the reflex to check instead of assume**. Every rule in this plugin was paid for in
+and **the reflex to check instead of assume**. Most rules in this plugin were paid for in
 a real project: a test that passed while the feature was broken, a backup that didn't
 restore, a process kill that took down another app, a "zero violations" report from a
-check that captured nothing.
+check that captured nothing. The rest come from what well-known engineers published:
+each cites its source and is marked as anticipated until a project confirms it.
 
 ## The senses
 
@@ -102,14 +103,30 @@ its exit code, and each was proven to fail on a known-bad case before shipping.
 
 ## Install
 
-In Claude Code:
+From a terminal, inside the folder of the project that will use it:
 
-```
-/plugin marketplace add ru3enaa1/coderachnid
-/plugin install coderachnid@coderachnid
+```sh
+claude plugin marketplace add ru3enaa1/coderachnid
+claude plugin install coderachnid@coderachnid --scope local
 ```
 
-To update later: `/plugin marketplace update coderachnid`.
+- **`--scope local` turns it on for this project only.** Without it, the plugin is
+  installed for every project (`--scope user`), and every session there reads its skill
+  descriptions.
+- **The terminal app also has these commands as `/plugin …`.** Some IDE extensions don't
+  offer `/plugin`; the `claude` CLI always works. The VS Code extension ships one inside
+  its own folder when `claude` isn't on your `PATH`.
+- **Updating takes two steps,** inside the project:
+
+  ```sh
+  claude plugin marketplace update coderachnid
+  claude plugin update coderachnid@coderachnid --scope local
+  ```
+
+  The first only refreshes the catalog: the installed plugin keeps its old version
+  until the second runs.
+- **A local install is tied to the folder's path.** After renaming or moving the folder,
+  run the install again inside it.
 
 To try a local clone without installing:
 
@@ -120,16 +137,39 @@ claude --plugin-dir ./coderachnid
 
 ## Use
 
-The skills activate on their own when the task matches their description. You can also
-ask for one by name ("use safe-database before this migration"). To give a new project
-the full structure, ask for **project-setup**.
+Eleven skills activate on their own when the task matches their description; you can
+also ask for one by name ("use safe-database before this migration"). The three
+discovery skills run only when you type their command, so they cost nothing in other
+sessions.
+
+### From idea to release
+
+1. **Install it in the project** (above) and choose the closing (below).
+2. **Discovery**, one command per session: `market-research`, then `offer`, then
+   `product-brief` (see "Start with evidence"). Decide "go" on the market report's
+   verdicts, or record that you build first and defer its tests.
+3. **Set up:** ask for a stack proposal as an ADR, then for **project-setup**. It writes
+   the project rules file, the plan seeded from the PRD, the first ADR, the database
+   layout and the project guards.
+4. **Build phase by phase** ("start F0", then F1…). `phased-plan` keeps the order and the
+   frozen scope. While you work, `precise-code`, `tests-that-bite`, `security-first`,
+   `safe-database`, `sourced-data` and `blind-spots` step in on their own, and
+   `pitfall-log` turns each surprise into a dated rule.
+5. **Keep sessions light:** `handoff`, or the relay below, before each `/clear`.
+6. **Release:** vulnerability scans before packaging and checksums from the shipped file
+   (`security-first`), installer traps (`blind-spots`). After the milestone, run the
+   tests you deferred and validate in the field before adding phases.
+
+### The five-point closing
 
 Skills load per task, so the five-point closing on **every** development reply comes
 from the plugin's output style. It keeps Claude Code's default behavior and tone and adds
 only the closing. Select it once:
 
-- in a project: `/output-style coderachnid:closing`
-- in every project: `"outputStyle": "coderachnid:closing"` in `~/.claude/settings.json`
+- in one project: `"outputStyle": "coderachnid:closing"` in the project's
+  `.claude/settings.local.json` (the `/output-style` command, where your Claude Code
+  has it, saves the same setting);
+- in every project: the same line in `~/.claude/settings.json`.
 
 Prefer not to change your output style? Add this line to the project's `CLAUDE.md`
 instead (`project-setup` adds it for you):
@@ -139,9 +179,9 @@ Every development response closes with the five-point block: next phase · keys 
 watch-outs · recommended tests · recommended implementation.
 ```
 
-On a capped plan, every installed skill's description is read in every session. For a
-session that isn't development work, `/plugin disable coderachnid` and
-`/plugin enable coderachnid` turn it off and on.
+On a capped plan, every enabled skill's description is read in every session. Install
+the plugin only in the projects that use it, and switch it off in one of them with
+`claude plugin disable coderachnid@coderachnid --scope local` (`enable` turns it back on).
 
 ### Keep long sessions light: `coderachnid-relay`
 
@@ -151,8 +191,8 @@ instead: past a token threshold it asks Claude to write the handoff, you type `/
 and the next session starts with the handoff loaded. It also warns before resuming a
 large conversation whose cache has expired, and keeps every compaction summary.
 
-```
-/plugin install coderachnid-relay@coderachnid
+```sh
+claude plugin install coderachnid-relay@coderachnid --scope local
 ```
 
 Details, settings and an optional status line with your five-hour usage:
@@ -181,20 +221,28 @@ Run each one by hand, in its own session; each reads the files the previous one 
    stand apart from the competitors and a mockup prompt for your design skill or image
    generator.
 
-Your own logo, typefaces, colors and references always win over the brief's proposal.
-The PRD becomes the plan's frozen scope before F0. On a fictional product,
-`product-brief` delivered every section of both documents in 2 of 2 runs, where a loose
-prompt for the same two documents covered 32%; `offer` delivered every section in 2 of 2
-runs against 10% (`evals/chain/`). The chain has since run on one real project, and
-what that run showed is in the current version. `market-research` needs live web search
-and is not part of that measurement.
+Before the third command, put your logo, typefaces, colors and the pages you like in a
+`brand/` or `docs/` folder: `product-brief` reads them first and asks only for what is
+missing. Your own references always win over the brief's proposal. The PRD becomes the
+plan's frozen scope before F0.
+
+On a fictional product, `product-brief` delivered every section of both documents in 2
+of 2 runs, where a loose prompt for the same two documents covered 32%; `offer`
+delivered every section in 2 of 2 runs against 10% (`evals/chain/`). `market-research`
+needs live web search and is not part of that measurement. The chain has since run on
+one real project, and what that run showed is in the current version.
 
 ## How it is checked
 
-- **Activation:** every skill has cases, in English and Spanish, for tasks that should
-  trigger it and tasks that should not, run with `claude plugin eval` (`evals/`).
+- **Activation:** every skill that activates on its own has cases, in English and
+  Spanish, for tasks that should trigger it and tasks that should not, run with
+  `claude plugin eval` (`evals/`).
 - **Value:** cases that compare the same task with and without the plugin, to keep only
   what changes the result.
+- **Documents:** `offer` and `product-brief` are graded on the files they write, by
+  graders that first had to pass a known-good document and fail a known-bad one
+  (`evals/chain/`). `market-research` needs live web search, so it is tried on real
+  projects instead.
 - **Guards:** `guards/tests/test-guards.sh` plants a violation for every rule of every
   guard and fails if any guard lets it through.
 
@@ -203,13 +251,15 @@ and is not part of that measurement.
 1. **Three layers.** *Senses* (skills) say what to do and why. *Guards* (tests, scripts,
    architecture rules) prove it was done. *Templates* give every project the same shape.
    Instructions alone are suggestions; the guards make them rules.
-2. **Every rule comes from a real failure.** It carries its reason and points to a check.
+2. **Every rule says where it comes from:** a real failure, or a published source. It
+   carries its reason and points to a check, and a rule no project has confirmed yet is
+   marked as anticipated.
 3. **Load only what's needed.** Short skills, with detail in `references/`, to keep the
    agent's context clean.
 4. **No hooks by default.** Nothing runs on every turn unless you opt in; the hooks live
    in the separate `coderachnid-relay` plugin.
-5. **Measured, not assumed.** A skill or a rule stays only if a test shows it fires when
-   it should and changes the result.
+5. **Measured, not assumed.** Skills are measured for when they fire and for what they
+   change; what can't be measured yet says so and is tried on real projects.
 6. **Vendor-neutral.** Patterns, not products.
 
 ## What it is not
