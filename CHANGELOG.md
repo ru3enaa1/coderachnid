@@ -6,6 +6,20 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+### Added
+
+- `docs/GETTING-STARTED.md`: a guide for first-time users that takes a project from an
+  empty folder to its first release, in the order the 14 skills are used: what to type
+  at each stage, what you get, what is asked of you, a cheat sheet, and how to update,
+  switch off and troubleshoot.
+
+### Changed
+
+- README: install rewritten around the `claude` CLI and `--scope local` (one project
+  only), with the two-step update and installs tied to the folder's path; claims that
+  stopped being true corrected; the order of use and the discovery chain shortened to a
+  summary that links to the guide.
+
 ## [0.8.0] - 2026-11-17
 
 Validation before sizing, a PRD of its own, and a working loop sourced from published

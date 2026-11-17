@@ -143,6 +143,10 @@ projects and generalized.
   release" order of the skills; claims corrected (rules from published sources,
   activation cases for the 11 model-invoked skills only). Same install text in the
   relay README.
+- **2026-11-17 · Getting-started guide published** (docs only, no version change).
+  `docs/GETTING-STARTED.md` holds the stage-by-stage use of the 14 skills for
+  first-time users; the README keeps a short summary and links to it, so the two don't
+  repeat each other.
 
 ## 3. Structure
 
@@ -155,6 +159,7 @@ output-styles/                    coderachnid:closing, the opt-in five-point clo
 plugins/relay/                    coderachnid-relay, the opt-in hooks plugin (D-013)
 guards/                           scripts that verify (the third layer)
 docs/DECISIONS.md                 why the plugin is shaped this way
+docs/GETTING-STARTED.md           the user guide: the skills in order, stage by stage
 assets/                           README artwork; edit build-assets.mjs, never the SVGs
 evals/                            `claude plugin eval` suite (cases/), F1 trial (activation/)
 ```
