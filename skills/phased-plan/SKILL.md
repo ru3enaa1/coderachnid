@@ -33,11 +33,13 @@ It contains:
 ## Rules
 
 - **Discovery comes before F0** for a new product, as a chain run by hand, one link per
-  session: `/coderachnid:market-research` (`docs/MARKET.md`: the three riskiest
-  assumptions and the cheapest test for each), `/coderachnid:offer` (`docs/OFFER.md`:
-  the offer and its test), `/coderachnid:product-brief` (`docs/BRIEF.md`: design
-  direction, stories, data, frozen scope). F0 starts when the owner decides "go" on that
-  evidence, not on enthusiasm; the brief's frozen scope becomes the plan's.
+  session: `/coderachnid:market-research` (`docs/MARKET.md`: a verdict per claim, the
+  three riskiest assumptions and the cheapest test for each), `/coderachnid:offer`
+  (`docs/OFFER.md`: the offer and its test), `/coderachnid:product-brief`
+  (`docs/PRD.md`: features, stories, data, frozen scope; `docs/BRIEF.md`: design
+  direction). F0 starts when the owner decides "go" on that evidence, not on enthusiasm;
+  the PRD's frozen scope becomes the plan's. An owner who builds first defers the tests
+  with their thresholds unchanged, and the plan says which claims are still unproven.
 - **F0 is foundations**: build, tests, architecture tests, coverage gates, the data
   layer with migrations, security baseline, project rules file. Nothing visible to users
   is built on sand.

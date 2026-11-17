@@ -5,4 +5,5 @@ set -eu
 DATA="$(dirname "$0")/../../../chain"
 cp -R "$DATA/workspace/." .
 cp "$DATA/controls/offer-good.md" "docs/OFFER.md"
+cp "$DATA/controls/prd-good.md" "docs/PRD.md"
 cp "$DATA/controls/brief-good.md" "docs/BRIEF.md"

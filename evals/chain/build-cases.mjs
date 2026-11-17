@@ -16,6 +16,7 @@ const llm = (name, path, criteria) => ({ name, path, criteria });
 
 const OFFER = "docs/OFFER.md";
 const BRIEF = "docs/BRIEF.md";
+const PRD = "docs/PRD.md";
 
 const offerGraders = [
   llm("offer-value-proposition", OFFER, `
@@ -70,21 +71,51 @@ counts, client logos) is a placeholder or must not be shown until it is real, AN
 presents no invented social proof as real.
 FAIL if it presents invented social proof as fact (for example "Trusted by 10,000+
 clinics" or a made-up testimonial) or never addresses social proof.`),
-  llm("brief-stories-criteria", BRIEF, `
+];
+
+// The requirements moved to their own file in v0.8.0; the last three graders are the
+// ones that judged them inside the brief before.
+const prdGraders = [
+  llm("prd-what-who-where", PRD, `
+PASS if the document states all three:
+1. What is being built, in concrete terms (what the user does with it).
+2. Who it is for: one specific kind of customer or user.
+3. The context of use: the situation or moment in which it is used, and the device or
+   platform.
+FAIL if any of the three is missing. A description made only of praise words such as
+"powerful", "modern" or "intuitive" does not count for point 1, and "for everyone" or
+"all sizes" does not count for point 2.`),
+  llm("prd-features-traced", PRD, `
+PASS if the core features are listed with an identifier each, and every feature has a
+priority (for example Must / Should / Later) AND the problem it serves.
+FAIL if features are a bare list of names, or lack priorities, or do not say which
+problem each one serves.`),
+  llm("prd-how-it-works", PRD, `
+PASS if the document describes at least one main user journey as ordered steps that say
+what the user does and what the system does or shows, AND describes what happens when a
+step fails (for example invalid input or a service that is down).
+FAIL if there is no step-by-step journey, or no failure case is described.`),
+  llm("prd-metrics-nongoals", PRD, `
+PASS if the document gives at least one success metric with a numeric target and says how
+or when it is measured, AND lists non-goals or things explicitly out of scope.
+FAIL if there is no metric with a number, or nothing is declared out of scope.`),
+  llm("prd-stories-criteria", PRD, `
 PASS if there are user stories and each has testable acceptance criteria (for example
 Given / When / Then), and at least one criterion covers a failure or error path.
 FAIL if there are no stories, the stories have no acceptance criteria, or no failure
 path is covered.`),
-  llm("brief-data-threats", BRIEF, `
+  llm("prd-data-threats", PRD, `
 PASS if the document lists the personal data the product handles, with why each is
 needed and where it is stored or how long it is kept, and names at least two threats,
 each with a control.
 FAIL if personal data or threats with controls are missing.`),
-  llm("brief-entities-scope", BRIEF, `
+  llm("prd-entities-scope", PRD, `
 PASS if the document lists the main data entities with their key fields, AND defines the
 MVP scope with an explicit list of what is NOT in it.
 FAIL if either is missing.`),
 ];
+
+const briefAndPrd = [...prdGraders, ...briefGraders];
 
 const CONTROL_PROMPT = "Reply with the single word OK. Do not read, create or change any file.";
 
@@ -96,25 +127,25 @@ const cases = [
     tags: ["chain", "chain-run", "offer"], runs: 2,
     prompt: "Con lo que hay en docs/MARKET.md, arma la oferta comercial de RecallKit y guárdala en docs/OFFER.md.",
     graders: offerGraders, extra: [] },
-  { name: "chain-brief-command", desc: "The product-brief skill, run by its command, writes a complete brief.",
+  { name: "chain-brief-command", desc: "The product-brief skill, run by its command, writes a complete PRD and design brief.",
     tags: ["chain", "chain-run", "product-brief"], runs: 2, prompt: '/coderachnid:product-brief "RecallKit"',
-    graders: briefGraders, extra: [["offer-good.md", OFFER]] },
-  { name: "chain-brief-loose", desc: "Baseline: the same brief asked for in a loose prompt, without the command.",
+    graders: briefAndPrd, extra: [["offer-good.md", OFFER]] },
+  { name: "chain-brief-loose", desc: "Baseline: the same two documents asked for in a loose prompt, without the command.",
     tags: ["chain", "chain-run", "product-brief"], runs: 2,
-    prompt: "Con docs/MARKET.md, docs/OFFER.md y docs/brand.md, escribe el brief del producto RecallKit (diseño y requisitos) en docs/BRIEF.md.",
-    graders: briefGraders, extra: [["offer-good.md", OFFER]] },
+    prompt: "Con docs/MARKET.md, docs/OFFER.md y docs/brand.md, escribe los requisitos del producto RecallKit (el PRD) en docs/PRD.md y el brief de diseño en docs/BRIEF.md.",
+    graders: briefAndPrd, extra: [["offer-good.md", OFFER]] },
   { name: "chain-control-offer-good", desc: "Positive control: every offer grader passes a known-good offer.",
     tags: ["chain", "chain-control"], runs: 1, prompt: CONTROL_PROMPT, control: true,
     graders: offerGraders, extra: [["offer-good.md", OFFER]] },
   { name: "chain-control-offer-bad", desc: "Positive control: every offer grader fails a known-bad offer (expected score 0).",
     tags: ["chain", "chain-control"], runs: 1, prompt: CONTROL_PROMPT, control: true,
     graders: offerGraders, extra: [["offer-bad.md", OFFER]] },
-  { name: "chain-control-brief-good", desc: "Positive control: every brief grader passes a known-good brief.",
+  { name: "chain-control-brief-good", desc: "Positive control: every PRD and brief grader passes known-good documents.",
     tags: ["chain", "chain-control"], runs: 1, prompt: CONTROL_PROMPT, control: true,
-    graders: briefGraders, extra: [["offer-good.md", OFFER], ["brief-good.md", BRIEF]] },
-  { name: "chain-control-brief-bad", desc: "Positive control: every brief grader fails a known-bad brief (expected score 0).",
+    graders: briefAndPrd, extra: [["offer-good.md", OFFER], ["prd-good.md", PRD], ["brief-good.md", BRIEF]] },
+  { name: "chain-control-brief-bad", desc: "Positive control: every PRD and brief grader fails known-bad documents (expected score 0).",
     tags: ["chain", "chain-control"], runs: 1, prompt: CONTROL_PROMPT, control: true,
-    graders: briefGraders, extra: [["offer-good.md", OFFER], ["brief-bad.md", BRIEF]] },
+    graders: briefAndPrd, extra: [["offer-good.md", OFFER], ["prd-bad.md", PRD], ["brief-bad.md", BRIEF]] },
 ];
 
 const q = (s) => JSON.stringify(s);

@@ -127,3 +127,32 @@ Update (2026-10-24): at the maintainer's request the anticipated mark was replac
 measured result of the chain evals (`docs/F2-EVALUATION.md`), with the note that neither
 skill has met a real project yet. A fictional fixture proves the skills deliver what
 they promise; only a real project can show what they miss.
+
+## D-015 · Validation before sizing, a PRD of its own, and craft sourced from published work (2026-11-17)
+
+The first real run of the discovery chain showed three gaps. The market report quoted
+review sites only and no community where the customer talks; it validated the market
+around the idea while the idea's own core feature stayed at "no data"; and the brief put
+the requirements behind 750 lines of design that was revised five times.
+
+So `market-research` now starts by framing the idea as a problem split into claims,
+looks for demand signals in open communities and for products that already earn money,
+and ends with a verdict per claim. A quote must come from a page opened in the session,
+and a community that blocks automated readers is never worked around: the user pastes
+the thread. Revenue figures from app-intelligence providers are labelled as modeled
+estimates, with gross or net stated.
+
+`product-brief` writes two files: the requirements in `docs/PRD.md`, with a fixed
+structure, ids and a traceability table, and the design direction in `docs/BRIEF.md`.
+This changes D-014's "one file per skill": the two documents have different readers and
+change at different speeds.
+
+`precise-code` gains a working loop and a reference on engineering craft. Its rules come
+from what well-known engineers published and from common practice in competitive
+programming, not from our own failures, so D-006 applies in a new way: each rule cites
+its source, the reference says which sources were opened and which only confirmed, and
+every rule not already paid for in our projects is marked anticipated. Two limits were
+set on purpose. Only the method is taken, never the look of contest code, which is
+written to be thrown away. And no practice is attributed to a person who did not publish
+it: no method written by an individual champion was found, so the contest practices are
+cited as the community's.

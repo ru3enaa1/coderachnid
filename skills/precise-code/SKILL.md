@@ -17,6 +17,28 @@ guess. Gaps appear where something was assumed, truncated or left implicit.
 3. **Match the surrounding code**: naming, idiom, comment density, structure. A new
    pattern needs a reason (and, if it is architectural, an ADR).
 
+## The working loop
+
+How experienced engineers go from a requirement to working code. Sources, reasons and
+checks for each step: `references/engineering-craft.md`.
+
+1. **Understand before typing.** Restate the task with its inputs, outputs and limits,
+   and work one example by hand. That example is the first test.
+2. **Let the limits choose the design:** how many records, how many people at once, how
+   fast, on which device. Without those numbers "simple" and "scalable" are opinions.
+3. **Data first.** Decide what is stored, how it relates and what must always be true of
+   it. The code follows from that.
+4. **Write the simplest version that is obviously right**, brute force included when
+   the sizes allow. It stays afterwards as the oracle.
+5. **Small steps, each one run.** When a change is hard, first make it easy without
+   changing behavior, then make it.
+6. **Remove special cases by reshaping the data**, not by adding branches.
+7. **Check the real version against the obvious one** on seeded random inputs
+   (see `tests-that-bite`), and look at it running.
+8. **Optimize last**, with a measurement before and after.
+
+A prototype built to learn is thrown away; what it taught goes into the plan.
+
 ## While writing
 
 - **Never truncate.** No `// ... rest unchanged`, no placeholders, no

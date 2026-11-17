@@ -19,6 +19,24 @@ time in a project before it became a rule.
 - **Absence checks also scan embedded CSS and scripts.** "Doesn't contain `th:`" found
   `width:`. Match a precise pattern (` th:[a-z]+=`) or cut to the body first.
 
+## Oracles: the obvious version checks the real one
+
+When there are two ways to compute a result, one obvious and slow and one real, let the
+first judge the second. The loop below is standard practice in competitive programming
+and is **anticipated** here; comparing two builds of the same program is the form a real
+project already confirmed (a trimmed runtime against the full one, byte for byte).
+
+- **Write the brute-force version first** and check it against the examples worked by
+  hand. If the oracle and the real version share a bug, they agree and prove nothing.
+- **Generate many small random inputs.** Small ones reach the edges (empty, one, ties,
+  duplicates) far more often than large ones, and a failure on five items can be read.
+- **Seed the generator and print the seed** with every failure, so the case can be
+  replayed. An unseeded generator finds a bug once and never again.
+- **Stop at the first disagreement, shrink the input** until removing anything makes it
+  pass, and keep that case as a named regression test.
+- **Keep the comparison as a property test** (see the pyramid in `../SKILL.md`), with
+  the oracle living in the test code, never in production.
+
 ## Mutation testing
 
 - **Read each surviving mutant as a question:** is a test missing here? The first run's

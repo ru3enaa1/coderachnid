@@ -125,6 +125,14 @@ projects and generalized.
 - **2026-11-09 · v0.7.0 published.** Clean install verified (both plugins at 0.7.0, 14
   skills, fixed cost unchanged); tag `v0.7.0` on `3e5efdd`. **Next:** a first real run of
   the discovery chain in a new project.
+- **2026-11-17 · v0.8.0 prepared, not committed** (branch
+  `feat/v0.8.0-validation-and-craft`, D-015). After the chain's first real run:
+  `market-research` validates before sizing (problem framing, demand signals, proven
+  demand, a verdict per claim; reference `demand-signals`); `product-brief` writes
+  `docs/PRD.md` (fixed structure, reference `prd-structure`) and `docs/BRIEF.md`;
+  `precise-code` gains a working loop and `engineering-craft`, sourced from published
+  work and marked anticipated. Chain evals: 11 graders controlled, command 1.00 (2/2)
+  vs loose 0.32. `market-research` and the working loop are not measured.
 
 ## 3. Structure
 

@@ -57,6 +57,14 @@ recall. C and E: low effort, reminders only.
 **Free position:** low setup effort with full recall campaigns, in Spanish, monthly
 billing. Evidence: problem 2 is growing and no low-effort tool runs recall [S5][S6].
 
+## 8. Validation scorecard
+
+| Claim | Evidence for | Evidence against | Verdict |
+|---|---|---|---|
+| Patients don't come back for recall and clinics notice late | 41 complaints in an owners' forum [S4] | none found | VALIDATED |
+| Small clinics already spend on the workaround | ~6 h/week of calls ≈ USD 70/month [S3] | no spend on recall itself today [S2] | PARTLY |
+| Clinics pay monthly for recall alone | competitors charge USD 25–120/month for suites [S7] | nobody sells recall alone | NOT YET |
+
 ## 9. Conclusions
 - Opportunity: recall campaigns a receptionist can start in ten minutes.
 - First customer: a clinic with one or two dentists and one receptionist.
