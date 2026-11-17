@@ -19,7 +19,9 @@ contributor) finds the rules, the plan and the history in the same places.
      really are, architecture, stack, conventions, pitfalls, commands, document map,
      response closing). The template has another name so it isn't loaded as live rules.
    - `DEVELOPMENT_PLAN.md`: goal, frozen scope, phases F0…Fn (see `phased-plan`). When
-     `docs/BRIEF.md` exists, its frozen scope and stories seed the plan.
+     `docs/PRD.md` exists, its frozen scope, features and stories seed the plan, and each
+     phase names the feature ids it delivers (an older project may hold them in
+     `docs/BRIEF.md`).
    - `docs/adr/0001-<first-decision>.md`, from `ADR.md`.
    - `database/` with `migrations/`, `schema.sql`, `examples/`, plus `dev/` and
      `backups/` git-ignored (see `safe-database`).

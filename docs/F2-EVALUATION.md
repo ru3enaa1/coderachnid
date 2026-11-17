@@ -220,6 +220,38 @@ What the runs found:
 - The fixture's regions were renamed after the offer runs (a privacy-guard hit); the
   final control run used the renamed files.
 
+## v0.8.0 · `product-brief` writes a PRD and a design brief (2026-11-17)
+
+Same fictional product and method as v0.6.1. `product-brief` now writes two files, so
+its cases grade `docs/PRD.md` (seven graders, four of them new) and `docs/BRIEF.md`
+(four). The loose prompt asks for the same two files.
+
+| Check | Result |
+|---|---|
+| Positive controls: 11 graders over known-good and known-bad documents | good **1.00**, bad **0.00** |
+| `/coderachnid:product-brief` (11 graders) | **1.00** (2 of 2 runs) · USD 1.61 per run |
+| Loose prompt for the same two documents | **0.32** · USD 0.73 per run |
+
+What the runs found:
+
+- **A new grader failed the known-good PRD 3 votes to 0** on its first control run. Its
+  criteria packed four conditions into three points; rewritten as three plain ones, it
+  passed the good document and still failed the bad one. The control caught it before
+  any real run was graded.
+- **The PRDs follow the fixed structure:** all 14 sections in order, features with ids
+  and priorities (12 in both runs, 6 of them Must), 6 and 7 stories with 28 and 29
+  numbered criteria, and the market report's verdicts carried into the problem section.
+  A perfect score does not show that; the documents were opened to check it.
+- **What the loose prompt missed:** features with priorities and the problem each
+  serves, journeys step by step with their failures, stories with acceptance criteria,
+  data and threats, entities and the "not in" list; in the brief, the one-accent palette
+  and the mockup prompt. It did state what, for whom and where, and one metric.
+- **Not measured:** `market-research` (it needs live web search), the working loop in
+  `precise-code` and the oracle section in `test-traps`. Their rules are sourced or come
+  from the first real run of the chain, and are marked anticipated where no project of
+  ours has confirmed them.
+- **Cost:** about USD 5.2 for the controls (run twice) and the four runs.
+
 ## Status
 
 The F2 criterion is met: every skill was measured, and four descriptions were tuned on

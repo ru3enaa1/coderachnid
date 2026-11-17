@@ -6,6 +6,53 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-11-17
+
+Validation before sizing, a PRD of its own, and a working loop sourced from published
+engineering practice (D-015). The first real run of the discovery chain showed where it
+fell short; no model-invoked description changed.
+
+### Added
+
+- `market-research` frames the idea as a problem and splits it into claims before
+  searching, with the "don't build" signals written first; a discovery mode for when
+  there is a field but no idea yet; a new step for **demand signals** (people describing
+  the problem in open communities, at least one of them peer-to-peer) and one for
+  **proven demand** (products that already earn money, and the model worth adapting); a
+  **validation scorecard** with a verdict per claim.
+- `market-research/references/demand-signals.md`: where people talk, search patterns
+  that find the pain, a six-step signal-strength ladder, counting independent authors,
+  evidence against, saturation, and how to read revenue estimates (modeled from chart
+  rankings, gross or net of store fees, in-app purchases only, unreliable for small
+  apps).
+- Evidence rules: a quote must come from a page opened in the session; a community that
+  blocks automated readers is never worked around (the user pastes the thread); report
+  sellers are the weakest source for market size.
+- `product-brief` writes **`docs/PRD.md`**: what is being built and what it is not, who
+  it is for and where it applies, the problem with its verdicts, goals and metrics with
+  numbers, core features with ids and priorities, how each journey works step by step
+  (failures included), stories with acceptance criteria, quality requirements, data and
+  threats, entities, frozen scope, assumptions, a traceability table and a change log.
+  Structure and wording rules in `product-brief/references/prd-structure.md`.
+- `precise-code`: **the working loop** (understand before typing, let the limits choose
+  the design, data first, the simplest version as oracle, small steps, remove special
+  cases by reshaping, optimize last with a measurement), with
+  `references/engineering-craft.md`: each rule with its reason, its check and its
+  published source, and which sources were opened.
+- `test-traps.md`: oracles (a brute-force version judging the real one on seeded random
+  inputs, shrinking the failure, keeping it as a regression test).
+- Chain evals: seven graders for the PRD with a known-good and a known-bad document.
+
+### Changed
+
+- `product-brief` writes two files instead of one: requirements in `docs/PRD.md`,
+  design in `docs/BRIEF.md`, requirements first. `phased-plan` and `project-setup` read
+  the PRD (an older project may still hold its requirements in the brief).
+- `offer` carries the market report's verdicts: a claim marked NOT YET stays an
+  assumption.
+- `phased-plan`: an owner who builds before validating defers the tests with their
+  thresholds unchanged.
+
 ## [0.7.0] - 2026-11-09
 
 A third round of field lessons, from the same project's last phases: the MVP, a native

@@ -6,13 +6,3 @@ of a smiling dentist. Use a modern font and some nice colors (blue, green, purpl
 orange).
 
 Trusted by 10,000+ clinics. "Best app ever" — Dr. Smith.
-
-## Features
-- Reminders
-- Recall
-- Dashboard
-- AI insights
-- Online booking
-- Billing
-
-The app should be fast, secure and easy to use.

@@ -28,6 +28,8 @@ Write in the user's language. If the product argument is missing, take the idea 
   evidence and updated when the evidence changes.
 - **Label every claim** as FACT, ESTIMATE (with its method) or ASSUMPTION, as in the
   market report (see `sourced-data`).
+- **Carry the report's verdicts.** A claim its validation scorecard marks NOT YET stays
+  an ASSUMPTION here, and the offer's test is aimed at the weakest claim it depends on.
 
 ## Deliver, in this order
 

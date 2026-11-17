@@ -64,7 +64,7 @@ check that captured nothing.
 | Skill | Activates when | What it adds |
 |---|---|---|
 | `security-first` | Code touches untrusted input or sensitive data (any endpoint, form, upload, import, auth), each phase, every commit | Threat modeling fitted to the real threat model, trust boundaries, secret handling, security tests as acceptance criteria, vulnerability scans before packaging, a pre-commit checklist |
-| `precise-code` | Writing or changing code | Read before change, no truncation, comments that explain *why*, reproducible outputs (own seeded generator, canonical inputs, byte-identical documents), dependencies vetted the day they enter, data files treated as code |
+| `precise-code` | Writing or changing code | Read before change, a working loop drawn from what well-known engineers published (understand first, data first, the simplest version as oracle, small steps), no truncation, comments that explain *why*, reproducible outputs (own seeded generator, canonical inputs, byte-identical documents), dependencies vetted the day they enter, data files treated as code |
 | `tests-that-bite` | A bug is reported or fixed, writing tests, deciding "done" | Failing test before the fix, positive controls (also for every automated review check), mutation testing read as questions and per class, golden files, tests on the project's real content, negative cases that can actually fail |
 | `safe-database` | Migrations, schema changes, data fixes, test runs | Backup → migrate → test → verify; disposable test databases; cleanup by id |
 | `blind-spots` | Editing or reviewing CSS and layout, server templates, generated documents or PDFs, build files or scripts; before saying work is done | The traps agents repeatedly fall into, and the check for each |
@@ -74,9 +74,9 @@ check that captured nothing.
 | `project-setup` | Starting a project or adopting coderachnid | Rules file, plan, ADR folder, database layout and project guards from templates |
 | `sourced-data` | The product shows prices, statistics, research or rules people rely on | A primary source, date and range for every figure; "no source, no number" |
 | `handoff` | The conversation has grown long, or you want to continue in a fresh session | A short handoff file so `/clear` costs nothing and the next session picks up the thread |
-| `market-research` | Only when you run `/coderachnid:market-research` (no cost in other sessions) | Market size, demand drivers, the top ten problems ranked by urgency and willingness to pay, competitors on a positioning map with the free position, every figure sourced, ending in the riskiest assumptions and how to test them |
+| `market-research` | Only when you run `/coderachnid:market-research` (no cost in other sessions) | The idea framed as a problem, people already describing it in open communities, products that already earn money from it, market size, the top ten problems, competitors on a positioning map with the free position, every figure and quote sourced, ending in a verdict per claim and the riskiest assumptions with their tests |
 | `offer` | Only when you run `/coderachnid:offer` (no cost in other sessions) | A one-sentence value proposition, three price tiers anchored to competitor prices, a guarantee you can honor, the cheapest test of the offer, and the promises the product must never make |
-| `product-brief` | Only when you run `/coderachnid:product-brief` (no cost in other sessions) | A design direction with a mockup prompt for your design tool, plus stories with acceptance criteria, personal data and threats, entities and a frozen MVP scope |
+| `product-brief` | Only when you run `/coderachnid:product-brief` (no cost in other sessions) | A structured PRD (what is being built, for whom and where, the problem, core features and how each works, stories with acceptance criteria, data and threats, frozen MVP scope) and a design brief with a mockup prompt for your design tool |
 
 Stack-specific knowledge lives in each skill's `references/` and is loaded only when the
 task needs it: Windows shells, Java/Spring, server-side templates and HTMX, web
@@ -84,8 +84,9 @@ frontend and generated art, documents rendered to screen and PDF, SQLite and MyS
 served on the user's own machine, desktop apps (a native window, the installer, the
 release), vulnerability scans and release artifacts, importing a customer's file, AI
 model integration, data files written by people (YAML, JSON), reproducible outputs, the
-ways a test passes without proving anything, and an editorial design direction for
-product pages.
+ways a test passes without proving anything, engineering craft with its sources, demand
+signals and how to read revenue estimates, the structure of a PRD, and an editorial
+design direction for product pages.
 
 ## Guards for your project
 
@@ -159,26 +160,34 @@ Details, settings and an optional status line with your five-hour usage:
 
 ### Start with evidence: the discovery chain
 
-Before building, three commands take an idea to a brief the code can start from. Run
-each one by hand, in its own session; each reads the file the previous one wrote.
+Before building, three commands take an idea to requirements the code can start from.
+Run each one by hand, in its own session; each reads the files the previous one wrote.
 
-1. `/coderachnid:market-research "idea" "customer" "industry" "regions"` writes
-   `docs/MARKET.md`: sourced figures, the top ten problems, the five main competitors
-   and the position none of them holds, and the three riskiest assumptions.
+1. `/coderachnid:market-research "idea or problem" "customer" "industry" "regions"`
+   writes `docs/MARKET.md`. It frames the idea as a problem, looks for people already
+   describing it in forums and reviews (quotes only from pages it opened), finds
+   products that already earn money from it, then sizes the market, ranks the top ten
+   problems and maps the five main competitors and the position none of them holds. It
+   ends with a verdict for each claim the idea makes and the three riskiest assumptions.
 2. `/coderachnid:offer "product"` writes `docs/OFFER.md`: what you sell, to whom, at
    which price (anchored to the competitors' prices and labelled an assumption until
    tested), the cheapest way to test it, and a list of promises your product must never
    make, ready for the forbidden-phrases guard.
-3. `/coderachnid:product-brief "product"` writes `docs/BRIEF.md`: a design direction
-   chosen to stand apart from the competitors, a mockup prompt to hand to your design
-   skill or image generator, and the system requirements (stories with acceptance
-   criteria, personal data and threats, entities, frozen MVP scope).
+3. `/coderachnid:product-brief "product"` writes two documents. `docs/PRD.md` holds the
+   requirements in a fixed structure: what is being built, for whom and where, the
+   problem, the core features and how each works, stories with acceptance criteria,
+   personal data and threats, entities, and the frozen MVP scope, all traced back to the
+   problems in the market report. `docs/BRIEF.md` holds a design direction chosen to
+   stand apart from the competitors and a mockup prompt for your design skill or image
+   generator.
 
 Your own logo, typefaces, colors and references always win over the brief's proposal.
-The brief becomes the plan's discovery phase and its frozen scope before F0. On a
-fictional product, `offer` and `product-brief` delivered every section they promise in
-2 of 2 runs each, where a loose prompt for the same document covered 10% and 29%
-(`evals/chain/`). They are not yet tried on a real project.
+The PRD becomes the plan's frozen scope before F0. On a fictional product,
+`product-brief` delivered every section of both documents in 2 of 2 runs, where a loose
+prompt for the same two documents covered 32%; `offer` delivered every section in 2 of 2
+runs against 10% (`evals/chain/`). The chain has since run on one real project, and
+what that run showed is in the current version. `market-research` needs live web search
+and is not part of that measurement.
 
 ## How it is checked
 
