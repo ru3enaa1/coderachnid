@@ -55,6 +55,25 @@ git tag -a vX.Y.Z -m "coderachnid vX.Y.Z"
 git push origin vX.Y.Z
 ```
 
+## v0.8.0 record (2026-11-17)
+
+- Guards: skills 0 (14 skills), private terms with `--history` 0, positive controls 76
+  of 76, `validate` passed with the two expected root warnings. Cross-skill links
+  checked.
+- No description of a model-invoked skill changed. `plugin details` now estimates about
+  1,479 tokens always on (1,432 before), but the difference comes from the longer
+  descriptions of `market-research` and `product-brief`, which run by hand and are left
+  out of the listing, so the real fixed cost is unchanged (about 1,110).
+- Cost when a skill loads: `precise-code`, which loads on coding tasks, grew from 6,439
+  to 7,658 bytes (about 300 tokens more per load) with the working loop. The by-hand
+  skills grew more (`market-research` and `product-brief` about 1.8k tokens each), but
+  they run once per project.
+- History: no-reply address only; no secret; no personal path.
+- Clean install from GitHub: both plugins at 0.8.0 from commit `ce637d3`; the three new
+  references present, `product-brief` writing `docs/PRD.md`, the working loop in
+  `precise-code`. 14 skills, 0 hooks; relay 3 hooks at no model context cost. Tag
+  `v0.8.0` on `ce637d3`.
+
 ## v0.7.0 record (2026-11-09)
 
 - Guards: skills 0 (14 skills), private terms with `--history` 0, positive controls 76
