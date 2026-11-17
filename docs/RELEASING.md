@@ -39,7 +39,7 @@ claude plugin marketplace add ru3enaa1/coderachnid
 claude plugin install coderachnid@coderachnid
 claude plugin install coderachnid-relay@coderachnid # the opt-in hooks plugin
 claude plugin list                                  # versions, enabled
-claude plugin details coderachnid                   # 9 skills, 0 hooks
+claude plugin details coderachnid                   # skills as in the README badge, 0 hooks
 rm -rf "$HOME/.cr-clean"
 ```
 

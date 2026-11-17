@@ -15,11 +15,17 @@ The relay keeps the thread in a short file instead:
 
 ## Install
 
+From a terminal, inside the project's folder:
+
+```sh
+claude plugin marketplace add ru3enaa1/coderachnid
+claude plugin install coderachnid@coderachnid --scope local
+claude plugin install coderachnid-relay@coderachnid --scope local
 ```
-/plugin marketplace add ru3enaa1/coderachnid
-/plugin install coderachnid@coderachnid
-/plugin install coderachnid-relay@coderachnid
-```
+
+`--scope local` turns the hooks on for this project only; without it they run in every
+project. The terminal app also has these commands as `/plugin …`. Updating and other
+details: [the main README](../../README.md#install).
 
 The relay needs coderachnid for the `handoff` skill. It runs plain `bash`, `grep`, `sed`
 and `tail` (Git Bash on Windows): no jq, Python or Node.
