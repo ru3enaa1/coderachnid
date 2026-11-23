@@ -25,3 +25,12 @@ plans or reviews) with this block, after everything else:
   project's rules name the labels, use those names.
 - Skip the block for replies that are not development work: a quick factual answer, a
   greeting, or a clarifying question.
+
+## When a change needs a deep review
+
+If the work touched authentication, money, personal data, a database schema, a contract
+other systems use, security settings, or code that goes to an organization or a client,
+and no audit of it is recorded in `docs/reviews/`, the **Recommended implementation**
+names the exact `/coderachnid:adr-guard` command: `plan` before coding, `audit` after. One
+line. When none of that applies, say nothing about it. Asked whether a task needs it, use
+the `adr-guard` skill's read-only triage.

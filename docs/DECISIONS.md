@@ -156,3 +156,31 @@ set on purpose. Only the method is taken, never the look of contest code, which 
 written to be thrown away. And no practice is attributed to a person who did not publish
 it: no method written by an individual champion was found, so the contest practices are
 cited as the community's.
+
+## D-016 · A skill the model knows, whose heavy work only the user starts (2026-11-23)
+
+The maintainer delivers code written with AI agents to organizations and needed two
+things: ADRs written before the work with clauses that can be checked, and a deep,
+evidence-backed audit after it, where tokens matter less than leaving no gap. He also
+asked for a sixth sense: that the agent itself say when a task deserves it.
+
+A by-hand skill (`disable-model-invocation`) can't give that sixth sense: it is absent
+from the model's listing (D-013), so the model doesn't know it exists. `adr-guard` is
+therefore visible to the model, at the cost of its description in every session, but
+split in two levels. Loaded by the model, it only triages: a read-only scan of the task
+and the repository that answers in a few lines with the exact command, or says it isn't
+needed. The plan and the audit, which write files, run the whole build and spend many
+tokens, start only when the user types the command or asks for them in words. The
+output style and `response-closing` add one line to the closing when a change matched a
+trigger and no audit is recorded.
+
+The audit adds four rules to the plugin's usual evidence discipline: it runs in a fresh
+session, never the one that wrote the code; it is read-only on the code under review,
+with probes and planted defects in a separate worktree; it never samples, keeping a
+coverage ledger of every changed hunk by every lens; and its verdict follows written
+rules, with INCONCLUSIVE kept apart from BLOCK so that "it could not be checked" never
+reads as "it is fine" or as "it is broken". The ADR template gains decision clauses and
+a scope fence, so every project's ADRs can be audited the same way.
+
+Sources: Nygard's ADRs (2011) and fitness functions (Ford, Parsons and Kua, 2017),
+marked anticipated until a real delivery confirms the method.

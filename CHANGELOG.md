@@ -6,15 +6,42 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-11-23
+
+Decide before, audit after: `adr-guard`, with a sixth sense that says when a change
+deserves it (D-016). 15 skills.
+
 ### Added
 
+- Skill `adr-guard`, visible to the model for a read-only triage only: asked whether a
+  task needs a deep review, or working on a change that touches authentication, money,
+  personal data, a schema, a public API, security settings or code delivered to others,
+  it answers in a few lines with the exact command, or says it isn't needed. The heavy
+  modes start only when the user asks:
+  - `/coderachnid:adr-guard plan "<task>"` writes the ADR with numbered decision
+    clauses, an objective check for each (a fitness function), a scope fence, the damage
+    to watch, the rollback and open questions, plus a baseline of the build and tests;
+  - `/coderachnid:adr-guard audit <ADR> <base>` checks the code against it in a fresh
+    session: six lenses (compliance, correctness, security, damage, direction,
+    operations), every clause's check run, a comparison with the baseline, probes and a
+    planted defect in a separate worktree, a coverage ledger with no empty cell, and a
+    verdict by written rules: APPROVE, APPROVE WITH CONDITIONS, INCONCLUSIVE or BLOCK.
+  - References: `plan.md`, `audit.md`, `audit-lenses.md`, `review-report.md`.
+- The closing names the `adr-guard` command when a change needs it: in the output style,
+  `response-closing` and the `CLAUDE.md` template.
 - `docs/GETTING-STARTED.md`: a guide for first-time users that takes a project from an
-  empty folder to its first release, in the order the 14 skills are used: what to type
-  at each stage, what you get, what is asked of you, a cheat sheet, and how to update,
+  empty folder to its first release, in the order the skills are used: what to type at
+  each stage, what you get, what is asked of you, a cheat sheet, and how to update,
   switch off and troubleshoot.
+- Evals for `adr-guard` (`evals/adr-guard/`): a fictional service with one clean and
+  three defective implementations, each defect proven real first; triage, plan and audit
+  cases with positive-controlled graders, and `check-closing.sh` for the closing line in
+  real sessions. Audit 8 of 8, triage 6 of 6, closing 4 of 4, plan 2 of 2.
 
 ### Changed
 
+- The ADR template (`project-setup`) gains decision clauses with checks and a scope
+  fence; `phased-plan` points risky changes to `adr-guard`.
 - README: install rewritten around the `claude` CLI and `--scope local` (one project
   only), with the two-step update and installs tied to the folder's path; claims that
   stopped being true corrected; the order of use and the discovery chain shortened to a

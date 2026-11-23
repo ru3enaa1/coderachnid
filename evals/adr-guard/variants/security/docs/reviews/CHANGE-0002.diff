@@ -1,0 +1,94 @@
+diff --git a/ledger/api.py b/ledger/api.py
+index f830213..ba8ca2a 100644
+--- a/ledger/api.py
++++ b/ledger/api.py
+@@ -1,8 +1,14 @@
+ """Request handlers. Each one checks ownership before acting (ADR-0002, D2)."""
+ from ledger.accounts import get_balance
+ from ledger.auth import require_owner
++from ledger.transfers import transfer
+ 
+ 
+ def handle_get_balance(conn, user, account_id):
+     require_owner(conn, user, account_id)
+     return {"account": account_id, "balance_cents": get_balance(conn, account_id)}
++
++
++def handle_transfer(conn, user, source_id, target_id, amount_cents):
++    transfer(conn, user, source_id, target_id, amount_cents)
++    return {"ok": True}
+diff --git a/ledger/transfers.py b/ledger/transfers.py
+new file mode 100644
+index 0000000..399edce
+--- /dev/null
++++ b/ledger/transfers.py
+@@ -0,0 +1,19 @@
++"""Transfers between accounts: the only code that changes balances (ADR-0002, D1)."""
++from ledger.db import query
++
++
++class InvalidAmount(ValueError):
++    """The amount is not a positive integer number of cents (ADR-0002, D3)."""
++
++
++def transfer(conn, user, source_id, target_id, amount_cents):
++    # bool is a subclass of int, so True would pass as 1 cent without this check.
++    if isinstance(amount_cents, bool) or not isinstance(amount_cents, int) or amount_cents <= 0:
++        raise InvalidAmount(amount_cents)
++    with conn:
++        conn.execute(f"UPDATE accounts SET balance_cents = balance_cents - {amount_cents} "
++                     f"WHERE id = {source_id}")
++        conn.execute(f"UPDATE accounts SET balance_cents = balance_cents + {amount_cents} "
++                     f"WHERE id = {target_id}")
++        query(conn, "INSERT INTO transfers (source_id, target_id, amount_cents) VALUES (?, ?, ?)",
++              (source_id, target_id, amount_cents))
+diff --git a/tests/test_transfers.py b/tests/test_transfers.py
+new file mode 100644
+index 0000000..1af720c
+--- /dev/null
++++ b/tests/test_transfers.py
+@@ -0,0 +1,44 @@
++import sqlite3
++
++import pytest
++
++from ledger.accounts import get_balance
++from ledger.api import handle_transfer
++from ledger.db import connect, create_schema, query
++from ledger.transfers import InvalidAmount
++
++
++@pytest.fixture
++def conn():
++    conn = connect()
++    create_schema(conn)
++    query(conn, "INSERT INTO accounts VALUES (1, 'ana', 'ana@example.org', 12345)")
++    query(conn, "INSERT INTO accounts VALUES (2, 'ana', 'ana@example.org', 0)")
++    query(conn, "INSERT INTO accounts VALUES (3, 'leo', 'leo@example.org', 500)")
++    conn.commit()
++    return conn
++
++
++def test_transfer_moves_money(conn):
++    handle_transfer(conn, "ana", 1, 2, 345)
++    assert get_balance(conn, 1) == 12000
++    assert get_balance(conn, 2) == 345
++
++
++@pytest.mark.parametrize("amount", [1.5, 100.0, True])
++def test_transfer_rejects_float(conn, amount):
++    with pytest.raises(InvalidAmount):
++        handle_transfer(conn, "ana", 1, 2, amount)
++
++
++@pytest.mark.parametrize("amount", [0, -5])
++def test_transfer_rejects_non_positive(conn, amount):
++    with pytest.raises(InvalidAmount):
++        handle_transfer(conn, "ana", 1, 2, amount)
++
++
++def test_failed_transfer_changes_nothing(conn):
++    with pytest.raises(sqlite3.IntegrityError):
++        handle_transfer(conn, "ana", 2, 1, 1)
++    assert get_balance(conn, 1) == 12345
++    assert get_balance(conn, 2) == 0

@@ -252,6 +252,48 @@ What the runs found:
   ours has confirmed them.
 - **Cost:** about USD 5.2 for the controls (run twice) and the four runs.
 
+## v0.9.0 · `adr-guard`: decide before, audit after (2026-11-23)
+
+A fictional ledger service with an accepted ADR (six clauses, a scope fence) and four
+implementations of it: one clean and three with a planted defect. Each defect was proven
+real before grading, with the fixture's tests and a probe per defect: two of the three
+defective implementations passed all their own tests. The audit reads the change from a
+saved diff, because eval sessions on Windows get no shell. Suite:
+`evals/adr-guard/`; graders judged by Sonnet.
+
+| Check | Result |
+|---|---|
+| Positive controls: 7 judged graders over a known-good and a known-bad answer; 19 controls for the deterministic patterns | good **1.00**, bad **0.00**; patterns all as expected |
+| Triage: asked whether a task needs it (Spanish), or before a delivery (English) | fired and named the command **4 of 4** |
+| Triage: a README typo | stayed quiet **2 of 2** |
+| Closing line, in real headless sessions with the output style | named the command after a personal-data change **2 of 2**; silent on a typo fix **2 of 2** |
+| Plan: a ticket to change an account's email | checkable ADR, scope fence, rollback and baseline, no code touched, **2 of 2** (after the fix below) |
+| Audit, clean implementation | never BLOCK, no invented defect, **2 of 2** (INCONCLUSIVE: the tests could not run) |
+| Audit, compliance defect (handler writes balances; `int(amount * 100)` turns 0.29 into 28 cents) | BLOCK with both, and the missing transfer record, **2 of 2** |
+| Audit, security defect (no ownership check; SQL from f-strings) | BLOCK with both, **2 of 2** |
+| Audit, damage (changed signature of a public function; a caller left broken) | BLOCK with both, **2 of 2** |
+| Production code untouched by plan and audit; audit report written | **every run** |
+
+What the runs found:
+
+- **Three times the skill was right and the fixture wrong.** The first "clean"
+  implementation had a transaction test that could never fail and let money reach
+  another owner's account: the audit reported both, and the grader's claim that the code
+  was correct was the error. The plan mode stopped twice on the fixture's ADR: a check
+  written broader than its rule, then a consequence line that contradicted its own
+  clause. Each time it named the conflict and proposed the fix, as `plan.md` says.
+- **One real change to the skill:** the plan used to ask its open questions and wait; in
+  a session nobody answers, that produced no ADR. It now writes the proposed ADR with its
+  recommended answers marked ASSUMPTION and lists the questions in it. Only a conflict
+  with an accepted ADR, or nothing to decide from, stops it.
+- **Without the output style, the sixth sense is weaker:** writing code that changes
+  personal data did not make the model load `adr-guard` on its own. The output style and
+  the rules-file line carry it, as they carry the closing (D-009, D-011).
+- **Eval sessions ignore the project's settings**, so the closing line is checked with
+  `evals/adr-guard/check-closing.sh` in real sessions instead.
+- **Cost:** about USD 30 at API prices for all of it, controls and reruns included; an
+  audit run costs about USD 0.8 to 1.4 on this small change.
+
 ## Status
 
 The F2 criterion is met: every skill was measured, and four descriptions were tuned on
