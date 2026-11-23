@@ -55,6 +55,15 @@ git tag -a vX.Y.Z -m "coderachnid vX.Y.Z"
 git push origin vX.Y.Z
 ```
 
+## v0.9.1 record (2026-11-23)
+
+- Guards: skills 0 (15 skills), private terms with `--history` 0, positive controls 76
+  of 76, `validate` passed with the two expected root warnings.
+- History: no-reply address only; no secret; no personal path.
+- Clean install from GitHub: both plugins at 0.9.1 from commit `40c93cb`; the new rules
+  present in the references. Fixed cost unchanged (about 1,639 estimated, about 1,270
+  real): only references grew. Tag `v0.9.1` on `40c93cb`.
+
 ## v0.9.0 record (2026-11-23)
 
 - Guards: skills 0 (15 skills), private terms with `--history` 0, positive controls 76

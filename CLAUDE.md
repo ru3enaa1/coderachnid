@@ -162,6 +162,9 @@ projects and generalized.
   (web frontend with a new installable-apps section, templates and HTMX, Java/Spring,
   Windows shell, MySQL) and one correction (the editor's compilation errors). No skill
   or description changed.
+- **2026-11-23 · v0.9.1 published.** Clean install verified (both plugins at 0.9.1, 15
+  skills, fixed cost unchanged); tag `v0.9.1` on `40c93cb`. **Next:** a first real
+  delivery audited with `adr-guard`.
 
 ## 3. Structure
 
