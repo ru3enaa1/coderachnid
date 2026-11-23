@@ -55,6 +55,20 @@ git tag -a vX.Y.Z -m "coderachnid vX.Y.Z"
 git push origin vX.Y.Z
 ```
 
+## v0.9.0 record (2026-11-23)
+
+- Guards: skills 0 (15 skills), private terms with `--history` 0, positive controls 76
+  of 76, `validate` passed with the two expected root warnings; cross-skill links
+  checked.
+- History: no-reply address only; no secret; no personal path.
+- Clean install from GitHub: both plugins at 0.9.0 from commit `9d47339`; `adr-guard`
+  with its four references, and the output style's new closing line present. 15 skills,
+  0 hooks; relay 3 hooks at no model context cost.
+- Fixed cost: `plugin details` estimates about 1,639 tokens always on (1,479 before).
+  Without the three by-hand skills, which the listing leaves out, about 1,270: the 160
+  added are `adr-guard`'s description, the price of a skill the model must know to warn.
+- Tag `v0.9.0` on `9d47339`.
+
 ## v0.8.0 record (2026-11-17)
 
 - Guards: skills 0 (14 skills), private terms with `--history` 0, positive controls 76

@@ -154,6 +154,9 @@ projects and generalized.
   apart from BLOCK) only on the user's command. Closing line in the output style,
   `response-closing` and the template. Evals on a fictional service: audit 8/8, triage
   6/6, closing 4/4 in real sessions, plan 2/2 after one fix; about USD 30.
+- **2026-11-23 · v0.9.0 published.** Clean install verified (both plugins at 0.9.0, 15
+  skills; real fixed cost about 1,270 tokens, 160 more for `adr-guard`'s description);
+  tag `v0.9.0` on `9d47339`.
 
 ## 3. Structure
 
