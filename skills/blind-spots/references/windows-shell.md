@@ -15,10 +15,13 @@
   `C:\Users\First Last` arrived split in two, and the program exited complaining about an
   extra argument. Quote each path by hand (`` "`"$path`"" ``). Java's `ProcessBuilder`
   does quote.
-- **A commit message with double quotes inside breaks.** The here-string reaches `git`
-  split, the pieces are read as paths (`pathspec '...' did not match`), the commit doesn't
-  happen, and what was staged goes into the next commit. Write the message to a file and
-  run `git commit -F <file>`. Confirmed 2026-11-09.
+- **Double quotes inside an argument to a native program get eaten.** A commit message
+  with quotes reached `git` split: the pieces were read as paths (`pathspec '...' did not
+  match`), the commit didn't happen, and what was staged went into the next commit. A
+  `docker inspect` template with `"..."` failed with *bad character '='*. Write commit
+  messages to a file (`git commit -F <file>`), and ask tools for JSON
+  (`{{json ...}}` piped to `ConvertFrom-Json`) instead of quoting inside a template.
+  Confirmed 2026-11-09.
 - **A `.ps1` with `$ErrorActionPreference = "Stop"` dies when its output is redirected**:
   native tools that print warnings on stderr (Maven does) become terminating errors.
 - PowerShell splits `-Dkey=path/file.txt` at the dot, and Maven then reads `.txt` as a
@@ -45,6 +48,15 @@
   project depends on.
 - Home folders with spaces (`C:\Users\First Last`) break unquoted paths in JVM
   `argLine`s, Java agents and scripts.
+- **Some settings split on spaces however they are quoted.** OpenSSH's
+  `UserKnownHostsFile` takes several files separated by spaces, so a path under
+  `C:\Users\First Last` became two paths, quotes or `~` notwithstanding, and the host key
+  was never saved. Use the folder's 8.3 short name (`/c/Users/FIRSTL~1/...`, from
+  `cmd /c for %I in ("<path>") do @echo %~sI`).
+- **Docker Desktop updates itself when it starts and restarts its engine.** A `docker
+  compose up` right after switching it on saw the database stop cleanly (SIGTERM, no
+  out-of-memory, no restart counted) and lose its earlier events. Before blaming the
+  container, read Docker's own log (`%LOCALAPPDATA%\Docker\log\host`).
 - The Windows firewall drops packets silently. Connecting to a port that is not
   listening on the LAN address **times out** instead of being refused, so a test that
   proves "not reachable from the network" must accept both outcomes.

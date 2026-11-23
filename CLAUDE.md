@@ -157,6 +157,11 @@ projects and generalized.
 - **2026-11-23 · v0.9.0 published.** Clean install verified (both plugins at 0.9.0, 15
   skills; real fixed cost about 1,270 tokens, 160 more for `adr-guard`'s description);
   tag `v0.9.0` on `9d47339`.
+- **2026-11-23 · v0.9.1 prepared** (branch `feat/v0.9.1-field-lessons-4`). Fourth round
+  of field lessons (D-012) from the second source project: rules in five references
+  (web frontend with a new installable-apps section, templates and HTMX, Java/Spring,
+  Windows shell, MySQL) and one correction (the editor's compilation errors). No skill
+  or description changed.
 
 ## 3. Structure
 

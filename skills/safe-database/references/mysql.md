@@ -4,6 +4,11 @@
   you later wait on a lock. When generating sequential numbers, read the max with
   `SELECT ... FOR UPDATE` (a locking read always sees the latest committed row).
   A concurrency test with two simultaneous saves catches the duplicate.
+- **To claim a row (`UPDATE ... SET owner = ? WHERE owner IS NULL`) and then read it, read
+  it with a lock** (`SELECT ... FOR UPDATE`, or a pessimistic-write lock in the ORM). The
+  transaction had already read the database earlier, so its REPEATABLE READ snapshot is
+  old: a plain read still showed the row as free after another session took it. A test
+  with two sessions claiming at once caught it.
 - **A violated `CHECK` (error 3819) does not arrive as a data-integrity exception**
   (those are for UNIQUE and FK). It arrives as a generic SQL exception, so catch the
   broader data-access exception or validate in the service first.

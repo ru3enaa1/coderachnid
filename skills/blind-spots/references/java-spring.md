@@ -34,9 +34,13 @@
 - A Maven wrapper that pins the `.zip` checksum fails with "distribution might be
   compromised" when `unzip` is missing and it downloads the `.tar.gz`. Install `unzip`
   in the container.
-- **"Unresolved compilation problems" in a test that compiles fine is the editor.** An
-  IDE's Java extension compiling into `target/` while Maven runs can leave broken classes
-  there. Delete the class from `target/test-classes` and run again; the code is fine.
+- **"Unresolved compilation problems" at test time means the class came from the
+  editor's compiler, not Maven.** An IDE's Java extension writes into `target/` on save,
+  and Maven may reuse that class instead of compiling. Read the message before deleting
+  anything: in one project the source was fine and the editor had left a broken class
+  (delete it from `target/test-classes` and run again); in another the source really had
+  an error, an invalid `\s` escape in a string, that Maven never reported because it
+  reused the editor's class.
 - **Search build logs for the test runner's failure marker** (`<<< FAIL` in Surefire),
   never a bare `FAIL`: it also matches the "CHECK constraint failed" that the database
   logs during the tests that expect it.
@@ -67,6 +71,14 @@
 - `?flag` with no value is `""` in Tomcat and `null` in MockMvc. Use
   `getParameterMap().containsKey(...)`.
 - `@WebMvcTest` slices need mocks for every bean a `@ControllerAdvice` touches.
+- **`@WithMockUser` without `roles` is `ROLE_USER`**: once routes require roles, every
+  such test gets 403. Name the role each test plays, and give services that check the
+  role themselves the same user.
+- **Two beans of the same type in one test context** (a test double and a
+  `@MockitoBean`) make injection ambiguous: mark the double `@Primary`.
+- **"Too many connections" in the suite comes from the context cache**: Spring keeps every
+  distinct test context (other properties, another `@Import`) alive with its own
+  connection pool. Give the test profile a small pool that closes idle connections fast.
 - In Spring 7, `MockMvcRequestBuilders.multipart(...)` is not a
   `MockHttpServletRequestBuilder`: a test helper that decorates requests needs its own
   overload for uploads.
