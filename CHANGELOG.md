@@ -6,6 +6,39 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+## [0.9.1] - 2026-11-23
+
+A fourth round of field lessons (D-012), from a second source project's last weeks:
+multi-company roles, an installable web app and a phone-first redesign. No skill or
+description changed.
+
+### Added
+
+- `web-frontend.md`: a `flex: 1` child ignores its height; a `legend` sits on its
+  fieldset's border; a class's `display` beats `hidden`; auto-growing textareas measured
+  from `height: 0`; `100dvh` on Android after navigating back; headless focus emulation;
+  capture with the GPU on for `backdrop-filter`; one calculation on server and browser
+  made twins (rounding, number printing, `StrictMath`). New section on installable web
+  apps: the Android splash colors, no `theme_color` with themes, and iPhone's installed
+  app not sharing Safari's cookies.
+- `server-templates-htmx.md`: the hidden `_field` after a `th:field` checkbox breaks
+  `+` selectors; `LocalDate` in a date input needs `@DateTimeFormat`; Spring's
+  transformer cache serving old CSS with `url(...)`; `hx-swap-oob` only in fragments;
+  `HX-Reswap: none` still applies out-of-band swaps; buttons outside their form.
+- `java-spring.md`: `@WithMockUser` defaults to `ROLE_USER`; two beans of one type in a
+  test context; "too many connections" from cached test contexts.
+- `windows-shell.md`: settings that split on spaces however quoted (OpenSSH), with the
+  8.3 short name as the way out; Docker Desktop restarting its engine after an update.
+- `mysql.md`: claiming a row and reading it back needs a locking read under REPEATABLE
+  READ.
+
+### Changed
+
+- `java-spring.md`: "Unresolved compilation problems" now covers both cases: a broken
+  class left by the editor, and a real source error Maven never reported because it
+  reused the editor's class.
+- `windows-shell.md`: the double-quotes trap covers every native program, not only `git`.
+
 ## [0.9.0] - 2026-11-23
 
 Decide before, audit after: `adr-guard`, with a sixth sense that says when a change

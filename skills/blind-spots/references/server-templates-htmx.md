@@ -18,6 +18,12 @@ These break at render time, not at compile time.
 - Attribute order is not preserved, so tests use a regex instead of a literal string.
 - A form that is re-rendered needs a class with getters and setters. `th:field` reads
   JavaBean getters, so a `record` doesn't work.
+- **A checkbox with `th:field` gets a hidden `<input name="_field">` right after it**, so
+  a style like `input:checked + label` no longer reaches the label (checked boxes looked
+  unchecked). Use the general sibling selector `~`, which works with and without it.
+- **A `LocalDate` in a `th:field` of `type="date"` needs `@DateTimeFormat(iso = DATE)`**:
+  without it the value is printed in the locale's format (`12/5/26`) and the browser
+  shows an empty field. A screenshot found it, not a test: assert the `value` attribute.
 - `@{/x(p=${null})}` writes `p=` (empty) rather than omitting it.
 - **`__...__` is preprocessing.** Two BEM classes (`block__element`) in one expression
   break the template. Build the class name in code.
@@ -32,7 +38,10 @@ These break at render time, not at compile time.
   depends on how the app runs.** One project served static files from the build output
   (copy them there, or restart); another, under `spring-boot:run`, served them straight
   from the source folder, where touching the build output changes nothing. A packaged jar
-  needs repackaging. Check which before "fixing" a stale stylesheet.
+  needs repackaging. Check which before "fixing" a stale stylesheet. **Copying is not
+  enough for a stylesheet with `url(...)` inside** when Spring rewrites static URLs: its
+  transformer cache keeps the rewritten bytes per file, not per content hash, so the new
+  URL serves the old CSS. Restart.
 - Fingerprinted static URLs (`app-<hash>.css`): templates always use `@{...}`, and tests
   match with a pattern.
 
@@ -44,5 +53,12 @@ These break at render time, not at compile time.
 - `hx-include="closest form"` on an `hx-get` puts the CSRF token in the URL. Include only
   the needed container.
 - A form without a field submits it as null: **null = don't touch; empty = clear.**
+- **Update a part of the page that a response doesn't target with `hx-swap-oob`** (for
+  example a footer that follows a preview). The out-of-band element goes only in the
+  fragment's response, never in the full page, or the page has two elements with one id.
+- **`HX-Reswap: none` leaves the target untouched and still applies out-of-band swaps**:
+  useful to keep the figures on screen while only a warning and a button change.
+- **A button outside its form names it with `form="id"`**: `button.form.requestSubmit()`
+  works, and HTMX includes that form's fields in the button's `hx-post`.
 - Serve HTMX locally, pinned, with its hash recorded. Never from a CDN in an app with a
   strict CSP.
