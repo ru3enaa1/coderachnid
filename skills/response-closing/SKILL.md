@@ -27,6 +27,11 @@ into a workflow: the human can read only the block and still know where things s
   watch-out and recommend an option.
 - **Recommendations not applied in this step go to the plan's living table** (see
   `phased-plan`), so they survive the session instead of scrolling away.
+- **A change that needs a deep review says so.** When the work touched authentication,
+  money, personal data, a schema, a contract other systems use, security settings, or
+  code going to an organization or a client, and no audit of it is recorded, the
+  recommended implementation names the exact `/coderachnid:adr-guard` command (`plan`
+  before coding, `audit` after). Otherwise, nothing about it.
 - **Write in the user's language.** The labels may be translated, but their order stays
   the same.
 

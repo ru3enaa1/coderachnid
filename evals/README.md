@@ -15,6 +15,7 @@ from `activation/sandbox/` into the run's empty workspace.
 | `cases/activation/<skill>-quiet-es` | The skill stays out of an unrelated request in Spanish | `tool_used: Skill`, `min: 0`, `max: 0` |
 | `cases/compliance/*` | Once loaded, the skill changes the result, measured against a no-plugin baseline | `regex` on files or the reply, `llm` rubric, plus a skill indicator |
 | `cases/chain/*` | `offer` and `product-brief` by their commands against loose prompts, plus positive controls for every grader (generated, see `chain/README.md`) | `llm` rubric on the written document, judged by Sonnet |
+| `cases/adr-guard/*` | `adr-guard`: the triage fires (and stays quiet), the closing names the command, plan writes a checkable ADR, and the audit of one clean and three defective implementations (generated, see `adr-guard/build-cases.mjs`) | `tool_used`, `regex` on the reply, `llm` on the trace judged by Sonnet, each with a positive control |
 
 ```sh
 claude plugin eval . --tag activation --ablation none --scaffold --trust-plugin --no-publish -j 2
@@ -45,6 +46,27 @@ claude plugin eval . --tag compliance --scaffold --trust-plugin --no-publish --a
   heredoc turned `[\\/]` into `[\/]`, a class that can never match a Windows path.
 - **Measure in isolation.** The F1 runner used the maintainer's own environment and
   reported 18 of 18; the isolated suite with more phrasings found four weak skills.
+- **A Windows path in a tool's JSON input has doubled backslashes.** A "this file must
+  not be written" pattern with one separator (`ledger[\\/]api`) never matches
+  `ledger\\api`, so the grader passes however the agent behaves. Use `[\\/]+`, and test
+  every pattern against a Windows and a POSIX sample, positive and negative, before a
+  run.
+- **A control text must not claim an action.** "I wrote docs/adr/0003…" in a control was
+  refused by the model (it hadn't written it) or failed by the judge for being untrue.
+  Present the content as a draft; a separate `tool_used` grader checks the file exists.
+- **Prove a planted defect is real before grading the review.** Run the fixture's tests
+  and a probe per defect: two of the three defective implementations passed all their own
+  tests, which is exactly what the audit has to see through.
+- **Eval sessions ignore the project's settings.** A case that wrote
+  `.claude/settings.json` with `"outputStyle": "coderachnid:closing"` started with
+  `output_style: default` (the trace's init line), so no closing could appear. Behavior
+  that depends on the output style is checked with real headless sessions instead:
+  `CLAUDE_BIN=<path to claude> bash evals/adr-guard/check-closing.sh`.
+- **When a "clean" fixture fails review, check the fixture first.** The first clean
+  implementation had a test that could never fail (its forced error hit the first write,
+  before the transaction mattered) and let money go to another owner's account; the
+  audit found both, and the grader's "this code is correct" was the error. The plan mode,
+  likewise, stopped on an ADR check that was written broader than its rule.
 - `--keep-temp` keeps a run's workspace and trace for debugging. Read only `out/`,
   never run git or tools inside it, and delete it afterwards.
 

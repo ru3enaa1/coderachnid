@@ -10,7 +10,7 @@ for the project. On Windows, the optional relay plugin runs its hooks with Git B
 
 ## The map
 
-coderachnid has 14 skills, and they work at different moments:
+coderachnid has 15 skills, and they work at different moments:
 
 | Moment | Skills | How they start |
 |---|---|---|
@@ -18,6 +18,7 @@ coderachnid has 14 skills, and they work at different moments:
 | Setting up the project | `project-setup` | you ask for it |
 | Building, phase by phase | `phased-plan` | you ask for a phase |
 | While you build | `precise-code`, `tests-that-bite`, `security-first`, `safe-database`, `sourced-data`, `blind-spots`, `pitfall-log` | on their own, when the task matches |
+| A change where a mistake is expensive | `adr-guard` | it tells you when it's worth it; plan and audit run when you type the command |
 | Every reply and every long session | `response-closing`, `handoff` | the output style, or when the conversation grows |
 
 ## Stage 0 · Prepare the project (once)
@@ -206,12 +207,36 @@ this migration"*.
 | 11 | `blind-spots` | CSS, templates, PDFs, scripts or builds; before saying "done" | screenshots at your real screen sizes, real exit codes, the known traps of your stack |
 | 12 | `pitfall-log` | something behaves unexpectedly, or a fix fails | a dated rule in the project's `CLAUDE.md` (Pitfalls), with the check that catches it |
 
+### 13 · When a mistake would be expensive: `adr-guard`
+
+For code you deliver to an organization or a client, code written mostly by AI agents,
+or a feature that handles money, identity or personal data.
+
+- **The sixth sense.** Ask *"does this task need adr-guard?"*, or just work: when a
+  change touches authentication, money, personal data, a schema, a public API, security
+  settings or code that goes to someone else, the closing names the exact command. The
+  check is read-only: it never builds, tests or writes anything to decide.
+- **Before the code:** `/coderachnid:adr-guard plan "<the task>"` writes the ADR with
+  numbered decision clauses, an objective check for each one, a scope fence (what may
+  change, what must not), the damage to watch and the rollback, plus a baseline of the
+  build and tests today. You accept the ADR; the clauses become the brief for whoever
+  implements.
+- **After the code**, in a fresh session: `/coderachnid:adr-guard audit <ADR> <base>`.
+  It reads every changed hunk through six lenses (compliance, correctness, security,
+  damage, direction, operations), runs each clause's check, compares with the baseline,
+  proves suspected defects with probe tests in a separate worktree, and plants a known
+  defect to make sure the review itself can catch one. The verdict is APPROVE, APPROVE
+  WITH CONDITIONS, INCONCLUSIVE (a critical check couldn't run) or BLOCK, and it never
+  approves with a gap in its coverage.
+- **What it is not:** it raises confidence, it can't prove the absence of bugs, and it
+  doesn't replace the organization's own review or security testing.
+
 ## Stage 4 · Keep the thread
 
 | # | Skill | When | What it does |
 |---|---|---|---|
-| 13 | `response-closing` | every development reply (the output style from Stage 0) | ends with five points: next phase, keys, watch-outs, tests to run, next step |
-| 14 | `handoff` | the conversation has grown long | writes `.coderachnid/HANDOFF.md`; then type `/clear` |
+| 14 | `response-closing` | every development reply (the output style from Stage 0) | ends with five points: next phase, keys, watch-outs, tests to run, next step |
+| 15 | `handoff` | the conversation has grown long | writes `.coderachnid/HANDOFF.md`; then type `/clear` |
 
 With the relay, the handoff is automatic: past about 120,000 tokens it asks for one, and
 the next session starts with it loaded. Every message re-reads the whole conversation,
@@ -238,6 +263,7 @@ so this is what keeps long projects affordable.
 | Requirements and design | `/coderachnid:product-brief "…"` | `docs/PRD.md`, `docs/BRIEF.md`, mockups |
 | Skeleton | *"Propose the stack in an ADR…"*, then *"Use project-setup…"* | `CLAUDE.md`, the plan, the first ADR, `database/`, `guards/` |
 | Build | *"Start F0"*, *"Start F1"*… | the product, phase by phase |
+| A risky change | *"Does this need adr-guard?"*, then `/coderachnid:adr-guard plan "…"` and, after, `audit` | ADRs with checks; an audit with a verdict |
 | Long sessions | *"Write the handoff"*, then `/clear` | the thread kept in a few hundred words |
 
 ## Updating, switching off, troubleshooting

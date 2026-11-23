@@ -147,6 +147,13 @@ projects and generalized.
   `docs/GETTING-STARTED.md` holds the stage-by-stage use of the 14 skills for
   first-time users; the README keeps a short summary and links to it, so the two don't
   repeat each other.
+- **2026-11-23 · v0.9.0 prepared, not committed** (branch `feat/v0.9.0-adr-guard`,
+  D-016). New skill `adr-guard` (15 skills): model-visible for a read-only triage (the
+  "sixth sense"), with `plan` (ADRs with checkable clauses, scope fence, baseline) and
+  `audit` (six lenses, coverage ledger, worktree probes, verdict by rules, INCONCLUSIVE
+  apart from BLOCK) only on the user's command. Closing line in the output style,
+  `response-closing` and the template. Evals on a fictional service: audit 8/8, triage
+  6/6, closing 4/4 in real sessions, plan 2/2 after one fix; about USD 30.
 
 ## 3. Structure
 

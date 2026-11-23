@@ -58,7 +58,10 @@ It contains:
 - **Scope changes are decisions.** Record them in an ADR with date and reason, and update
   the plan. Never let the scope drift quietly.
 - **Every architectural decision gets an ADR** (`docs/adr/NNNN-title.md`): context,
-  options, decision, consequences. Template: `../project-setup/templates/ADR.md`.
+  options, decision, consequences. Template: `../project-setup/templates/ADR.md`. For a
+  risky change (security, money, personal data, schema, contracts, code delivered to
+  others), `/coderachnid:adr-guard plan` writes it with checkable clauses, and
+  `/coderachnid:adr-guard audit` checks the code against it afterwards.
   Smaller decisions made on the way (a library version, a formula detail) go, dated,
   in the document they govern, not in a new ADR.
 - **Product intent becomes a constraint.** When the owner restates what the product

@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2Fru3enaa1%2Fcoderachnid%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&color=3a3f47" alt="version">
-  <img src="https://img.shields.io/badge/skills-14-3a3f47" alt="skills: 14">
+  <img src="https://img.shields.io/badge/skills-15-3a3f47" alt="skills: 15">
   <img src="https://img.shields.io/badge/hooks-opt--in%20plugin-3a3f47" alt="hooks: opt-in plugin">
   <img src="https://img.shields.io/badge/plugin-Claude%20Code-3a3f47" alt="plugin: Claude Code">
   <img src="https://img.shields.io/badge/license-MIT-3a3f47" alt="license: MIT">
@@ -80,6 +80,7 @@ each cites its source and is marked as anticipated until a project confirms it.
 | `handoff` | The conversation has grown long, or you want to continue in a fresh session | A short handoff file so `/clear` costs nothing and the next session picks up the thread |
 | `market-research` | Only when you run `/coderachnid:market-research` (no cost in other sessions) | The idea framed as a problem, people already describing it in open communities, products that already earn money from it, market size, the top ten problems, competitors on a positioning map with the free position, every figure and quote sourced, ending in a verdict per claim and the riskiest assumptions with their tests |
 | `offer` | Only when you run `/coderachnid:offer` (no cost in other sessions) | A one-sentence value proposition, three price tiers anchored to competitor prices, a guarantee you can honor, the cheapest test of the offer, and the promises the product must never make |
+| `adr-guard` | You ask whether a task needs a deep review, code is about to go to an organization or a client, or a change touches authentication, money, personal data, schemas, public APIs or security settings | A read-only triage that names the exact command when it's worth it; then, only when you run it, ADRs with checkable clauses before coding (`plan`) and an evidence-backed audit of compliance, damage and security after (`audit`) |
 | `product-brief` | Only when you run `/coderachnid:product-brief` (no cost in other sessions) | A structured PRD (what is being built, for whom and where, the problem, core features and how each works, stories with acceptance criteria, data and threats, frozen MVP scope) and a design brief with a mockup prompt for your design tool |
 
 Stack-specific knowledge lives in each skill's `references/` and is loaded only when the
@@ -89,8 +90,9 @@ served on the user's own machine, desktop apps (a native window, the installer, 
 release), vulnerability scans and release artifacts, importing a customer's file, AI
 model integration, data files written by people (YAML, JSON), reproducible outputs, the
 ways a test passes without proving anything, engineering craft with its sources, demand
-signals and how to read revenue estimates, the structure of a PRD, and an editorial
-design direction for product pages.
+signals and how to read revenue estimates, the structure of a PRD, ADRs with checkable
+clauses and the lenses of a deep audit, and an editorial design direction for product
+pages.
 
 ## Guards for your project
 
@@ -140,7 +142,7 @@ claude --plugin-dir ./coderachnid
 
 ## Use
 
-Eleven skills activate on their own when the task matches their description; you can
+Twelve skills activate on their own when the task matches their description; you can
 also ask for one by name ("use safe-database before this migration"). The three
 discovery skills run only when you type their command, so they cost nothing in other
 sessions.
@@ -150,6 +152,13 @@ In order: install it in the project → discovery (`market-research`, `offer`,
 other skills step in on their own → `handoff` between long sessions → release. Each
 stage, with the commands to type and what you get:
 **[the getting-started guide](docs/GETTING-STARTED.md)**.
+
+For a change where a mistake is expensive (code delivered to an organization, money,
+personal data, a schema, a public API), `adr-guard` is the sixth sense: it tells you
+when a deep review is worth it and gives you the command. `/coderachnid:adr-guard plan`
+writes the ADRs with checkable clauses before the code; `/coderachnid:adr-guard audit`
+checks the code against them afterwards, in a fresh session, and never approves with a
+gap in its coverage.
 
 ### The five-point closing
 
@@ -220,6 +229,10 @@ the brief's proposal. What each command does, and what it asks of you:
   where a loose prompt for the same documents covered 10% (offer) and 32% (PRD and
   brief). `market-research` needs live web search, so it is tried on real projects
   instead; the chain's first real run shaped the current version.
+- **Audits:** `adr-guard` audits one clean and three defective implementations of a
+  fictional service, each defect first proven real with a probe. It found every planted
+  defect and never blocked the clean one, 8 of 8 runs; its triage named the command 4 of
+  4 times and stayed quiet 2 of 2 (`evals/adr-guard/`).
 - **Guards:** `guards/tests/test-guards.sh` plants a violation for every rule of every
   guard and fails if any guard lets it through.
 
