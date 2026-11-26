@@ -212,10 +212,20 @@ this migration"*.
 For code you deliver to an organization or a client, code written mostly by AI agents,
 or a feature that handles money, identity or personal data.
 
-- **The sixth sense.** Ask *"does this task need adr-guard?"*, or just work: when a
-  change touches authentication, money, personal data, a schema, a public API, security
-  settings or code that goes to someone else, the closing names the exact command. The
-  check is read-only: it never builds, tests or writes anything to decide.
+- **The sixth sense.** Ask *"does this task need adr-guard?"*, or just work. When a
+  change that touches authentication, money, personal data, a schema, a public API,
+  security settings or code that goes to someone else is complete, the closing ends with
+  a recommendation block: why (with the file that shows it), the scope, the complete
+  command to run in a new session, and what to bring back. It says it **once**: nothing
+  while you are still building, nothing again after you've seen it, nothing when no file
+  shows a trigger. The check is read-only: it never builds, tests or writes to decide.
+- **The thread between the two sessions.** The audit runs in a new session, so the two
+  conversations talk through two fixed blocks. You copy the command from the
+  recommendation block into the new session; that session ends with an
+  `adr-guard result` block (verdict, the report's path, what to fix first, the next
+  step); you paste it back where you were working, and that session opens the report and
+  continues from it: fixing blockers first, each with a failing test, and telling you
+  whether a re-audit is needed.
 - **Before the code:** `/coderachnid:adr-guard plan "<the task>"` writes the ADR with
   numbered decision clauses, an objective check for each one, a scope fence (what may
   change, what must not), the damage to watch and the rollback, plus a baseline of the
@@ -263,7 +273,7 @@ so this is what keeps long projects affordable.
 | Requirements and design | `/coderachnid:product-brief "…"` | `docs/PRD.md`, `docs/BRIEF.md`, mockups |
 | Skeleton | *"Propose the stack in an ADR…"*, then *"Use project-setup…"* | `CLAUDE.md`, the plan, the first ADR, `database/`, `guards/` |
 | Build | *"Start F0"*, *"Start F1"*… | the product, phase by phase |
-| A risky change | *"Does this need adr-guard?"*, then `/coderachnid:adr-guard plan "…"` and, after, `audit` | ADRs with checks; an audit with a verdict |
+| A risky change | *"Does this need adr-guard?"*, then the command from the recommendation block, in a new session; paste its `adr-guard result` block back | ADRs with checks; an audit with a verdict; the fixes done from the report |
 | Long sessions | *"Write the handoff"*, then `/clear` | the thread kept in a few hundred words |
 
 ## Updating, switching off, troubleshooting

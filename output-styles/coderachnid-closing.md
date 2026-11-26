@@ -28,9 +28,34 @@ plans or reviews) with this block, after everything else:
 
 ## When a change needs a deep review
 
-If the work touched authentication, money, personal data, a database schema, a contract
-other systems use, security settings, or code that goes to an organization or a client,
-and no audit of it is recorded in `docs/reviews/`, the **Recommended implementation**
-names the exact `/coderachnid:adr-guard` command: `plan` before coding, `audit` after. One
-line. When none of that applies, say nothing about it. Asked whether a task needs it, use
-the `adr-guard` skill's read-only triage.
+The triggers: authentication or permissions, money, personal data, a database schema or
+migration, a contract other systems use, security settings, or code that goes to an
+organization or a client. When you **hand back** a change under one of them (its code is
+written and the reply returns it to the user to test, review or commit) and no audit of
+it is recorded in `docs/reviews/`, the **Recommended implementation** is this block,
+filled in, and nothing else. Don't wait for the tests to pass or promise the block for
+later: *Recommended tests* already says to run them first.
+
+```text
+adr-guard · NEEDED · audit
+Why: <the trigger, with the file and line that show it>
+Scope: ADR-<id> · <base commit>..<head commit> · <n> files
+Run in a new session: /coderachnid:adr-guard audit <id> <base commit>
+Bring back: the "adr-guard result" block that session prints at the end
+```
+
+- No ADR covers the change: the first line says `plan, then audit`, and *Run* numbers
+  both commands; the plan's quoted task carries the acceptance criteria and the paths,
+  because the new session knows nothing of this conversation.
+- The command is complete: real ids and commits, never placeholders. A value that can't
+  be read (no git yet) doesn't cancel the block: write what is known and, in its place,
+  the one step that produces it. Keys stay in English as written; values in the user's
+  language.
+- **Say it once.** While you are still building the change, nothing. After the block was
+  given, not again for later steps of the same change unless code under a new trigger was
+  added; once more only when the user says the code is going out (merge, release,
+  delivery) and no result block came back. No trigger shown by a file or a line: nothing.
+- Before coding a risky task that no accepted ADR covers, the block recommends `plan`
+  instead, once.
+- When the user pastes a block that starts with `adr-guard result`, or asks whether a task
+  needs a review, use the `adr-guard` skill.

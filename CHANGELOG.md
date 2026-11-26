@@ -6,6 +6,40 @@ The format follows [Keep a Changelog](https://keepachangelog.com) and the projec
 
 ## [Unreleased]
 
+## [0.9.2] - 2026-11-26
+
+`adr-guard`'s sixth sense, sharpened: it speaks once, with the complete command, and
+the two sessions talk through standard blocks (D-016, update).
+
+### Added
+
+- **The recommendation block.** When a risky change is handed back, the closing (and the
+  triage, when asked) gives a fixed block: why, with the file that shows the trigger; the
+  scope (ADR, base and head commits); the complete command to run in a new session; and
+  what to bring back. For `plan`, the quoted task carries what the new session needs.
+- **The result block.** Every audit and every plan ends with an `adr-guard result` block
+  to paste into the session that asked: verdict, the report's path, clause and finding
+  counts, what to fix first, conditions, what was not verified, and the next action with
+  the re-audit command when one is needed.
+- **The result came back.** Pasting that block makes the working session open the
+  report, act on the verdict (blockers first, a failing test before each fix, inside the
+  scope fence), leave the ADR and the report untouched, and say whether a re-audit is
+  needed.
+- **Rules for staying quiet:** certain or silent (a trigger shown by a file or a line),
+  nothing while still building, the block once when the change is handed back, not again
+  for later steps of the same change, once more only when the code is going out.
+- An optional quoted note on `audit` says what to look at hardest without narrowing the
+  coverage. When the disposable copy for the positive control can't be made, the audit
+  reports it as not performed and the verdict is INCONCLUSIVE.
+- Evals: the result-comes-back case, block graders on triage, plan and audit,
+  `check-patterns.mjs` (40 controls), and `check-closing.sh` with a "say it once" case in
+  a real two-turn conversation.
+
+### Changed
+
+- The closing no longer waits for the tests to pass before recommending the audit: a
+  first version of the rule made it defer the command.
+
 ## [0.9.1] - 2026-11-23
 
 A fourth round of field lessons (D-012), from a second source project's last weeks:

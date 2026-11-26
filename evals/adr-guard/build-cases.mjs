@@ -20,18 +20,31 @@ const OUT = join(HERE, "..", "cases", "adr-guard");
 
 // Patterns are raw strings: a JS escape must never eat a regex backslash.
 const SKILL_FIRED = String.raw`"skill"\s*:\s*"(?:[\w-]+:)?adr-guard"`;
-const COMMAND = String.raw`/coderachnid:adr-guard\s+(plan|audit)`;
-const AUDIT_COMMAND = String.raw`/coderachnid:adr-guard\s+audit`;
 // In the tool input's JSON a Windows path has doubled backslashes: every separator is
 // `[\\/]+`, never `[\\/]` (one character would never match and the grader would pass vacuously).
-const PROD_FILE = String.raw`"file_path"\s*:\s*"[^"]*[\\/]+ledger[\\/]+(api|transfers|accounts|reports|auth|db)\.py"`;
+// Anchored to the run's working tree (`…/home/cwd/`): an audit may plant its control
+// defect in a disposable copy elsewhere (`<temp>/adr-guard-0002/ledger/…`), which is
+// what the skill asks for and once made an unanchored pattern fail a correct run.
+const PROD_FILE = String.raw`"file_path"\s*:\s*"[^"]*[\\/]+cwd[\\/]+ledger[\\/]+(api|transfers|accounts|reports|auth|db)\.py"`;
 const AUDIT_REPORT = String.raw`"file_path"\s*:\s*"[^"]*docs[\\/]+reviews[\\/]+ADR-0002-audit`;
 const NEW_ADR = String.raw`"file_path"\s*:\s*"[^"]*docs[\\/]+adr[\\/]+0003-`;
+// The two blocks that thread a working session and an audit session (v0.9.2). Their
+// keys are fixed, in English, so these patterns are the standard's own check.
+const NEEDED_BLOCK = String.raw`adr-guard · NEEDED · (audit|plan)[\s\S]*Why:[\s\S]*Scope:[\s\S]*Run in a new session:[\s\S]*/coderachnid:adr-guard\s+(plan|audit)[\s\S]*Bring back:`;
+const NEEDED_AUDIT_BLOCK = String.raw`adr-guard · NEEDED · audit[\s\S]*Why:[\s\S]*Scope:[\s\S]*Run in a new session:\s*/coderachnid:adr-guard\s+audit\s+0002\b[\s\S]*Bring back:`;
+const AUDIT_RESULT_BLOCK = String.raw`adr-guard result\s+Mode: audit · ADR-0002\b[^\n]*\s+Verdict: (APPROVE WITH CONDITIONS|APPROVE|INCONCLUSIVE|BLOCK)\s+Report: docs/reviews/ADR-0002-audit[\s\S]*Clauses:[\s\S]*Findings:[\s\S]*Fix first:[\s\S]*Next:`;
+const PLAN_RESULT_BLOCK = String.raw`adr-guard result\s+Mode: plan · ADR-0003\b[\s\S]*ADR: docs/adr/0003-[\s\S]*Baseline: docs/reviews/[\s\S]*Next:[\s\S]*/coderachnid:adr-guard\s+audit\s+0003\b`;
+const REAUDIT = String.raw`/coderachnid:adr-guard\s+audit\s+0002\b`;
+const REPORT_PATH = String.raw`"file_path"\s*:\s*"[^"]*docs[\\/]+reviews[\\/]+ADR-0002-audit-2026-11-24\.md"`;
+const ADR_PATH = String.raw`"file_path"\s*:\s*"[^"]*docs[\\/]+adr[\\/]+0002-`;
 
 const skillFired = { name: "skill-fired", type: "tool_used", tool: "Skill", input_match: SKILL_FIRED };
 const skillQuiet = { ...skillFired, name: "skill-stays-quiet", min: 0, max: 0, arm: "both" };
-const namesCommand = { name: "names-the-command", type: "regex", target: "last_message", pattern: COMMAND };
-const namesAudit = { name: "names-audit", type: "regex", target: "last_message", pattern: AUDIT_COMMAND };
+const neededBlock = { name: "recommendation-block", type: "regex", target: "last_message", pattern: NEEDED_BLOCK };
+const neededAuditBlock = { name: "recommendation-block-audit", type: "regex", target: "last_message", pattern: NEEDED_AUDIT_BLOCK };
+const auditResultBlock = { name: "result-block", type: "regex", target: "last_message", pattern: AUDIT_RESULT_BLOCK };
+const planResultBlock = { name: "result-block", type: "regex", target: "last_message", pattern: PLAN_RESULT_BLOCK };
+const untouched = (label, tool, path) => ({ name: `${label}-untouched-${tool.toLowerCase()}`, type: "tool_used", tool, input_match: path, min: 0, max: 0 });
 const noProdWrite = { name: "production-code-untouched-write", type: "tool_used", tool: "Write", input_match: PROD_FILE, min: 0, max: 0 };
 const noProdEdit = { name: "production-code-untouched-edit", type: "tool_used", tool: "Edit", input_match: PROD_FILE, min: 0, max: 0 };
 const reportWritten = { name: "report-written", type: "tool_used", tool: "Write", input_match: AUDIT_REPORT, min: 1 };
@@ -140,6 +153,38 @@ const CONTROLS = [
   ["damage", AUDIT_GRADERS.damage], ["planAdr", PLAN_GRADERS[0]], ["planBaseline", PLAN_GRADERS[1]],
 ];
 
+// The result comes back: the working session receives the pasted block of a BLOCK audit
+// (the report is in `returns/security/`) and must fix by the report, not by the summary.
+const RETURN_GRADER = llm("return-fixes-by-the-report", `
+The agent received an "adr-guard result" block with verdict BLOCK for ledger/transfers.py.
+PASS if the trace shows the agent editing files so that all three hold:
+1. transfer() in ledger/transfers.py calls require_owner before any write (for the source
+   account at least; also checking the target is fine);
+2. the two balance UPDATE statements in ledger/transfers.py no longer use f-strings: they
+   pass their values as parameters;
+3. tests/test_transfers.py gains a test where a user who does not own the source account
+   is rejected.
+FAIL if any of the three is missing, or if the agent only described the fixes without
+editing the files.`);
+
+const RETURN_BLOCK = `adr-guard result
+Mode: audit · ADR-0002 · base (before LED-42) → head (working tree) · 2026-11-24
+Verdict: BLOCK
+Report: docs/reviews/ADR-0002-audit-2026-11-24.md
+Clauses: 4 MET · 0 PARTLY · 2 VIOLATED · 0 NOT VERIFIABLE
+Findings: 2 blocker · 0 major · 1 minor · 0 note (0 suspected)
+Fix first:
+1. [BLOCKER] ledger/transfers.py:9 · transfer() never checks who owns the accounts (D2) → require_owner for source and target before any write
+2. [BLOCKER] ledger/transfers.py:13 · the balance updates are built with f-strings (D4) → db.query with parameters
+Conditions: none
+Not verified: the test suite, no shell in the audit session
+Next: fix 1 and 2 with a failing test first; then, in a new session: /coderachnid:adr-guard audit 0002 docs/reviews/CHANGE-0002.diff`;
+
+const RETURN_CONTROL = {
+  good: 'Make exactly these edits, then reply DONE. In ledger/transfers.py: add "from ledger.auth import require_owner"; right after the amount check add require_owner(conn, user, source_id) and require_owner(conn, user, target_id); replace the two conn.execute f-string statements with query(conn, "UPDATE accounts SET balance_cents = balance_cents - ? WHERE id = ?", (amount_cents, source_id)) and the same with + for target_id. In tests/test_transfers.py: import Forbidden from ledger.auth and add test_transfer_rejects_foreign_account, which expects Forbidden when handle_transfer(conn, "leo", 1, 3, 100) is called.',
+  bad: 'Make exactly this edit and nothing else, then reply DONE. In ledger/transfers.py replace the two conn.execute f-string statements with query(conn, "UPDATE accounts SET balance_cents = balance_cents - ? WHERE id = ?", (amount_cents, source_id)) and the same with + for target_id. Do not add anything else and do not touch the tests.',
+};
+
 const AUDIT_PROMPT = "/coderachnid:adr-guard audit 0002 docs/reviews/CHANGE-0002.diff";
 const WRITE_TOOLS = ["Read", "Glob", "Grep", "Skill", "Edit", "Write"];
 const READ_TOOLS = ["Read", "Glob", "Grep", "Skill"];
@@ -150,12 +195,12 @@ const cases = [
     desc: "Asked in Spanish whether an assigned task needs adr-guard, the skill triages read-only and names the command.",
     runs: 2, tools: READ_TOOLS, variant: null, turns: 15, timeout: 600,
     prompt: "En el trabajo me asignaron esta tarea: agregar un endpoint para que el dueño de una cuenta cambie el correo de su cuenta, y entregarlo al equipo del banco cliente el viernes. ¿Es necesario aplicar adr-guard a esta tarea?",
-    graders: [skillFired, namesCommand] },
+    graders: [skillFired, neededBlock] },
   { name: "act-adr-guard-fires-en", tags: ["adr-guard", "adr-guard-triage", "activation", "en"],
     desc: "Before handing existing code to a client, the skill recommends the audit with its command.",
     runs: 2, tools: READ_TOOLS, variant: "security", turns: 15, timeout: 600,
     prompt: "I'm about to hand the transfer feature (ledger/transfers.py and the new handler in ledger/api.py) over to the client's team. Does it need a deep review before I do?",
-    graders: [skillFired, namesAudit] },
+    graders: [skillFired, neededAuditBlock] },
   { name: "act-adr-guard-quiet-es", tags: ["adr-guard", "adr-guard-triage", "activation", "es"],
     desc: "A typo in the README does not wake adr-guard.",
     runs: 2, tools: READ_TOOLS, variant: null, turns: 8, timeout: 300,
@@ -171,7 +216,23 @@ const cases = [
     desc: "Plan mode writes an ADR with checkable clauses, a scope fence and a baseline, and no code.",
     runs: 2, tools: WRITE_TOOLS, variant: null, turns: 40, timeout: 1500,
     prompt: `/coderachnid:adr-guard plan "${PLAN_TASK}"`,
-    graders: [...PLAN_GRADERS, { name: "plan-adr-written", type: "tool_used", tool: "Write", input_match: NEW_ADR, min: 1 }, noProdWrite, noProdEdit] },
+    graders: [...PLAN_GRADERS, { name: "plan-adr-written", type: "tool_used", tool: "Write", input_match: NEW_ADR, min: 1 }, planResultBlock, noProdWrite, noProdEdit] },
+
+  // The result comes back to the working session.
+  { name: "adr-guard-return", tags: ["adr-guard", "adr-guard-return"],
+    desc: "Given the pasted result block of a BLOCK audit, the working session opens the report, fixes by it and names the re-audit.",
+    runs: 2, tools: WRITE_TOOLS, variant: "security", overlay: "security", turns: 40, timeout: 1500,
+    prompt: `Este es el veredicto de la auditoría:\n\n${RETURN_BLOCK}`,
+    graders: [RETURN_GRADER, skillFired,
+      { name: "report-opened", type: "tool_used", tool: "Read", input_match: REPORT_PATH, min: 1 },
+      { name: "names-the-re-audit", type: "regex", target: "last_message", pattern: REAUDIT },
+      untouched("adr", "Write", ADR_PATH), untouched("adr", "Edit", ADR_PATH),
+      untouched("report", "Write", REPORT_PATH), untouched("report", "Edit", REPORT_PATH)] },
+  ...["good", "bad"].map((kind) => ({
+    name: `adr-guard-control-return-${kind}`, tags: ["adr-guard", "adr-guard-control"], control: true,
+    desc: `Positive control: return-fixes-by-the-report must ${kind === "good" ? "pass" : "fail"} these edits.`,
+    runs: 1, tools: WRITE_TOOLS, variant: "security", turns: 20, timeout: 600,
+    prompt: RETURN_CONTROL[kind], graders: [RETURN_GRADER] })),
 
   // Audit mode, by command, one case per variant.
   ...[["clean", [AUDIT_GRADERS.clean]], ["violation", [AUDIT_GRADERS.violation, AUDIT_GRADERS.violationRecord]],
@@ -179,7 +240,7 @@ const cases = [
     name: `adr-guard-audit-${v}`, tags: ["adr-guard", "adr-guard-audit"],
     desc: `Audit of the ${v} implementation of ADR-0002.`,
     runs: 2, tools: WRITE_TOOLS, variant: v, turns: 80, timeout: 2400, prompt: AUDIT_PROMPT,
-    graders: [...gs, reportWritten, noProdWrite, noProdEdit] })),
+    graders: [...gs, reportWritten, auditResultBlock, noProdWrite, noProdEdit] })),
 
   // Positive controls: each grader over a known-good and a known-bad answer.
   ...CONTROLS.flatMap(([key, grader]) => ["good", "bad"].map((kind) => ({
@@ -241,6 +302,7 @@ function fixture(c) {
     'cp -R "$DATA/workspace/." .',
   ];
   if (c.variant) lines.push(`cp -R "$DATA/variants/${c.variant}/." .`);
+  if (c.overlay) lines.push(`cp -R "$DATA/returns/${c.overlay}/." .`);
   return lines.join("\n") + "\n";
 }
 

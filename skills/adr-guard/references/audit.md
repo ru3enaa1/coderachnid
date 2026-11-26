@@ -20,6 +20,9 @@ fresh session, never the one that wrote the code.
 
 ## 1. Fix what is under review
 
+- **The note, if the command carries one** (a last quoted argument): what the session
+  that asked wants looked at hardest. Spend the adversarial pass there first. It never
+  narrows the scope: every hunk is still read by every lens.
 - **The contract:** the ADR ids given, or the ADRs that cover the changed paths. No ADR
   for the change → stop and recommend `/coderachnid:adr-guard plan` (a retroactive ADR).
   An ADR still *proposed* → say so: the code was built on an unaccepted decision.
@@ -89,6 +92,11 @@ the checks and lenses that should see it. If none does, the review is not truste
 so, and say which check failed to bite. Remove the worktree at the end and confirm the
 user's tree is unchanged (`git status` the same as at the start).
 
+**When the copy can't be made or run** (no shell, no git, no permission to write outside
+the repository): the positive control is *not performed*. Say so in the report with the
+exact steps to run it, count it under *Not verified*, and let the verdict be INCONCLUSIVE
+when the control was required. Never plant the defect in the working tree instead.
+
 ## 7. Decide the verdict
 
 Severities and the report: `review-report.md`.
@@ -111,8 +119,13 @@ disagree, the report says so; the verdict still follows the rules.
 
 - Write `docs/reviews/ADR-NNNN-audit-<date>.md` from the template, with the head commit
   inside.
-- **The final reply repeats the one-screen summary:** verdict, findings by severity with
-  file and line, clauses not MET, regressions, what was not verified.
+- **The final reply is short and ends with the result block.** A few lines in plain words
+  (the verdict and why), then the `adr-guard result` block from `review-report.md`, fenced
+  and complete: it is what the user copies back to the session that asked for the audit,
+  so nothing that session needs may live only in the prose above it.
+- **The block's "Next" names the re-audit, or says none is needed.** A re-audit is needed
+  after a BLOCK, and after any fix that touches code under a critical clause; give its
+  complete command with the same base.
 - **Drift:** when the code departs from the ADR for a reason that looks right, propose
   the amendment (a new ADR that supersedes the clause) for the human to decide. The
   verdict still treats the clause as VIOLATED until the human accepts the change.

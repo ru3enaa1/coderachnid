@@ -294,6 +294,42 @@ What the runs found:
 - **Cost:** about USD 30 at API prices for all of it, controls and reruns included; an
   audit run costs about USD 0.8 to 1.4 on this small change.
 
+## v0.9.2 · `adr-guard`: the thread between two sessions (2026-11-26)
+
+In use, the closing line left the maintainer asking for the complete command, and what
+came back from the audit changed shape every time. Both ends are now fixed blocks with
+English keys, and the triage has rules for staying quiet. Same fixture as v0.9.0.
+
+| Check | Result |
+|---|---|
+| Pattern controls for the two blocks and the path graders (`check-patterns.mjs`) | **40 of 40** behave as expected |
+| Triage answers with the complete recommendation block (why, scope, command, what to bring back) | **4 of 4**; quiet on a typo **2 of 2** |
+| Closing, real sessions in a git repository: the block when a personal-data change is handed back | **2 of 2**, no placeholders in the command |
+| Closing: silent on a README typo | **2 of 2** |
+| Closing: the block after the risky turn, **not repeated** on a harmless follow-up in the same conversation | **2 of 2** |
+| Audit ends with the `adr-guard result` block (verdict, report path, fix first, next) | **8 of 8**; defects still found and the clean change never blocked, 8 of 8 |
+| Plan ends with its result block and the audit command for later | **2 of 2** |
+| The result comes back: the pasted block of a BLOCK audit → report opened, both blockers fixed with tests first, ADR and report untouched, re-audit named | **2 of 2** (grader controlled: good 1.00, bad 0.00) |
+
+What the runs found:
+
+- **"Complete" was the wrong word.** The first rule gave the block "when the change is
+  complete and its tests pass". In a session that couldn't run tests the model deferred
+  it ("once the tests pass I'll give you the commands"): 0 of 4. That is the very thing
+  the maintainer complained about. The rule is now "when you hand the change back", and
+  the block doesn't wait for the tests: 6 of 6.
+- **A grader failed a correct audit.** One clean run scored 0.8: the "production code
+  untouched" pattern matched any path containing `ledger/`, and the audit had written its
+  planted-defect copy in a disposable folder outside the working tree, as the skill asks
+  (in a later run that write was denied, and the report said "positive control: not
+  performed" instead of faking it). The pattern is now anchored to the working tree, with
+  the scratch path as a negative control, and `audit.md` says what to do when the copy
+  can't be made.
+- **The check became more real:** the closing fixture is now a git repository and the
+  session may run read-only git, as in a real project, so the block's base commit is a
+  real one.
+- **Cost:** about USD 16 at API prices, the reruns included.
+
 ## Status
 
 The F2 criterion is met: every skill was measured, and four descriptions were tuned on

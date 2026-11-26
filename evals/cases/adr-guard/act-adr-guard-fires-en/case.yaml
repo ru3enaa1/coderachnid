@@ -17,7 +17,7 @@ graders:
     type: tool_used
     tool: Skill
     input_match: '"skill"\s*:\s*"(?:[\w-]+:)?adr-guard"'
-  - name: names-audit
+  - name: recommendation-block-audit
     type: regex
     target: last_message
-    pattern: '/coderachnid:adr-guard\s+audit'
+    pattern: 'adr-guard · NEEDED · audit[\s\S]*Why:[\s\S]*Scope:[\s\S]*Run in a new session:\s*/coderachnid:adr-guard\s+audit\s+0002\b[\s\S]*Bring back:'
