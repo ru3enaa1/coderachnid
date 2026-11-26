@@ -55,6 +55,20 @@ git tag -a vX.Y.Z -m "coderachnid vX.Y.Z"
 git push origin vX.Y.Z
 ```
 
+## v0.9.2 record (2026-11-26)
+
+- Guards: skills 0 (15 skills), private terms with `--history` 0, positive controls 76
+  of 76, `check-patterns.mjs` 40 of 40, `validate` passed with the two expected root
+  warnings and one new plugin-directory check (no icon), which this release didn't cause.
+- History: no-reply address only; no secret; no personal path.
+- Clean install from GitHub: both plugins at 0.9.2 from commit `2284d4f`; the
+  recommendation block, the `adr-guard result` block and the closing's "Bring back" line
+  present in the installed files. 15 skills, 0 hooks.
+- Fixed cost: about 1,671 tokens estimated (1,639 before); about 1,300 real without the
+  three by-hand skills. The 32 added are `adr-guard`'s description, which now also fires
+  on a pasted result block.
+- Tag `v0.9.2` on `2284d4f`.
+
 ## v0.9.1 record (2026-11-23)
 
 - Guards: skills 0 (15 skills), private terms with `--history` 0, positive controls 76

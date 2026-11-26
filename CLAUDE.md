@@ -173,6 +173,9 @@ projects and generalized.
   sessions including "not repeated", audits 8/8 with the block, return 2/2; 40 pattern
   controls. Found and fixed: the rule that waited for tests deferred the command; a
   grader that failed a correct audit.
+- **2026-11-26 · v0.9.2 published.** Clean install verified (both plugins at 0.9.2, 15
+  skills, fixed cost about 30 tokens more); tag `v0.9.2` on `2284d4f`. **Next:** the
+  round trip on a real delivery; a plugin icon (PNG) for the plugin directory.
 
 ## 3. Structure
 
