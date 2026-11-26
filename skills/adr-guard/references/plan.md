@@ -114,5 +114,7 @@ memory or from what someone said earlier.
   change the status to **accepted** with the date. Until then, implementation waits.
 - **Give the clauses to whoever implements.** When agents write the code, paste the
   decision clauses and the scope fence into their instructions: they are the brief.
-- Close with the command for later, in a fresh session, with the base filled in:
+- **End the reply with the result block** for a plan (`review-report.md`), fenced: the ADR
+  and baseline paths, the clause counts, and in *Next* the complete audit command for
+  later, in a new session, with the base filled in:
   `/coderachnid:adr-guard audit NNNN <base commit>`.

@@ -154,11 +154,13 @@ stage, with the commands to type and what you get:
 **[the getting-started guide](docs/GETTING-STARTED.md)**.
 
 For a change where a mistake is expensive (code delivered to an organization, money,
-personal data, a schema, a public API), `adr-guard` is the sixth sense: it tells you
-when a deep review is worth it and gives you the command. `/coderachnid:adr-guard plan`
-writes the ADRs with checkable clauses before the code; `/coderachnid:adr-guard audit`
-checks the code against them afterwards, in a fresh session, and never approves with a
-gap in its coverage.
+personal data, a schema, a public API), `adr-guard` is the sixth sense: when such a
+change is complete it tells you, once, why a deep review is worth it, with the complete
+command for a new session. `/coderachnid:adr-guard plan` writes the ADRs with checkable
+clauses before the code; `/coderachnid:adr-guard audit` checks the code against them
+afterwards and never approves with a gap in its coverage. The audit ends with a standard
+`adr-guard result` block; paste it back where you were working and that session picks up
+the thread from the report.
 
 ### The five-point closing
 
@@ -231,8 +233,10 @@ the brief's proposal. What each command does, and what it asks of you:
   instead; the chain's first real run shaped the current version.
 - **Audits:** `adr-guard` audits one clean and three defective implementations of a
   fictional service, each defect first proven real with a probe. It found every planted
-  defect and never blocked the clean one, 8 of 8 runs; its triage named the command 4 of
-  4 times and stayed quiet 2 of 2 (`evals/adr-guard/`).
+  defect and never blocked the clean one, 8 of 8 runs; its triage gave the complete
+  recommendation block 4 of 4 times and stayed quiet 2 of 2. In real two-turn sessions
+  the block appeared once and was not repeated, and a pasted result block was acted on
+  from its report (`evals/adr-guard/`).
 - **Guards:** `guards/tests/test-guards.sh` plants a violation for every rule of every
   guard and fails if any guard lets it through.
 

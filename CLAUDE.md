@@ -165,6 +165,14 @@ projects and generalized.
 - **2026-11-23 · v0.9.1 published.** Clean install verified (both plugins at 0.9.1, 15
   skills, fixed cost unchanged); tag `v0.9.1` on `40c93cb`. **Next:** a first real
   delivery audited with `adr-guard`.
+- **2026-11-26 · v0.9.2 prepared, not committed** (branch `feat/v0.9.2-adr-guard-thread`,
+  D-016 update). `adr-guard`'s sixth sense sharpened after real use: a recommendation
+  block with the complete command, an `adr-guard result` block that every audit and plan
+  ends with, a "result came back" mode in the working session, and rules for staying
+  quiet (once, when the change is handed back). Measured: triage 6/6, closing 6/6 in real
+  sessions including "not repeated", audits 8/8 with the block, return 2/2; 40 pattern
+  controls. Found and fixed: the rule that waited for tests deferred the command; a
+  grader that failed a correct audit.
 
 ## 3. Structure
 

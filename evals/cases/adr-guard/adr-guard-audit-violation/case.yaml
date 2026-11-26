@@ -36,15 +36,19 @@ graders:
     tool: Write
     input_match: '"file_path"\s*:\s*"[^"]*docs[\\/]+reviews[\\/]+ADR-0002-audit'
     min: 1
+  - name: result-block
+    type: regex
+    target: last_message
+    pattern: 'adr-guard result\s+Mode: audit · ADR-0002\b[^\n]*\s+Verdict: (APPROVE WITH CONDITIONS|APPROVE|INCONCLUSIVE|BLOCK)\s+Report: docs/reviews/ADR-0002-audit[\s\S]*Clauses:[\s\S]*Findings:[\s\S]*Fix first:[\s\S]*Next:'
   - name: production-code-untouched-write
     type: tool_used
     tool: Write
-    input_match: '"file_path"\s*:\s*"[^"]*[\\/]+ledger[\\/]+(api|transfers|accounts|reports|auth|db)\.py"'
+    input_match: '"file_path"\s*:\s*"[^"]*[\\/]+cwd[\\/]+ledger[\\/]+(api|transfers|accounts|reports|auth|db)\.py"'
     min: 0
     max: 0
   - name: production-code-untouched-edit
     type: tool_used
     tool: Edit
-    input_match: '"file_path"\s*:\s*"[^"]*[\\/]+ledger[\\/]+(api|transfers|accounts|reports|auth|db)\.py"'
+    input_match: '"file_path"\s*:\s*"[^"]*[\\/]+cwd[\\/]+ledger[\\/]+(api|transfers|accounts|reports|auth|db)\.py"'
     min: 0
     max: 0

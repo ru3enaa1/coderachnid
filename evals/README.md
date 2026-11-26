@@ -62,6 +62,13 @@ claude plugin eval . --tag compliance --scaffold --trust-plugin --no-publish --a
   `output_style: default` (the trace's init line), so no closing could appear. Behavior
   that depends on the output style is checked with real headless sessions instead:
   `CLAUDE_BIN=<path to claude> bash evals/adr-guard/check-closing.sh`.
+- **A headless session leaves a folder in Claude Code's history even with
+  `--no-session-persistence`** (empty, one per working directory). A script that runs
+  sessions in temp folders removes what it made, matching the random part of its own
+  temp folder's name, never a broader pattern.
+- **A standard needs its own check.** The blocks `adr-guard` uses between sessions have
+  fixed keys, so their grader patterns are tested against good and bad samples:
+  `node evals/adr-guard/check-patterns.mjs`.
 - **When a "clean" fixture fails review, check the fixture first.** The first clean
   implementation had a test that could never fail (its forced error hit the first write,
   before the transaction mattered) and let money go to another owner's account; the

@@ -74,7 +74,8 @@ Dependencies enter one at a time, in the phase that needs them, with the version
 ### How every response ends
 
 Every development response closes with the five-point block: next phase · keys ·
-watch-outs · recommended tests · recommended implementation. When the work touched
+watch-outs · recommended tests · recommended implementation. When a change that touched
 authentication, money, personal data, a schema, a public API, security settings or code
-that goes to someone else, and no audit of it is recorded, the recommended
-implementation names the `/coderachnid:adr-guard` command.
+that goes to someone else is complete, and no audit of it is recorded, the recommended
+implementation is the `adr-guard` block, given once: why, scope, the complete
+`/coderachnid:adr-guard` command for a new session, and what to bring back.

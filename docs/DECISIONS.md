@@ -184,3 +184,15 @@ a scope fence, so every project's ADRs can be audited the same way.
 
 Sources: Nygard's ADRs (2011) and fitness functions (Ford, Parsons and Kua, 2017),
 marked anticipated until a real delivery confirms the method.
+
+Update (2026-11-26, v0.9.2): in use, the sixth sense had two problems. Its closing line
+left the maintainer asking for the complete command, and what came back from the audit
+session changed shape every time, so the working session had no fixed thing to continue
+from. The warning and its answer are now a protocol of two blocks with fixed English
+keys: a recommendation block (why, scope, the complete command for a new session, what
+to bring back) and an `adr-guard result` block that every audit and plan ends with
+(verdict, the report's path, what to fix first, the next action). Pasted back, the
+result block makes the working session open the report and act on the verdict. And
+because an alarm that rings at every step gets ignored, the triage has rules for
+silence: it speaks only with a trigger shown by a file or a line, once, when the change
+is complete, and never again in the conversation unless new risky code was added.
